@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2015/11/2 ?U?? 06:06:41 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="org.iii.ideas.catering_service.dao.Restaurantdish" table="restaurantdish" catalog="cateringservice">
+        <id name="rdishId" type="java.lang.Integer">
+            <column name="RDishId" />
+            <generator class="identity" />
+        </id>
+        <property name="restaurantId" type="int">
+            <column name="RestaurantId" not-null="true" />
+        </property>
+        <property name="rdishName" type="string">
+            <column name="RDishName" not-null="true" />
+        </property>
+        <property name="rdishTypeId" type="string">
+            <column name="RDishTypeId" length="50" not-null="true" />
+        </property>
+        <property name="sortOrder" type="int">
+            <column name="sortOrder" not-null="true" />
+        </property>
+        <property name="ingredientList" type="string">
+            <column name="ingredientList" length="2000">
+                <comment>&#168;&#207;&#165;&#206;&#173;&#185;&#167;&#247;&#166;C&#170;&#237;</comment>
+            </column>
+        </property>
+        <property name="calorie" type="int">
+            <column name="calorie" not-null="true">
+                <comment>&#188;&#246;&#182;q</comment>
+            </column>
+        </property>
+        <property name="dishPicId" type="string">
+            <column name="dishPicId" not-null="true" />
+        </property>
+        <property name="enable" type="int">
+            <column name="enable" not-null="true">
+                <comment>&#172;O&#167;_&#165;&#205;&#174;&#196;</comment>
+            </column>
+        </property>
+        <property name="createDate" type="timestamp">
+            <column name="createDate" length="19" not-null="true">
+                <comment>&#171;&#216;&#165;&#223;&#164;&#233;&#180;&#193;</comment>
+            </column>
+        </property>
+        <property name="createUser" type="string">
+            <column name="createUser" length="50" not-null="true" />
+        </property>
+        <property name="modifyDate" type="timestamp">
+            <column name="modifyDate" length="19">
+                <comment>&#173;&#215;&#167;&#239;&#164;&#233;&#180;&#193;</comment>
+            </column>
+        </property>
+        <property name="modifyUser" type="string">
+            <column name="modifyUser" length="50" />
+        </property>
+    </class>
+</hibernate-mapping>

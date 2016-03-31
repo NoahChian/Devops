@@ -1,0 +1,2 @@
+var fcloudQuerySourceidUrl = 'http://trace.twfoodtrace.org.tw/fcloud/index.do?action=querySourceId';
+var fcloudProductLinkUrl = 'http://trace.twfoodtrace.org.tw/fcloud/index.do?action=getProductInfoByUser';

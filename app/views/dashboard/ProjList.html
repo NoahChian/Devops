@@ -1,0 +1,46 @@
+<div >
+	<br><br>
+	<div class="col-md-2">專案清單列表</div>
+	<br><br>
+
+	<div class="col-md-2">專案名稱：</div>
+	<div class="col-md-2">
+			<input type = "text" ng-model="name" placeholder=""></input>
+	</div>
+	<div class="col-md-offset-5">
+		<input type = "checkbox"></input>
+		是否需要建立清單
+	</div>
+
+	<br>
+
+	<div class="pull-right btn btn-primary btn-outline">查詢</div>
+	<br>
+	<hr style="width: 100% ; height: 3px; background-color: grey ;"/>
+	<br></br>
+	<table class="table table-bordered">
+		
+
+
+
+
+		<tr style="background-color: lightgrey">
+			<th>專案名稱</th>
+			<th>是否需建立清單</th>
+			<th>預計送出日</th>
+			<th>預計完成日</th>
+			<th>實際完成日</th>
+			<th>操作</th>
+		</tr>
+		<tr ng-repeat="(key,value) in obj">
+			<td><a ui-sref="ResultList" >{{value.name}}</a><span></td>
+			<td>{{value.custom_fields[6].name}}<span></td>
+			<td>{{value.C}}<span></td>
+			<td>{{value.D}}<span></td>
+			<td>{{value.E}}<span></td>
+			<td><a ui-sref="SetProjConf" >{{value.F}}</a><span></td>			
+		</tr>
+	</table>
+	<button></button>
+
+</div>

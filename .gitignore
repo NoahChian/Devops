@@ -1,0 +1,12 @@
+<<<<<<< HEAD
+node_modules/
+bower_components/
+.tmp/
+#dist/
+gen/
+docs/
+=======
+/target
+/.classpath
+/.settings
+>>>>>>> 77ef969b1b53baf1c4a36ed6448495be126bc197

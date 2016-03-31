@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2015/11/2 ?U?? 06:06:41 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="org.iii.ideas.catering_service.dao.Restaurantmenudish" table="restaurantmenudish" catalog="cateringservice">
+        <id name="rmenuDishId" type="java.lang.Integer">
+            <column name="RMenuDishId" />
+            <generator class="identity" />
+        </id>
+        <property name="rmenuId" type="int">
+            <column name="RMenuId" not-null="true">
+                <comment>&#181;&#230;&#179;&#230;ID</comment>
+            </column>
+        </property>
+        <property name="rdishId" type="int">
+            <column name="RDishId" not-null="true">
+                <comment>&#181;&#230;&#166;&#226;ID</comment>
+            </column>
+        </property>
+        <property name="menuDate" type="string">
+            <column name="MenuDate" length="50" not-null="true">
+                <comment>&#168;&#209;&#192;\&#164;&#233;&#180;&#193;</comment>
+            </column>
+        </property>
+        <property name="enable" type="int">
+            <column name="enable" not-null="true">
+                <comment>&#172;O&#167;_&#165;&#205;&#174;&#196;</comment>
+            </column>
+        </property>
+        <property name="createDate" type="timestamp">
+            <column name="createDate" length="19" not-null="true" />
+        </property>
+        <property name="createUser" type="string">
+            <column name="createUser" length="50" not-null="true" />
+        </property>
+        <property name="modifyDate" type="string">
+            <column name="modifyDate" length="50" />
+        </property>
+        <property name="modifyUser" type="binary">
+            <column name="modifyUser" />
+        </property>
+    </class>
+</hibernate-mapping>

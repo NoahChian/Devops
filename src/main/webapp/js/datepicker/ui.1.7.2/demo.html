@@ -1,0 +1,42 @@
+
+<html>
+<head>
+<title>jQuery日期選擇</title>
+<meta http-equiv="Content-Type" content="text/html; charset=big5" />
+	<link type="text/css" href="ui.all.css" rel="stylesheet" />
+	<script type="text/javascript" src="../jquery-1.3.2.js"></script>
+	<script type="text/javascript" src="ui.core.js"></script>
+	<script type="text/javascript" src="ui.datepicker.js"></script>
+	<script type="text/javascript" src="ui.datepicker.tw.js"></script>
+<script language="javascript" type="text/javascript">
+<!--
+function when_body_load()
+{
+    if(typeof(body_load)=='function')
+    {
+        body_load();
+    }
+}
+
+function body_load(){	
+	$('#Text2').datepicker({		
+			changeMonth: true,
+			changeYear: true,
+      dateFormat: 'yymmdd', 
+      showOn: 'button', 
+      buttonImageOnly: true, 
+      buttonImage: 'calendar.gif',
+      formatYear:function(v){return '民國'+(v-1911)+'年';}
+  });
+}
+
+//-->
+</script>
+
+</head>
+<body onload="when_body_load()">
+	<div style="margin:20px 0px 0px 100px;">
+	<input id="Text2" type="text" size="6" value="981001" style="text-align:center;" />
+	</div>
+</body>
+</html>

@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd" xmlns:tx="http://www.springframework.org/schema/tx">
+
+
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<property name="configLocation" value="classpath:hibernate.cfg.xml">
+		</property>
+	</bean>
+
+
+	<bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<tx:annotation-driven transaction-manager="transactionManager" />
+
+	<bean id="NegIngredientDAO" class="org.iii.ideas.catering_service.dao.NegIngredientDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+
+	<bean id="urlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="mappings">
+			<props>
+				<!-- <prop key="/listSupplier/">listSupplier</prop> -->
+				<!-- <prop key="/manageSupplier/">manageSupplier</prop> -->
+				<!-- <prop key="/manageKitchen/">manageKitchen</prop> -->
+				<prop key="/manageDish/">manageDish</prop>
+
+			</props>
+		</property>
+	</bean>
+
+
+	<bean id="listSupplier" class="org.iii.ideas.catering_service.controller.SupplierController">
+		<property name="methodNameResolver" ref="supplierMethodResolver" />
+		<property name="supplierDAO" ref="supplierDAO" />
+		<property name="countyDAO" ref="CountyDAO" />
+		<property name="areaDAO" ref="AreaDAO" />
+
+	</bean>
+
+	<bean id="supplierMethodResolver" class="org.springframework.web.servlet.mvc.multiaction.ParameterMethodNameResolver">
+		<property name="paramName" value="action" />
+		<property name="defaultMethodName" value="supplierContent" />
+	</bean>
+
+	<bean id="manageSupplier" class="org.iii.ideas.catering_service.controller.ManageSupplierController">
+		<property name="methodNameResolver" ref="manageSupplierMethodResolver" />
+		<property name="supplierDAO" ref="supplierDAO" />
+		<property name="countyDAO" ref="CountyDAO" />
+		<property name="areaDAO" ref="AreaDAO" />
+
+	</bean>
+
+	<bean id="manageSupplierMethodResolver" class="org.springframework.web.servlet.mvc.multiaction.ParameterMethodNameResolver">
+		<property name="paramName" value="action" />
+		<property name="defaultMethodName" value="supplierContent" />
+	</bean>
+	<!-- <bean id="manageKitchen" class="org.iii.ideas.catering_service.controller.KitchenController"> <property name="methodNameResolver" ref="kitchenMethodResolver"/> <property name="kitchenDAO" ref="KitchenDAO"/> <property name="countyDAO" ref="CountyDAO"/> 
+		<property name="areaDAO" ref="AreaDAO"/> <property name="schoolDAO" ref="SchoolDAO"/> <property name="uidDAO" ref="UidDAO"/> </bean> -->
+	<bean id="kitchenMethodResolver" class="org.springframework.web.servlet.mvc.multiaction.ParameterMethodNameResolver">
+		<property name="paramName" value="action" />
+		<property name="defaultMethodName" value="kitchenContent" />
+	</bean>
+
+	<bean id="manageDish" class="org.iii.ideas.catering_service.controller.DishController">
+		<property name="methodNameResolver" ref="dishMethodResolver" />
+		<property name="dishDAO" ref="DishDAO" />
+		<property name="supplierDAO" ref="supplierDAO" />
+		<property name="ingredientDAO" ref="IngredientDAO" />
+	</bean>
+
+	<bean id="dishMethodResolver" class="org.springframework.web.servlet.mvc.multiaction.ParameterMethodNameResolver">
+		<property name="paramName" value="action" />
+		<property name="defaultMethodName" value="dishContent" />
+	</bean>
+
+	<bean id="supplierDAO" class="org.iii.ideas.catering_service.dao.SupplierDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+
+	<bean id="UidDAO" class="org.iii.ideas.catering_service.dao.UidDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="IngredientDAO" class="org.iii.ideas.catering_service.dao.IngredientDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="MenuDAO" class="org.iii.ideas.catering_service.dao.MenuDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="BatchfileDAO" class="org.iii.ideas.catering_service.dao.BatchfileDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="KitchenDAO" class="org.iii.ideas.catering_service.dao.KitchenDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="SchoolDAO" class="org.iii.ideas.catering_service.dao.SchoolDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="IngredientbatchdataDAO" class="org.iii.ideas.catering_service.dao.IngredientbatchdataDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="BatchdataDAO" class="org.iii.ideas.catering_service.dao.BatchdataDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="CountyDAO" class="org.iii.ideas.catering_service.dao.CountyDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="AreaDAO" class="org.iii.ideas.catering_service.dao.AreaDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="UseraccountDAO" class="org.iii.ideas.catering_service.dao.UseraccountDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="SupplierDAO" class="org.iii.ideas.catering_service.dao.SupplierDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="DishDAO" class="org.iii.ideas.catering_service.dao.DishDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="CounterDAO" class="org.iii.ideas.catering_service.dao.CounterDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="SchoolkitchenDAO" class="org.iii.ideas.catering_service.dao.SchoolkitchenDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="hibernateUtil" class="org.iii.ideas.catering_service.util.HibernateUtil">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="logUtil" class="org.iii.ideas.catering_service.util.LogUtil">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="IngredientCertificateDAO" class="org.iii.ideas.catering_service.dao.IngredientCertificateDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="ViewSchoolMenuWithBatchdataDAO" class="org.iii.ideas.catering_service.dao.ViewSchoolMenuWithBatchdataDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+</beans>

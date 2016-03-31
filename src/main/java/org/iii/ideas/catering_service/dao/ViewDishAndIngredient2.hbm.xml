@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+<!-- 	<class name="org.iii.ideas.catering_service.dao.ViewDishAndIngredient2" -->
+<!-- 		table="viewdishandingredient2"> -->
+	<class name="org.iii.ideas.catering_service.dao.ViewDishAndIngredient2"
+		table="viewDishAndIngredient2">
+<!-- 		<composite-id name="id" class="org.iii.ideas.catering_service.dao.ViewDishAndIngredientId"> -->
+<!--            <key-property name="dishbatchdataid" type="java.lang.Long"> -->
+<!--                <column name="dishbatchdataid" /> -->
+<!--            </key-property> -->
+<!--            <key-property name="ingredientBatchId" type="java.lang.Long"> -->
+<!--                <column name="ingredientBatchId" /> -->
+<!--            </key-property> -->
+<!--       	 </composite-id> -->
+		<id name="id" type="java.lang.String">
+			<column name="id" />
+		</id>
+		           
+        <property name="dishbatchdataid" type="java.lang.Long">
+			<column name="dishbatchdataid" />
+		</property>
+		<property name="ingredientBatchId" type="java.lang.Long">
+			<column name="ingredientBatchId" />
+		</property>
+		
+		<property name="menudate" type="java.lang.String">
+			<column name="menudate" />
+		</property>		
+		<property name="sfstreetname" type="java.lang.String">
+			<column name="SFStreetName" />
+		</property>
+		<property name="schoolid" type="java.lang.Integer">
+			<column name="schoolid" />
+		</property>
+		<property name="schoolname" type="java.lang.String">
+			<column name="schoolname" />
+		</property>
+		<property name="schoolcode" type="java.lang.String">
+            		<column name="SchoolCode" length="10"/>
+        	</property>
+		<property name="kitchenid" type="java.lang.Integer">
+			<column name="kitchenid" />
+		</property>
+		<property name="kitchenname" type="java.lang.String">
+			<column name="kitchenname" />
+		</property>
+		<property name="countyid" type="java.lang.Integer">
+			<column name="countyid" />
+		</property>
+		<property name="county" type="java.lang.String">
+			<column name="county" />
+		</property>
+<!-- 		<property name="dishbatchdataid" type="java.lang.Long"> -->
+<!-- 			<column name="dishbatchdataid" /> -->
+<!-- 		</property> -->
+		<property name="dishname" type="java.lang.String">
+			<column name="dishname" />
+		</property>
+		<property name="dishtype" type="java.lang.String">
+			<column name="dishtype" />
+		</property>
+		<property name="updatedatetime" type="java.sql.Timestamp">
+			<column name="updatedatetime" length="19" />
+		</property>
+		<property name="dishshowname" type="java.lang.String">
+			<column name="dishshowname" />
+		</property>
+<!-- 		<property name="ingredientBatchId" type="java.lang.Long"> -->
+<!-- 			<column name="IngredientBatchId" /> -->
+<!-- 		</property> -->
+		<property name="batchDataId" type="java.lang.Long">
+			<column name="BatchDataId" />
+		</property>
+		<property name="dishId" type="java.lang.Long">
+			<column name="DishId" />
+		</property>
+		<property name="ingredientId" type="java.lang.Long">
+			<column name="IngredientId" />
+		</property>
+		<property name="ingredientName" type="java.lang.String">
+			<column name="IngredientName" />
+		</property>
+		<property name="stockDate" type="java.sql.Timestamp">
+			<column name="StockDate" length="19" />
+		</property>
+		<property name="manufactureDate" type="java.sql.Timestamp">
+			<column name="ManufactureDate" length="19" />
+		</property>
+		<property name="expirationDate" type="java.sql.Timestamp">
+			<column name="ExpirationDate" length="19" />
+		</property>
+		<property name="lotNumber" type="java.lang.String">
+			<column name="LotNumber" />
+		</property>
+		<property name="brand" type="java.lang.String">
+			<column name="Brand" />
+		</property>
+		<property name="origin" type="java.lang.String">
+			<column name="Origin" length="45" />
+		</property>
+		<property name="source" type="java.lang.String">
+			<column name="Source" length="45" />
+		</property>
+		<property name="supplierId" type="java.lang.Integer">
+			<column name="SupplierId" />
+		</property>
+		<property name="sourceCertification" type="java.lang.String">
+			<column name="SourceCertification" length="45" />
+		</property>
+		<property name="certificationId" type="java.lang.String">
+			<column name="CertificationId" length="45" />
+		</property>
+		<property name="menuId" type="java.lang.Integer">
+			<column name="menuId" />
+		</property>
+		<property name="supplierCompanyId" type="java.lang.String">
+			<column name="SupplierCompanyId" />
+		</property>
+		<property name="supplierName" type="java.lang.String">
+			<column name="SupplierName" />
+		</property>
+		<property name="brandNo" type="java.lang.String">
+			<column name="BrandNo" />
+		</property>
+		<property name="manufacturer" type="java.lang.String">
+			<column name="manufacturer" />
+		</property>	
+		<property name="productName" type="java.lang.String">
+			<column name="productName" />
+		</property>	
+		<property name="ingredientQuantity" type="java.lang.String">
+			<column name="ingredientQuantity" />
+		</property>	
+		<property name="ingredientAttr" type="java.lang.Integer">
+			<column name="ingredientAttr" />
+		</property>
+		<property name="menuType" type="java.lang.Integer">
+			<column name="MenuType" />
+		</property>
+		<property name="enable" type="java.lang.Integer">
+			<column name="enable" />
+		</property>
+	</class>	
+</hibernate-mapping>

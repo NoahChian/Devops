@@ -1,0 +1,29 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:task="http://www.springframework.org/schema/task"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans     
+        http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+        http://www.springframework.org/schema/context 
+        http://www.springframework.org/schema/context/spring-context-3.0.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd
+   		http://www.springframework.org/schema/task
+		http://www.springframework.org/schema/task/spring-task-3.0.xsd
+		http://www.springframework.org/schema/util 
+		http://www.springframework.org/schema/util/spring-util-3.0.xsd">
+ 	
+ 	<!-- <sws:static-wsdl id="orders" location="/WEB-INF/wsdl/orders.wsdl"/>  -->
+    
+    <context:component-scan base-package="org.iii.ideas.catering_service.rest, org.iii.ideas.catering_service.service, org.iii.ideas.catering_service.dao" />
+	<mvc:annotation-driven />
+	<task:annotation-driven />
+	
+	<!-- properties -->
+	<util:properties id="applicationProps" location="/WEB-INF/cateringservice.properties" />
+    <context:property-placeholder properties-ref="applicationProps" /> 
+
+</beans>

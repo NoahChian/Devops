@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="org.iii.ideas.catering_service.dao.Kitchenfda" table="kitchenFDA">
+		<id name="kitchenId" type="java.lang.Integer">
+            <column name="kitchenId" />
+            <generator class="identity" />
+        </id>
+        <property name="fdaCompanyId" type="java.lang.String">
+        	<column name="fdaCompanyId" not-null="true" />
+        </property>
+        <property name="updatetime" type="java.sql.Timestamp">
+        	<column name="updatetime" not-null="true" />
+        </property>
+        <property name="updateuser" type="java.lang.String">
+            <column name="updateuser" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

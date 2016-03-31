@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="org.iii.ideas.catering_service.dao.SeasoningStockData" table="seasoningstockdata">
+    	
+        <id name="seasoningStockId" type="java.lang.Long">
+            <column name="seasoningstockId" />
+            <generator class="org.iii.ideas.catering_service.dao.IGeneratorUUID" />
+        </id>
+        <property name="kitchenId" type="java.lang.Integer">
+            <column name="kitchenId" />
+        </property>
+        <property name="restaurantId" type="java.lang.Integer">
+            <column name="restaurantId" />
+        </property>
+        <property name="seasoningName" type="java.lang.String">
+            <column name="SeasoningName"	 />
+        </property>
+        <property name="stockDate" type="java.sql.Timestamp">
+            <column name="StockDate" length="19" />
+        </property>
+        <property name="manufactureDate" type="java.sql.Timestamp">
+            <column name="ManufactureDate" length="19" />
+        </property>
+        <property name="expirationDate" type="java.sql.Timestamp">
+            <column name="ExpirationDate" length="19" />
+        </property>
+        <property name="lotNumber" type="java.lang.String">
+            <column name="LotNumber" />
+        </property>
+        <property name="brand" type="java.lang.String">
+            <column name="Brand" />
+        </property>
+        <property name="origin" type="java.lang.String">
+            <column name="Origin" length="45" />
+        </property>
+        <property name="source" type="java.lang.String">
+            <column name="Source" length="45" />
+        </property>
+        <property name="supplierId" type="java.lang.Integer">
+            <column name="SupplierId" />
+        </property>
+        <property name="sourceCertification" type="java.lang.String">
+            <column name="SourceCertification" length="45" />
+        </property>
+        <property name="certificationId" type="java.lang.String">
+            <column name="CertificationId" length="45" />
+        </property>
+        <property name="menuType" type="java.lang.Integer">
+            <column name="menuType" />
+        </property>
+        <property name="supplierCompanyId" type="java.lang.String">
+            <column name="SupplierCompanyId" not-null="false" />
+        </property>
+        <property name="supplierName" type="java.lang.String">
+            <column name="SupplierName" not-null="false" />
+        </property>
+        <property name="brandNo" type="java.lang.String">
+            <column name="brandNo" not-null="false" />
+        </property> 
+		<property name="productName" type="java.lang.String">
+			<column length="50" name="ProductName" />
+		</property> 
+		<property name="manufacturer" type="java.lang.String">
+			<column length="100" name="Manufacturer" />
+		</property> 
+		<property name="ingredientQuantity" type="java.lang.String">
+			<column default="0" length="255" name="IngredientQuantity" />
+		</property> 
+		<property name="ingredientUnit" type="java.lang.String">
+			<column length="50" name="IngredientUnit" />
+		</property>     
+		<property name="ingredientAttr" type="integer">
+			<column default="0" length="11" name="IngredientAttr" />
+		</property>   
+		<property name="useStartDate" type="java.sql.Timestamp">
+            <column name="usestartdate" length="19" />
+        </property>
+        <property name="useeEndDate" type="java.sql.Timestamp">
+            <column name="useenddate" length="19" />
+        </property>
+        <property name="lastUpdateId" type="java.lang.String">
+            <column name="lastupdateid" length="50" />
+        </property>
+        <property name="lastUpdateDate" type="java.sql.Timestamp">
+            <column name="lastupdatedate" length="19" />
+        </property>
+        <property name="Enable" type="java.lang.Integer">
+            <column name="enable" />
+        </property>
+    </class>
+</hibernate-mapping>

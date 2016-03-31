@@ -1,0 +1,60 @@
+<div>
+	<a ui-sref="ViewResult" class="pull-right btn btn-primary btn-outline">修改歷程</a>
+	<br></br>
+	<div class="col-md-2">
+		專案名稱：
+	</div>
+	<div >
+		<span ng-bind ="ProjNam"></span>
+	</div>
+	<br>
+	<div class="col-md-2">
+		狀態：
+	</div>
+	<div>
+		<span ng-bind ="ProjState"></span>
+	</div>
+	<br>
+	<div class="col-md-2">
+		送審問題單編號：
+	</div>
+	<div>
+		<span ng-bind ="QuesNum"></span>
+	</div>		
+	<br><br>
+	<div class="pull-left btn btn-primary btn-outline">將成果清單送出審查</div>
+	</div>
+	<br></br>
+	<hr style="width: 100% ; height: 3px; background-color: grey ;"/>
+	<div ui-sref="NewResult" class="pull-right btn btn-primary btn-outline">新增成果</div>
+	<br></br><br>
+	<table class="table table-bordered">
+		
+
+
+
+
+		<tr style="background-color: lightgrey">
+			<th>成果編號</th>
+			<th>成果名稱</th>
+			<th>送審問題單編號</th>
+			<th>預計交付日</th>
+			<th>送出審查日</th>
+			<th>實際完成日</th>
+			<th>操作</th>	
+		</tr>
+
+		
+
+		<tr ng-repeat="(key,value) in results">
+			<td>{{value.A}}<span></td>
+			<td>{{value.B}}<span></td>
+			<td>{{value.C}}<span></td>
+			<td>{{value.D}}<span></td>
+			<td>{{value.E}}<span></td>
+			<td>{{value.F}}<span></td>
+			<td>{{value.G}}<span></td>
+			
+		</tr>
+	</table>
+</div>

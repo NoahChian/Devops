@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2014/4/17 ?U?? 04:09:57 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="org.iii.ideas.catering_service.dao.IngredientCertificate" table="ingredientcertificate" >
+        <id name="certId" type="java.lang.Integer">
+            <column name="CertId" />
+             <generator class="identity" />
+        </id>
+        <property name="certNo" type="java.lang.String">
+            <column name="CertNo" />
+        </property>
+        <property name="certType" type="java.lang.String">
+            <column name="CertType" />
+        </property>
+        <property name="expiryDate" type="java.sql.Timestamp">
+            <column name="ExpiryDate" />
+        </property>        
+        <property name="createDate" type="java.sql.Timestamp">
+            <column name="CreateDate" />
+        </property>
+        <property name="createUser" type="java.lang.String">
+            <column name="CreateUser" />
+        </property>
+        <property name="updateDate" type="java.sql.Timestamp">
+            <column name="UpdateDate" />
+        </property>
+        <property name="updateUser" type="java.lang.String">
+            <column name="UpdateUser" />
+        </property>
+        <property name="sourceXml" type="java.lang.String">
+            <column name="SourceXml" />
+        </property>
+        <property name="sourceJson" type="java.lang.String">
+            <column name="SourceJson" />
+        </property>
+    </class>
+    </hibernate-mapping>

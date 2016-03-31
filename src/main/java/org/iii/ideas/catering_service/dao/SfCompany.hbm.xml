@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2015/2/3 上午 09:26:01 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="org.iii.ideas.catering_service.dao.SfCompany" table="sf_company">
+        <id name="id" type="java.lang.Long">
+            <column name="Id" />
+            <generator class="identity" />
+        </id>
+        <property name="name" type="string">
+            <column name="Name" length="100" not-null="true" unique="true" />
+        </property>
+        <property name="address" type="string">
+            <column name="Address" not-null="true" />
+        </property>
+        <property name="tel" type="string">
+            <column name="Tel" not-null="true" />
+        </property>
+        <property name="owner" type="string">
+            <column name="Owner" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

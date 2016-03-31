@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2014/6/26 ?U?? 02:28:22 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="org.iii.ideas.catering_service.dao.Uploadfile" table="uploadfile">
+        <id name="uuid" type="long">
+            <column name="Uuid"/>
+            <generator class="org.iii.ideas.catering_service.dao.IGeneratorUUID" />
+        </id>
+        <property name="encodeFileName" type="string">
+            <column name="EncodeFileName" length="45" not-null="true" />
+        </property>
+        <property name="OriginalFileName" type="string">
+            <column name="OriginalFileName" length="255" not-null="true" />
+        </property>
+        <property name="sourceType" type="string">
+            <column name="SourceType" length="45" />
+        </property>
+        <property name="targetId" type="string">
+            <column name="TargetId" length="45" />
+        </property>
+        <property name="filePath" type="string">
+            <column name="FilePath" length="250" not-null="true" />
+        </property>
+        <property name="mimeType" type="string">
+            <column name="MimeType" length="100" not-null="true" />
+        </property>
+        <property name="extType" type="string">
+            <column name="ExtType" length="45" not-null="true" />
+        </property>
+        <property name="createTime" type="timestamp">
+            <column name="CreateTime" length="19" />
+        </property>
+        <property name="updateTime" type="timestamp">
+            <column name="UpdateTime" length="19" />
+        </property>
+    </class>
+</hibernate-mapping>

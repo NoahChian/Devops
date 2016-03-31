@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2015/2/3 上午 09:26:01 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="org.iii.ideas.catering_service.dao.SfProduct" table="sf_product">
+        <id name="id" type="java.lang.Long">
+            <column name="Id" />
+            <generator class="identity" />
+        </id>
+        <property name="name" type="string">
+            <column name="Name" length="50" not-null="true" />
+        </property>
+        <property name="supplierCompanyId" type="long">
+            <column name="SupplierCompanyId" not-null="true" />
+        </property>
+        <property name="manufacturerId" type="long">
+            <column name="ManufacturerId" not-null="true" />
+        </property>
+        <property name="preservedMethod" type="string">
+            <column name="PreservedMethod" length="100" not-null="true" />
+        </property>
+        <property name="soldway" type="string">
+            <column name="Soldway" length="100" not-null="true" />
+        </property>
+        <property name="packages" type="string">
+            <column name="Packages" not-null="true" />
+        </property>
+        <property name="certification" type="string">
+            <column name="Certification" length="45" />
+        </property>
+        <property name="certificationId" type="string">
+            <column name="CertificationId" length="45" />
+        </property>
+        <property name="appliedNoByJdf" type="string">
+            <column name="AppliedNoByJDF" />
+        </property>
+        <property name="barCode" type="string">
+            <column name="BarCode" />
+        </property>
+    </class>
+</hibernate-mapping>

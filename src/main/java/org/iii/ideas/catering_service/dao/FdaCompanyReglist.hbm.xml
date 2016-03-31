@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="org.iii.ideas.catering_service.dao.FdaCompanyReglist" table="fda_company_reglist">
+		<id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <property name="company_Name" type="java.lang.String">
+        	<column name="company_Name" not-null="true" />
+        </property>
+        <property name="businessId" type="java.lang.String">
+        	<column name="businessId" not-null="true" />
+        </property>
+        <property name="address" type="java.lang.String">
+        	<column name="address" not-null="true" />
+        </property>
+        <property name="fdaCompanyId" type="java.lang.String">
+        	<column name="fdaCompanyId" not-null="true" />
+        </property>
+        <property name="regType" type="java.lang.String">
+        	<column name="regType" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

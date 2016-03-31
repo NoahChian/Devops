@@ -1,0 +1,116 @@
+@import url("reset.css");
+
+@import url("basis.css");
+
+@import url("pop.css");
+
+html{}
+
+body{ background:#FFF;}
+
+#SPPIO{ width:10px; height:10px;}
+
+
+
+
+
+
+
+
+
+
+
+/*--- 抬頭線 ----------------------------------------------------------------------------------------------*/
+#TOPER{ width:100%; height:20px;}
+
+
+
+
+/*--- 最外框 ----------------------------------------------------------------------------------------------*/
+#WRAPPER{ width:1000px; color:#CC0000; padding:0 0 20px 0; margin:0 auto; position:relative;}
+
+
+
+
+/*--- 抬頭 ----------------------------------------------------------------------------------------------*/
+#HEADER{ width:1000px; height:200px; border-radius:0 0 10px 10px; 
+background:url(../images/header_bkere.jpg) no-repeat; margin:0 0 10px 0;}
+
+
+ps 微調:
+css2.css(as css.css u have):
+#HEADER > 
+
+
+/*--- 內容資料 ----------------------------------------------------------------------------------------------*/
+#CONTENT{ width:1000px;}
+
+
+
+
+/*--- 左選單 ----------------------------------------------------------------------------------------------*/
+#SUB_NAV{ float:left; width:194px; background:#fbfbfb; padding:0 0 20px 0;}
+
+
+/*--- 右內容 ----------------------------------------------------------------------------------------------*/
+#MAINi{ float:right; width:796px; color:#6b7788; }
+
+#TAB_TYP_A{ text-align:center; background:url(../images/tab_type-a_bkere.jpg) center bottom no-repeat; padding:30px 0;}
+
+#TAB_TYP_B{ text-align:center; padding:24px 0;}
+
+
+
+
+
+
+
+
+/*--- 註腳 ----------------------------------------------------------------------------------------------*/
+#FOOTERx{ clear:both; width:100%; height:30px; line-height:30px; font-size:15px; text-align:center; color:#FFF; 
+background:url(../images/footer_bkere.jpg);}
+
+
+
+
+
+
+
+
+
+
+
+
+
+#MAIN_TITLE_BAR{ width:100%; color:#FFF; border-radius:10px 10px 0 0;}
+
+#MAIN_SECOND_BAR{ width:100%; color:#4d8000;}
+
+#MAIM_LINER_A{ clear:both; width:100%; border-bottom:dashed 1px #71a91e;}
+
+#MAIM_LINER_B{ clear:both; width:100%; border-bottom:solid 4px #6e9b44;}
+
+
+
+
+/*--- 表格 ------------------------------------------------------------------------------------------------------------------------------------*/
+#TAB_BOX_DATA{ padding:0 5px; margin:10px 0 30px 0;}
+#TAB_BOX_DATA table{ border:solid 1px #999;}
+#TAB_BOX_DATA table td{ padding:5px 5px;}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

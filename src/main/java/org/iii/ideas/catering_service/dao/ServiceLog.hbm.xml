@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="org.iii.ideas.catering_service.dao.ServiceLog" table="servicelog">
+    	 
+    	
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        
+        <property name="date" type="java.sql.Timestamp">
+            <column name="date" not-null="true" />
+        </property>
+        <property name="qAccount" type="java.lang.String">
+            <column name="qAccount" not-null="true" />
+        </property>
+        <property name="qUsername" type="java.lang.String">
+            <column name="qUsername" not-null="true" />
+        </property>
+        <property name="qType" type="java.lang.String">
+            <column name="qType" not-null="true" />
+        </property>
+        <property name="serviceAccount" type="java.lang.String">
+            <column name="serviceAccount" not-null="true" />
+        </property>
+        <property name="qContent" type="java.lang.String">
+            <column name="qContent" not-null="false" />
+        </property>
+    </class>
+</hibernate-mapping>

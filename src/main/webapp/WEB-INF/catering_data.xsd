@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--Created with Liquid XML Studio Developer Edition (Trial) 9.0.11.3078 
+	(http://www.liquid-technologies.com) -->
+<xs:schema xmlns:Item="http://twfoodtrace.org.tw/FcloudDataschemas"
+	elementFormDefault="qualified" targetNamespace="http://twfoodtrace.org.tw/FcloudDataschemas"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xmime="http://www.w3.org/2005/05/xmlmime">
+	<xs:element name="UploadProductRequest" type="Item:UploadProductRequestType" />
+	<xs:element name="UploadProductResponse" type="Item:FoodResponseType" />
+	<xs:element name="UploadBatchProductRequest" type="Item:UploadBatchProductRequestType" />
+	<xs:element name="UploadBatchProductResponse" type="Item:FoodResponseType" />
+	<xs:element name="DeleteBatchProductRequest" type="Item:DeleteBatchProductRequestType" />
+	<xs:element name="DeleteBatchProductResponse" type="Item:FoodResponseType" />
+	<xs:complexType name="UploadProductRequestType">
+		<xs:sequence>
+			<xs:element name="Action" type="xs:string" />
+			<xs:element name="MessageId" type="xs:string" />
+			<xs:element name="CompanyAccount" type="xs:string" />
+			<xs:element name="CompanyId" type="xs:string" />
+			<xs:element name="CompanyName" type="xs:string" />
+			<xs:element name="ServiceDate" type="xs:string" />
+			<xs:element name="SchoolId" type="xs:string" />
+			<xs:element name="Staple1"  type="xs:string" />
+			<xs:element name="Staple2" minOccurs="0" type="xs:string" />
+      <xs:element name="MainCourse1"  type="xs:string" />
+      <xs:element name="MainCourse2" minOccurs="0" type="xs:string" />
+			<xs:element name="MainCourse3" minOccurs="0"  type="xs:string" />
+			<xs:element name="SideDish1" minOccurs="0" type="xs:string" />
+			<xs:element name="SideDish2" minOccurs="0"  type="xs:string" />
+			<xs:element name="SideDish3" minOccurs="0" type="xs:string" />
+			<xs:element name="SideDish4" minOccurs="0"  type="xs:string" />
+			<xs:element name="SideDish5" minOccurs="0"  type="xs:string" />
+			<xs:element name="SideDish6" minOccurs="0"  type="xs:string" />
+			<xs:element name="Vegetable"  minOccurs="0" type="xs:string" />
+			<xs:element name="Soup" minOccurs="0"  type="xs:string" />
+			<xs:element name="Extra1" minOccurs="0"  type="xs:string" />
+      <xs:element name="Extra2" minOccurs="0"  type="xs:string" />
+			<xs:element name="Grains"   type="xs:string" />
+			<xs:element name="MeatBeans"   type="xs:string" />
+			<xs:element name="Vegetables"   type="xs:string" />
+			<xs:element name="Oils"   type="xs:string" />
+			<xs:element name="Fruits"   type="xs:string" />
+			<xs:element name="Milk"   type="xs:string" />
+			<xs:element name="Calories"   type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="UploadBatchProductRequestType">
+		<xs:sequence>
+			<xs:element type="xs:string" name="Action" />
+			<xs:element type="xs:string" name="MessageId" />
+						<xs:element type="xs:string" name="CompanyId" />
+						<xs:element type="xs:string" name="SchoolId" />
+						<xs:element type="xs:string" name="ServiceDate"  />
+						<xs:element type="xs:string" name="UploaderAccount"   />
+						<xs:element name="Sources">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="SourceItem" maxOccurs="unbounded"
+										minOccurs="1">
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element type="xs:string" name="DishesName" />
+												<xs:element type="xs:string" name="SourceName" />
+												<xs:element type="xs:string" name="Brands"
+													minOccurs="0" />
+												<xs:element type="xs:string" name="Origin"
+													minOccurs="0" />
+												<xs:element type="xs:string" name="Source" />
+												<xs:element type="xs:string" name="SupplierId"
+													 />
+												<xs:element type="xs:string" name="SupplierName" />
+												<xs:element type="xs:string" name="SourceCertification"
+													minOccurs="0" />
+												<xs:element type="xs:string" name="CertificationID" minOccurs="0" />
+												<xs:element type="xs:string" name="StockDate" />
+												<xs:element type="xs:string" name="ManufactureDate" minOccurs="0" />
+                        <xs:element type="xs:string" name="ExpirationDate"  minOccurs="0" />
+                        <xs:element type="xs:string" name="LotNumber" minOccurs="0" />
+												<xs:element name="SourceInspectionFileList"
+													minOccurs="1">
+													<xs:complexType>
+														<xs:sequence>
+															<xs:element type="xs:string" name="SourceInspectionFile"
+																minOccurs="0" />
+															<xs:element type="xs:string"
+																name="SourceIngredientsInspectionLab" minOccurs="0" />
+															<xs:element type="xs:string"
+																name="SourceIngredientsInspectionStatus" minOccurs="0" />
+														</xs:sequence>
+													</xs:complexType>
+												</xs:element>
+											</xs:sequence>
+										</xs:complexType>
+									</xs:element>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="FoodResponseType">
+		<xs:sequence>
+			<xs:element type="xs:string" name="MessageId" />
+			<xs:element type="xs:string" name="SchoolId" />
+			<xs:element type="xs:string" name="ServiceDate" />
+			<xs:element type="xs:string" name="Status" />
+			<xs:element type="xs:string" name="Description" />
+			<xs:element name="ItemStatus" type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DeleteBatchProductRequestType">
+		<xs:sequence>
+			<xs:element type="xs:string" name="Action" />
+			<xs:element type="xs:string" name="MessageId" />
+			<xs:element type="xs:string" name="OriginalMessageId" />
+			<xs:element type="xs:string" name="UploaderAccount" />
+			<xs:element type="xs:string" name="ServiceDate" />
+			<xs:element type="xs:string" name="SchoolId" />
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

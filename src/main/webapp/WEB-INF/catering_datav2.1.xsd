@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:Item="http://twfoodtrace.org.tw/FcloudDataschemas"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xmime="http://www.w3.org/2005/05/xmlmime"
+	targetNamespace="http://twfoodtrace.org.tw/FcloudDataschemas"
+	elementFormDefault="qualified">
+	<xs:element name="UploadMenuRequest" type="Item:UploadMenuRequestType" />
+	<xs:element name="UploadMenuResponse" type="Item:FoodResponseTypev2" />
+	<xs:element name="UploadIngredientRequest" type="Item:UploadIngredientRequestType" />
+	<xs:element name="UploadIngredientResponse" type="Item:FoodResponseTypev2" />
+	<xs:element name="DeleteMenuRequest" type="Item:DeleteMenuRequestType" />
+	<xs:element name="DeleteMenuResponse" type="Item:FoodResponseTypev2" />
+	<xs:element name="UploadSupplierRequest" type="Item:UploadSupplierRequestType" />
+	<xs:element name="UploadSupplierResponse" type="Item:FoodResponseTypev2" />
+	<xs:element name="DeleteSupplierRequest" type="Item:DeleteSupplierRequestType" />
+	<xs:element name="DeleteSupplierResponse" type="Item:FoodResponseTypev2" />
+	<xs:complexType name="UploadMenuRequestType">
+		<xs:sequence>
+			<xs:element name="Action" type="xs:string" />
+			<xs:element name="MessageId" type="xs:string" />
+			<xs:element name="UploaderAccount" type="xs:string" />
+			<xs:element name="Token" type="xs:string" />
+			<xs:element name="SendTime" type="xs:long" />
+			<xs:element name="CompanyId" type="xs:string" />
+			<xs:element name="ServiceDate" type="xs:string" />
+			<xs:element name="MenuType" type="xs:string" />
+			<xs:element name="SchoolId" type="xs:string" />
+			<xs:element name="Staple1" type="Item:DishInfo" maxOccurs="1" minOccurs="0"/>
+			<xs:element name="Staple2" type="Item:DishInfo" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="MainCourse1" type="Item:DishInfo" maxOccurs="1" minOccurs="0"/>
+			<xs:element name="MainCourse2" type="Item:DishInfo"
+				minOccurs="0" maxOccurs="1"/>
+			<xs:element name="MainCourse3" type="Item:DishInfo"
+				minOccurs="0" maxOccurs="1"/>
+			<xs:element name="MainCourse4" type="Item:DishInfo"
+				minOccurs="0" maxOccurs="1"/>
+			<xs:element name="SideDish1" type="Item:DishInfo"
+				minOccurs="0" maxOccurs="1"/>
+			<xs:element name="SideDish2" type="Item:DishInfo"
+				minOccurs="0" maxOccurs="1"/>
+			<xs:element name="SideDish3" type="Item:DishInfo"
+				minOccurs="0" maxOccurs="1"/>
+			<xs:element name="SideDish4" type="Item:DishInfo"
+				minOccurs="0" maxOccurs="1"/>
+			<xs:element name="SideDish5" type="Item:DishInfo"
+				minOccurs="0" maxOccurs="1"/>
+			<xs:element name="SideDish6" type="Item:DishInfo"
+				minOccurs="0" maxOccurs="1"/>
+			<xs:element name="Vegetable" type="Item:DishInfo"
+				minOccurs="0" maxOccurs="1"/>
+			<xs:element name="Soup" type="Item:DishInfo" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="Extra1" type="Item:DishInfo" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="Extra2" type="Item:DishInfo" minOccurs="0" maxOccurs="1"/>
+			<!-- 新版相容的菜色清單   2.1 (保留暫不使用)-->
+            <xs:element name="DishList" type="Item:DishesType" minOccurs="0" maxOccurs="1" />
+            
+            <xs:element name="Grains" type="xs:decimal" />
+			<xs:element name="MeatBeans" type="xs:decimal" />
+			<xs:element name="Vegetables" type="xs:decimal" />
+			<xs:element name="Oils" type="xs:decimal" />
+			<xs:element name="Fruits" type="xs:decimal" />
+			<xs:element name="Milk" type="xs:decimal" />
+			<xs:element name="Calories" type="xs:decimal" />
+		</xs:sequence>
+	</xs:complexType>
+
+
+
+
+	<xs:complexType name="UploadIngredientRequestType">
+		<xs:sequence>
+			<xs:element name="Action" type="xs:string" />
+			<xs:element name="MessageId" type="xs:string" />
+			<xs:element name="UploaderAccount" type="xs:string" />
+			<xs:element name="Token" type="xs:string" />
+			<xs:element name="SendTime" type="xs:long" />
+			<xs:element name="CompanyId" type="xs:string" />
+			<xs:element name="ServiceDate" type="xs:string" />
+			<xs:element name="MenuType" type="xs:string" />
+			<xs:element name="SchoolId" type="xs:string" />
+			<xs:element name="Sources">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="SourceItem" minOccurs="1" maxOccurs="unbounded">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="DishesName"
+										type="xs:string" />
+									<xs:element name="SourceName"
+										type="xs:string" />
+									<!-- 品牌 -->
+									<xs:element name="Brands"
+										type="xs:string" minOccurs="0" />
+									<!-- 品名 -->
+									<xs:element name="ProductName"
+										type="xs:string" minOccurs="0" />
+									<!-- 製造商 -->
+									<xs:element name="Manufacturer"
+										type="xs:string" minOccurs="0" />
+
+									<xs:element name="ManufacturerBAN"
+										type="xs:string" minOccurs="0" />
+									<xs:element name="BrandsBAN"
+										type="xs:string" maxOccurs="1" minOccurs="0">
+									</xs:element>
+									<xs:element name="Origin"
+										type="xs:string" minOccurs="0" />
+									<xs:element name="Source"
+										type="xs:string" />
+									<xs:element name="SupplierId"
+										type="xs:string" />
+									<xs:element name="SupplierName"
+										type="xs:string" />
+									<xs:element
+										name="SourceCertification" type="xs:string" minOccurs="0" />
+									<xs:element name="CertificationID"
+										type="xs:string" minOccurs="0" />
+									<xs:element name="StockDate"
+										type="xs:string" />
+									<xs:element name="ManufactureDate"
+										type="xs:string" minOccurs="0" />
+									<xs:element name="ExpirationDate"
+										type="xs:string" minOccurs="0" />
+									<xs:element name="LotNumber"
+										type="xs:string" minOccurs="0" />
+									<xs:element
+										name="SourceInspectionFile" minOccurs="1">
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element
+													name="SourceInspectionFileName" type="xs:string"
+													minOccurs="0" />
+												<xs:element
+													name="SourceIngredientsInspectionLab" type="xs:string"
+													minOccurs="0" />
+												<xs:element
+													name="SourceIngredientsInspectionStatus" type="xs:string"
+													minOccurs="0" />
+											</xs:sequence>
+										</xs:complexType>
+									</xs:element>
+									<!-- 基因改造食品 -->
+									<xs:element
+										name="GeneticallyModifiedFoodList"
+										type="Item:GeneticallyModifiedFoodType" minOccurs="0"
+										maxOccurs="1" />
+									<!-- 食材數量 -->
+									<xs:element
+										name="IngredientQuantity" type="xs:decimal" minOccurs="0"
+										maxOccurs="1" />
+									<!-- 食材單位 -->
+									<xs:element name="IngredientUnit"
+										type="xs:string" minOccurs="0" maxOccurs="1" />
+									<!-- 加工食品(Y/N) -->
+									<xs:element name="ProcessedFood"
+										type="xs:string" minOccurs="0" maxOccurs="1" />
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="FoodResponseTypev2">
+		<xs:sequence>
+			<xs:element name="MessageId" type="xs:string" />
+			<xs:element name="CompanyId" type="xs:string" />
+			<xs:element name="UploadDate" type="xs:string" />
+			<xs:element name="Status" type="xs:string" />
+			<xs:element name="Description" type="xs:string" />
+			<xs:element name="Message" type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DeleteMenuRequestType">
+		<xs:sequence>
+			<xs:element name="Action" type="xs:string" />
+			<xs:element name="MessageId" type="xs:string" />
+			<xs:element name="UploaderAccount" type="xs:string" />
+			<xs:element name="Token" type="xs:string" />
+			<xs:element name="SendTime" type="xs:long" />
+			<xs:element name="CompanyId" type="xs:string" />
+			<xs:element name="ServiceDate" type="xs:string" />
+			<xs:element name="MenuType" type="xs:string" />
+			<xs:element name="SchoolId" type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="UploadSupplierRequestType">
+		<xs:sequence>
+			<xs:element name="Action" type="xs:string" />
+			<xs:element name="MessageId" type="xs:string" />
+			<xs:element name="UploaderAccount" type="xs:string" />
+			<xs:element name="Token" type="xs:string" />
+			<xs:element name="SendTime" type="xs:long" />
+			<xs:element name="CompanyId" type="xs:string" />
+			<xs:element name="SupplierId" type="xs:string" />
+			<xs:element name="SupplierName" type="xs:string" />
+			<xs:element name="SupplierTel" type="xs:string" />
+			<xs:element name="SupplierAddress" type="xs:string" />
+			<xs:element name="SupplierCertification" type="xs:string"
+				minOccurs="0" />
+			<xs:element name="Owner" type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DeleteSupplierRequestType">
+		<xs:sequence>
+			<xs:element name="Action" type="xs:string" />
+			<xs:element name="MessageId" type="xs:string" />
+			<xs:element name="UploaderAccount" type="xs:string" />
+			<xs:element name="Token" type="xs:string" />
+			<xs:element name="SendTime" type="xs:long" />
+			<xs:element name="CompanyId" type="xs:string" />
+			<xs:element name="SupplierId" type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DishInfo">
+		<xs:simpleContent>
+			<xs:extension base="xs:string">
+				<xs:attribute name="imagefilename" type="xs:string" />
+				<xs:attribute name="showname" type="xs:string"></xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+
+
+	<!-- 多菜色格式 -->
+<!-- 2.1版(保留暫不使用)-->
+	<xs:complexType name="DishesType">
+		<xs:sequence>
+			<xs:element name="Dish" minOccurs="1" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:sequence>
+						<!-- 菜別: 主食/主菜 /副菜/蔬菜/附餐/湯品 -->
+						<xs:element name="DishType" type="xs:string"></xs:element>
+						<!-- 菜色資料 -->
+						<xs:element name="DishInfo" type="Item:DishInfo" />
+						<!-- 顯示順序 -->
+						<xs:element name="DisplayOrder" type="xs:decimal" />
+						<!-- 菜色份數 (保留暫不使用)-->
+						<xs:element name="DishQuantity" type="xs:decimal"
+							minOccurs="0" maxOccurs="1" />
+				
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+
+	<!-- 基因改造食品 -->
+	<xs:complexType name="GeneticallyModifiedFoodType">
+		<xs:sequence>
+			<xs:element name="GeneticallyModifiedFood" minOccurs="1" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:sequence>
+						<!-- 玉米、大豆、棉花、油菜、甜菜、番木瓜、南瓜、苜蓿 -->
+						<xs:element name="FoodCode" type="xs:string" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+</xs:schema>

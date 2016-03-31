@@ -1,0 +1,30 @@
+<br>
+<div ng-controller="tab2">
+<table class="table table-bordered">
+		
+
+
+
+
+		<tr style="background-color: lightgrey">
+			<th>時間</th>
+			<th>修改者</th>
+			<th>修改項目</th>
+			<th>欄位名稱</th>
+			<th>修改前</th>
+			<th>修改後</th>	
+		</tr>
+
+		
+
+		<tr ng-repeat="(key,value) in results">
+			<td>{{value.A}}<span></td>
+			<td>{{value.B}}<span></td>
+			<td>{{value.C}}<span></td>
+			<td>{{value.D}}<span></td>
+			<td>{{value.E}}<span></td>
+			<td>{{value.F}}<span></td>
+			
+		</tr>
+	</table>
+</div>

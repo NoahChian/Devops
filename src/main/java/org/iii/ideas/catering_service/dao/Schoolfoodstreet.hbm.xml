@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2015/11/2 ?U?? 06:06:41 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="org.iii.ideas.catering_service.dao.Schoolfoodstreet" table="schoolfoodstreet">
+        <id name="sfstreetId" type="java.lang.Integer">
+            <column name="SFStreetId" />
+            <generator class="identity" />
+        </id>
+        <property name="schoolId" type="int">
+            <column name="SchoolId" not-null="true" />
+        </property>
+        <property name="sfstreetName" type="string">
+            <column name="SFStreetName" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

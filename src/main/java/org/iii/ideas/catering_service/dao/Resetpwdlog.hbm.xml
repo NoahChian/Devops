@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2014/6/6 ?U?? 02:21:16 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="org.iii.ideas.catering_service.dao.Resetpwdlog" table="resetpwdlog">
+        <id name="logId" type="java.lang.Integer">
+            <column name="LogId" />
+            <generator class="identity" />
+        </id>
+        <property name="username" type="string">
+            <column name="Username" not-null="true" />
+        </property>
+        <property name="email" type="string">
+            <column name="Email" not-null="true" />
+        </property>
+        <property name="ts" type="string">
+            <column name="ts" length="45" not-null="true" />
+        </property>
+        <property name="sourceIp" type="string">
+            <column name="SourceIp" length="45" />
+        </property>
+        <property name="createTime" type="timestamp">
+            <column name="CreateTime" length="19" not-null="true" />
+        </property>
+        <property name="updateTime" type="timestamp">
+            <column name="UpdateTime" length="19" not-null="true" />
+        </property>
+        <property name="description" type="string">
+            <column name="Description" />
+        </property>
+        <property name="status" type="string">
+            <column name="Status" length="10" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

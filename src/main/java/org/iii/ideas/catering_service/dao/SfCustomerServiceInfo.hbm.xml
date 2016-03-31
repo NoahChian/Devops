@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2015/2/3 上午 09:26:01 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="org.iii.ideas.catering_service.dao.SfCustomerServiceInfo" table="sf_customerserviceinfo">
+        <id name="id" type="java.lang.Long">
+            <column name="Id" />
+            <generator class="identity" />
+        </id>
+        <property name="supplierCompanyId" type="long">
+            <column name="SupplierCompanyId" not-null="true" />
+        </property>
+        <property name="manufacturerId" type="long">
+            <column name="ManufacturerId" not-null="true" />
+        </property>
+        <property name="hotline" type="string">
+            <column name="Hotline" not-null="true" />
+        </property>
+        <property name="owner" type="string">
+            <column name="Owner" not-null="true" />
+        </property>
+        <property name="contactStaff" type="string">
+            <column name="ContactStaff" not-null="true" />
+        </property>
+        <property name="contactTel" type="string">
+            <column name="ContactTel" not-null="true" />
+        </property>
+        <property name="contactFax" type="string">
+            <column name="ContactFax" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

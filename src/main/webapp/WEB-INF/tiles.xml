@@ -1,0 +1,339 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN" "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+<tiles-definitions>
+	<!--採用/WEB-INF/jsp/common/layout.jsp做為基本版型，-->
+	<definition name="base.definition" template="/WEB-INF/jsp/common/layout.jsp">
+		<put-attribute name="title" value="校園食材登錄平臺"></put-attribute>
+		<put-attribute name="description" value="">校園食材登錄平臺</put-attribute>
+		<put-attribute name="header" value="/WEB-INF/jsp/common/header.jsp"></put-attribute>
+		<put-attribute name="navi" value="/WEB-INF/jsp/common/navi.jsp"></put-attribute>
+		<put-attribute name="navifooter" value="/WEB-INF/jsp/common/navifooter.jsp"></put-attribute>
+		<put-attribute name="navifooter_demo" value="/WEB-INF/jsp/common/navifooter_demo.jsp"></put-attribute>
+		<put-attribute name="footer" value="/WEB-INF/jsp/common/footer.jsp"></put-attribute>
+	</definition>
+	
+	<!--員生消費合作社 採用/WEB-INF/jsp/common/layout_sf.jsp做為基本版型，-->
+	<definition name="sfproduct.definition" template="/WEB-INF/jsp/common/layout_sf.jsp">
+		<put-attribute name="title" value="員生消費合作社"></put-attribute>
+		<put-attribute name="description" value="">員生消費合作社</put-attribute>
+		<put-attribute name="header" value="/WEB-INF/jsp/common/header.jsp"></put-attribute>
+<!-- 		<put-attribute name="navi" value="/WEB-INF/jsp/common/navi.jsp"></put-attribute> -->
+		<put-attribute name="navifooter" value="/WEB-INF/jsp/common/navifooter.jsp"></put-attribute>
+		<put-attribute name="navifooter_demo" value="/WEB-INF/jsp/common/navifooter_demo.jsp"></put-attribute>
+		<put-attribute name="footer" value="/WEB-INF/jsp/common/footer.jsp"></put-attribute>
+	</definition>
+	
+	<definition name="admin.definition" template="/WEB-INF/jsp/common/layout_admin.jsp">
+		<put-attribute name="title" value="校園食材登錄平臺"></put-attribute>
+		<put-attribute name="description" value="">校園食材登錄平臺</put-attribute>
+		<put-attribute name="header" value="/WEB-INF/jsp/common/header.jsp"></put-attribute>
+		<put-attribute name="footer" value="/WEB-INF/jsp/common/footer.jsp"></put-attribute>
+	</definition>
+
+	<definition name="custom.definition" template="/WEB-INF/jsp/common/layout_calendar.jsp">
+		<put-attribute name="title" value="校園食材登錄平臺"></put-attribute>
+		<put-attribute name="description" value="">校園食材登錄平臺</put-attribute>
+	</definition>
+	<definition name="custom/calendar" extends="custom.definition">		
+		<put-attribute name="content" value="/WEB-INF/jsp/main/taipei.jsp"></put-attribute>
+	</definition>
+	
+	<definition name="custom/school" extends="custom.definition">		
+		<put-attribute name="content" value="/WEB-INF/jsp/main/school.jsp"></put-attribute>
+	</definition>
+	
+		<definition name="custom/nopage" extends="custom.definition">		
+		<put-attribute name="content" value="/WEB-INF/jsp/nopage.jsp"></put-attribute>
+	</definition>
+	
+	<definition name="privacy" extends="custom.definition">		
+		<put-attribute name="content" value="/WEB-INF/jsp/privacy.jsp"></put-attribute>
+		</definition>
+	<definition name="main/maintain" template="/WEB-INF/jsp/main/maintain.jsp">
+		<put-attribute name="title" value="食材登錄平臺"></put-attribute>
+		<put-attribute name="description" value="">食材登錄平臺</put-attribute>
+	</definition>
+	
+	<definition name="service" extends="admin.definition">		
+		<put-attribute name="content" value="/WEB-INF/jsp/service.jsp"></put-attribute>
+	</definition>
+	
+   	<definition name="admin/sample" extends="base.definition">		
+		<put-attribute name="content" value="/WEB-INF/jsp/content.jsp"></put-attribute>
+	</definition>
+	
+	<definition name="index/index" template="/WEB-INF/jsp/index/index.jsp"/>
+	
+	<definition name="main/index" extends="base.definition">		
+		<put-attribute name="content" value="/WEB-INF/jsp/main/index.jsp"></put-attribute>
+	</definition>
+	
+	<definition name="ingredients/management" extends="base.definition">		
+		<put-attribute name="content" value="/WEB-INF/jsp/ingredients_management.jsp"></put-attribute>
+	</definition>
+	
+		<definition name="ingredients_management" extends="base.definition">		
+		<put-attribute name="content" value="/WEB-INF/jsp/ingredients_management.jsp"></put-attribute>
+	</definition>
+	
+	<definition name="ingredients_detail" extends="base.definition">		
+		<put-attribute name="content" value="/WEB-INF/jsp/ingredients_detail.jsp"></put-attribute>
+	</definition>
+	
+	
+	<definition name="ingredients/detail" extends="base.definition">		
+		<put-attribute name="content" value="/WEB-INF/jsp/ingredients_detail.jsp"></put-attribute>
+	</definition>
+	
+	<definition name="ingredients/modify" extends="base.definition">		
+		<put-attribute name="content" value="/WEB-INF/jsp/ingredients_modify.jsp"></put-attribute>
+	</definition>
+	
+	<definition name="ingredients_modify" extends="base.definition">		
+		<put-attribute name="content" value="/WEB-INF/jsp/ingredients_modify.jsp"></put-attribute>
+	</definition>
+	<!-- 20140702 Ric remove
+	<definition name="seasoning/modify" extends="base.definition">		
+		<put-attribute name="content" value="/WEB-INF/jsp/seasoning_modify.jsp"></put-attribute>
+	</definition>
+	 -->
+	
+	<definition name="singleSch/detail" extends="base.definition">		
+		<put-attribute name="content" value="/WEB-INF/jsp/singleSch_detail.jsp"></put-attribute>
+	</definition>
+	
+	<definition name="singleSch/modify" extends="base.definition">		
+		<put-attribute name="content" value="/WEB-INF/jsp/singleSch_modify.jsp"></put-attribute>
+	</definition>
+	
+	
+	<definition name="supplyinfo" extends="base.definition">		 
+		<put-attribute name="content" value="/WEB-INF/jsp/supplyinfo.jsp"></put-attribute>
+	</definition>
+	
+	<definition name="certification" extends="base.definition">		
+		<put-attribute name="content" value="/WEB-INF/jsp/certification.jsp"></put-attribute>
+	</definition>
+	
+	<definition name="abnormal" extends="base.definition">		
+		<put-attribute name="content" value="/WEB-INF/jsp/abnormal.jsp"></put-attribute>
+	</definition>
+	
+	<definition name="govern" extends="base.definition">		
+		<put-attribute name="content" value="/WEB-INF/jsp/govern.jsp"></put-attribute>
+	</definition>
+	
+	<definition name="addgovern" extends="base.definition">		
+		<put-attribute name="content" value="/WEB-INF/jsp/addgovern.jsp"></put-attribute>
+	</definition>
+	
+	<definition name="abnormalsearch" extends="base.definition">		
+		<put-attribute name="content" value="/WEB-INF/jsp/abnormalsearch.jsp"></put-attribute>
+	</definition>
+	
+	<definition name="kitchenIngredient" extends="base.definition">		
+		<put-attribute name="content" value="/WEB-INF/jsp/kitchenIngredient.jsp"></put-attribute>
+	</definition>
+	<!--  20140630 Ric: 已改為listSupplierV2.jsp
+	<definition name="listSupplier" extends="base.definition">
+	
+		<put-attribute name="content" value="/WEB-INF/jsp/listSupplier.jsp"></put-attribute>
+	</definition>
+	
+	<definition name="manageSupplier" extends="base.definition">
+		
+		<put-attribute name="content" value="/WEB-INF/jsp/manageSupplier.jsp"></put-attribute>
+	</definition>
+	 -->
+	<definition name="manageKitchen" extends="base.definition">		
+		<put-attribute name="content" value="/WEB-INF/jsp/kitchen.jsp"></put-attribute>
+	</definition>
+	
+	<definition name="listDish" extends="base.definition">
+		<!--<put-attribute name="title" value="常用菜單維護"></put-attribute>  -->
+		<put-attribute name="content" value="/WEB-INF/jsp/listDish.jsp"></put-attribute>
+	</definition>
+	
+	<definition name="manageDish" extends="base.definition">
+		<!--<put-attribute name="title" value="常用菜單維護"></put-attribute>  -->
+		<put-attribute name="content" value="/WEB-INF/jsp/manageDish.jsp"></put-attribute>
+	</definition>
+	
+	<definition name="school_Menu" extends="base.definition">		
+		<put-attribute name="content" value="/WEB-INF/jsp/school_Menu.jsp"></put-attribute>
+	</definition>
+	
+	<definition name="singleSch_manage" extends="base.definition">		
+		<put-attribute name="content" value="/WEB-INF/jsp/singleSch_manage.jsp"></put-attribute>
+	</definition>
+	<definition name="singleSch_detail" extends="base.definition">		
+		<put-attribute name="content" value="/WEB-INF/jsp/singleSch_detail.jsp"></put-attribute>
+	</definition>
+	<definition name="singleSch_modify" extends="base.definition">		
+		<put-attribute name="content" value="/WEB-INF/jsp/singleSch_modify.jsp"></put-attribute>
+	</definition>		 
+	<!-- dennis 0202 -->
+	<definition name="dishImageUpload" extends="base.definition">		
+	    <!--<put-attribute name="title" value="菜色圖檔維護"></put-attribute>  -->
+		<put-attribute name="content" value="/WEB-INF/jsp/dishImageUpload.jsp"></put-attribute>
+	</definition>
+	<!-- Ric 0217 統計功能統整頁-->
+	<definition name="managelist" extends="base.definition">		
+		<put-attribute name="content" value="/WEB-INF/jsp/managelist.jsp"></put-attribute>
+	</definition>
+	<definition name="Taichung" extends="base.definition">		
+		<put-attribute name="content" value="/WEB-INF/jsp/Taichung.jsp"></put-attribute>
+	</definition>
+	<definition name="taipei" extends="base.definition">		
+		<put-attribute name="content" value="/WEB-INF/jsp/main/taipei.jsp"></put-attribute>
+	</definition>	
+	<definition name="userManage" extends="base.definition">		
+		<put-attribute name="content" value="/WEB-INF/jsp/userManage.jsp"></put-attribute>
+	</definition>
+	<!--  20140702 Ric remove page 
+	<definition name="kitchenManage" extends="base.definition">		
+		<put-attribute name="content" value="/WEB-INF/jsp/kitchenManage.jsp"></put-attribute>
+	</definition>
+	 -->
+	<definition name="listKitchen" extends="base.definition">		
+		<put-attribute name="content" value="/WEB-INF/jsp/listKitchen.jsp"></put-attribute>
+	</definition>
+	<definition name="listUser" extends="base.definition">		
+		<put-attribute name="content" value="/WEB-INF/jsp/listUser.jsp"></put-attribute>
+	</definition>
+	<definition name="listSchool" extends="base.definition">		
+		<put-attribute name="content" value="/WEB-INF/jsp/listSchool.jsp"></put-attribute>
+	</definition>
+	
+	<!-- Raymond 20140414 -->
+	<definition name="nullIngredient" extends="base.definition">		
+		<put-attribute name="content" value="/WEB-INF/jsp/nullIngredient.jsp"></put-attribute>
+	</definition>
+	
+	<!-- 手機介面採用/WEB-INF/jsp/mobile/layout.jsp做為基本版型，-->
+	<definition name="mobile.base.definition" template="/WEB-INF/jsp/mobile/layout.jsp">
+		<put-attribute name="title" value="校園食材登錄平臺"></put-attribute>
+		<put-attribute name="description" value="">校園食材登錄平臺</put-attribute>
+	</definition>
+	
+	<definition name="mobile/msearch" extends="mobile.base.definition">		
+		<put-attribute name="page" value="/WEB-INF/jsp/mobile/msearch.jsp"></put-attribute>
+	</definition>
+	<definition name="mcontents" extends="mobile.base.definition">		
+		<put-attribute name="page" value="/WEB-INF/jsp/mobile/mcontents.jsp"></put-attribute>
+	</definition>
+	<definition name="news" extends="mobile.base.definition">		
+		<put-attribute name="page" value="/WEB-INF/jsp/mobile/news.jsp"></put-attribute>
+	</definition>
+	<!-- 	小型iframe add by ellis 20141226 -->
+	<definition name="custom/mschool" extends="mobile.base.definition">		
+		<put-attribute name="page" value="/WEB-INF/jsp/main/mSchool.jsp"></put-attribute>
+	</definition>
+	
+	<!-- Raymond 20140528 -->
+	<definition name="listSupplier" extends="base.definition">		
+		<put-attribute name="content" value="/WEB-INF/jsp/listSupplierV2.jsp"></put-attribute>
+	</definition>
+	<!-- Ric 20150108 -->
+	<definition name="listSeasoning" extends="base.definition">		
+		<put-attribute name="content" value="/WEB-INF/jsp/listSeasoning.jsp"></put-attribute>
+	</definition>
+	
+	<!-- Raymond 20140604 -->
+	<definition name="resetpwd" extends="base.definition">		
+		<put-attribute name="content" value="/WEB-INF/jsp/resetpwd.jsp"></put-attribute>
+	</definition>
+	
+	<!-- Ric 20140613 -->
+	<definition name="missingCase" extends="base.definition">		
+		<put-attribute name="content" value="/WEB-INF/jsp/missingCase.jsp"></put-attribute>
+	</definition>
+	<!-- Ric 20140708 -->
+	<definition name="ingredientproperty" extends="base.definition">		
+		<put-attribute name="content" value="/WEB-INF/jsp/ingredientproperty.jsp"></put-attribute>
+	</definition>
+	<!-- Ric 20140806 for 007agent -->
+	<definition name="read_Menu" extends="base.definition">		
+		<put-attribute name="content" value="/WEB-INF/jsp/read_Menu.jsp"></put-attribute>
+	</definition>
+	<definition name="read_ingredients" extends="base.definition">		
+		<put-attribute name="content" value="/WEB-INF/jsp/read_ingredients.jsp"></put-attribute>
+	</definition>
+	<definition name="read_ingredients2" extends="base.definition">		
+		<put-attribute name="content" value="/WEB-INF/jsp/read_ingredients2.jsp"></put-attribute>
+	</definition>
+	
+	<!-- Steven 校園有販售之商品 2015.02.05 -->
+	<definition name="manageListSchoolProductSet" extends="base.definition">		
+		<put-attribute name="content" value="/WEB-INF/jsp/manageListSchoolProductSet.jsp"></put-attribute>
+	</definition>
+	<!-- Steven 員生消費合作社商品 2015.02.15 -->
+	<definition name="customerQuerySF" extends="sfproduct.definition">		
+		<put-attribute name="content" value="/WEB-INF/jsp/customerQuerySF.jsp"></put-attribute>
+	</definition>
+	
+	<!-- 維護開關頁面 -->
+	<definition name="systemMaintainSwitch" extends="base.definition">		
+		<put-attribute name="content" value="/WEB-INF/jsp/systemMaintainSwitch.jsp"></put-attribute>
+	</definition>
+	
+	<!-- 菜色量統計報表 -->
+	<definition name="statistic_Dish" extends="base.definition">		
+		<put-attribute name="content" value="/WEB-INF/jsp/statistic_Dish.jsp"></put-attribute>
+	</definition>
+	<definition name="statisticDish" extends="base.definition">		
+		<put-attribute name="content" value="/WEB-INF/jsp/statisticDish.js"></put-attribute>
+	</definition>
+	
+	<!-- 學校數量與清單 -->
+	<definition name="statistic_School" extends="base.definition">		
+		<put-attribute name="content" value="/WEB-INF/jsp/statistic_School.jsp"></put-attribute>
+	</definition>
+	<definition name="statisticSchool" extends="base.definition">		
+		<put-attribute name="content" value="/WEB-INF/jsp/statisticSchool.js"></put-attribute>
+	</definition>
+	
+	<!-- 廚房數量與清單 -->
+	<definition name="statistic_Kitchen" extends="base.definition">		
+		<put-attribute name="content" value="/WEB-INF/jsp/statistic_Kitchen.jsp"></put-attribute>
+	</definition>
+	<definition name="statisticKitchen" extends="base.definition">		
+		<put-attribute name="content" value="/WEB-INF/jsp/statisticKitchen.js"></put-attribute>
+	</definition>
+	
+	<!-- 供應商數量與清單 -->
+	<definition name="statistic_Supplier" extends="base.definition">		
+		<put-attribute name="content" value="/WEB-INF/jsp/statistic_Supplier.jsp"></put-attribute>
+	</definition>
+	<definition name="statisticSupplier" extends="base.definition">		
+		<put-attribute name="content" value="/WEB-INF/jsp/statisticSupplier.js"></put-attribute>
+	</definition>
+	
+	<!-- 團膳缺漏報表 20151120 chu -->
+	<definition name="missingCase_V2" extends="base.definition">		
+		<put-attribute name="content" value="/WEB-INF/jsp/missingCase_V2.jsp"></put-attribute>
+	</definition>
+	<definition name="missingCase005" extends="base.definition">		
+		<put-attribute name="content" value="/WEB-INF/jsp/missingCase005.jsp"></put-attribute>
+	</definition>
+	<!-- 上線率日報表 20151204 chu -->
+	<definition name="missingCaseRate" extends="base.definition">
+		<put-attribute name="content" value="/WEB-INF/jsp/missingCaseRate.jsp"></put-attribute>
+	</definition>
+	<!-- 公告管理 -->
+	<definition name="read_NewsBulletin" extends="base.definition">		
+		<put-attribute name="content" value="/WEB-INF/jsp/read_NewsBulletin.jsp"></put-attribute>
+	</definition>
+	<definition name="listNewsBulletin" extends="base.definition">		
+		<put-attribute name="content" value="/WEB-INF/jsp/listNewsBulletin.js"></put-attribute>
+	</definition>
+	
+	<!-- 學校 : 待審核項目 -->
+	<definition name="listAcceptSchoolKitchenWaitApproveBySchool" extends="base.definition">
+		<put-attribute name="content" value="/WEB-INF/jsp/listAcceptSchoolKitchenWaitApproveBySchool.jsp"></put-attribute>
+	</definition>
+	<!-- 學校 : 審核記錄報表 -->
+	<definition name="auditRecords" extends="base.definition">
+		<put-attribute name="content" value="/WEB-INF/jsp/auditRecords.jsp"></put-attribute>
+	</definition>
+</tiles-definitions>

@@ -1,0 +1,79 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2015/11/2 ?U?? 06:06:41 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="org.iii.ideas.catering_service.dao.RestaurantStockIngredient" table="restaurantStockIngredient">
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <property name="restaurantId" type="int">
+            <column name="restaurantId" not-null="true" />
+        </property>
+        <property name="ingredientId" type="int">
+            <column name="ingredientId" not-null="true" />
+        </property>
+        <property name="stockDate" type="timestamp">
+            <column name="stockDate" length="19" not-null="true">
+                <comment>&#182;i&#179;f&#164;&#233;&#180;&#193;</comment>
+            </column>
+        </property>
+        <property name="useDate" type="timestamp">
+            <column name="useDate" length="19" not-null="true" />
+        </property>
+        <property name="manufactureDate" type="timestamp">
+            <column name="manufactureDate" length="19">
+                <comment>&#187;s&#179;y&#164;&#233;&#180;&#193;</comment>
+            </column>
+        </property>
+        <property name="expirationDate" type="timestamp">
+            <column name="expirationDate" length="19">
+                <comment>&#166;&#179;&#174;&#196;&#180;&#193;&#173;&#173;</comment>
+            </column>
+        </property>
+        <property name="lotNumber" type="string">
+            <column name="lotNumber">
+                <comment>&#167;&#229;&#184;&#185;</comment>
+            </column>
+        </property>
+        <property name="origin" type="string">
+            <column name="origin" length="50">
+                <comment>&#178;&#163;&#166;a</comment>
+            </column>
+        </property>
+        <property name="ingredientQuantity" type="string">
+            <column name="ingredientQuantity" length="50">
+                <comment>&#173;&#185;&#167;&#247;&#165;&#247;&#182;q</comment>
+            </column>
+        </property>
+        <property name="ingredientUnit" type="string">
+            <column name="ingredientUnit" length="50">
+                <comment>&#173;&#185;&#167;&#247;&#173;&#171;&#182;q</comment>
+            </column>
+        </property>
+        <property name="ingredientAttr" type="java.lang.Integer">
+            <column name="ingredientAttr">
+                <comment>
+                &#173;&#185;&#167;&#247;&#196;&#221;&#169;&#202;&#161;G0000001:&#176;&#242;&#167;&#239;&#182;&#192;&#168;&#167;&#161;A0000010&#161;G&#176;&#242;&#167;&#239;&#165;&#201;&#166;&#204;&#161;A0000101&#161;G&#165;[&#164;u&#173;&#185;&#171;~</comment>
+            </column>
+        </property>
+        <property name="enable" type="java.lang.Integer">
+            <column name="enable">
+                <comment>&#172;O&#167;_&#165;&#205;&#174;&#196;</comment>
+            </column>
+        </property>
+        <property name="createDate" type="timestamp">
+            <column name="createDate" length="19" not-null="true" />
+        </property>
+        <property name="createUser" type="string">
+            <column name="createUser" length="50" not-null="true" />
+        </property>
+        <property name="modifyDate" type="timestamp">
+            <column name="modifyDate" length="19" />
+        </property>
+        <property name="modifyUser" type="string">
+            <column name="modifyUser" length="50" />
+        </property>
+    </class>
+</hibernate-mapping>

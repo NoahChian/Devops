@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2015/11/2 ?U?? 06:06:41 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="org.iii.ideas.catering_service.dao.Restaurantdishtype" table="restaurantdishtype" catalog="cateringservice">
+        <id name="rdishTypeId" type="java.lang.Integer">
+            <column name="RDishTypeId" />
+            <generator class="identity" />
+        </id>
+        <property name="restaurantId" type="int">
+            <column name="RestaurantId" not-null="true" />
+        </property>
+        <property name="rdishTypeName" type="string">
+            <column name="RDishTypeName" length="50" not-null="true" />
+        </property>
+        <property name="sortOrder" type="java.lang.Integer">
+            <column name="SortOrder" />
+        </property>
+    </class>
+</hibernate-mapping>

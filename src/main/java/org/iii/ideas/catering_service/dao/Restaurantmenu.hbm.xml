@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2015/11/2 ?U?? 06:06:41 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="org.iii.ideas.catering_service.dao.Restaurantmenu" table="restaurantmenu" catalog="cateringservice">
+        <id name="rmenuId" type="java.lang.Integer">
+            <column name="RMenuId" />
+            <generator class="identity" />
+        </id>
+        <property name="restaurantId" type="int">
+            <column name="RestaurantId" not-null="true" />
+        </property>
+        <property name="enable" type="int">
+            <column name="Enable" not-null="true" />
+        </property>
+        <property name="createDate" type="timestamp">
+            <column name="createDate" length="19" not-null="true" />
+        </property>
+        <property name="createUser" type="string">
+            <column name="createUser" length="50" not-null="true" />
+        </property>
+        <property name="modifyDate" type="timestamp">
+            <column name="modifyDate" length="19" />
+        </property>
+        <property name="modifyUser" type="string">
+            <column name="modifyUser" length="50" />
+        </property>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,65 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2015/11/2 ?U?? 06:06:41 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="org.iii.ideas.catering_service.dao.Restaurant" table="restaurant" >
+        <id name="restaurantId" type="java.lang.Integer">
+            <column name="RestaurantId" />
+            <generator class="identity" />
+        </id>
+        <property name="sfstreetId" type="java.lang.Integer">
+            <column name="SFStreetId" not-null="true" />
+        </property>
+        <property name="restaurantName" type="string">
+            <column name="RestaurantName" not-null="true" />
+        </property>
+        <property name="companyId" type="string">
+            <column name="companyId" length="55" not-null="true" />
+        </property>
+        <property name="picturePath" type="string">
+            <column name="picturePath">
+                <comment>&#192;\&#198;U&#185;&#207;&#164;&#249;&#166;&#236;&#184;m</comment>
+            </column>
+        </property>
+        <property name="tel" type="string">
+            <column name="tel" length="50" not-null="true" />
+        </property>
+        <property name="address" type="string">
+            <column name="address" not-null="true" />
+        </property>
+        <property name="hours1Desc" type="string">
+            <column name="Hours1_desc" length="50" not-null="true" />
+        </property>
+        <property name="hours1Value" type="string">
+            <column name="Hours1_value" length="50" not-null="true" />
+        </property>
+        <property name="hours2Desc" type="string">
+            <column name="Hours2_desc" length="50" not-null="true" />
+        </property>
+        <property name="hours2Value" type="string">
+            <column name="Hours2_value" length="50" not-null="true" />
+        </property>
+        <property name="mealItems" type="string">
+            <column name="mealItems" />
+        </property>
+        <property name="manager" type="string">
+            <column name="manager" length="50" not-null="true" />
+        </property>
+        <property name="enable" type="string">
+            <column name="enable" length="1" not-null="true" />
+        </property>
+        <property name="createDate" type="timestamp">
+            <column name="createDate" length="19" not-null="true" />
+        </property>
+        <property name="createUser" type="string">
+            <column name="createUser" length="50" not-null="true" />
+        </property>
+        <property name="modifyDate" type="timestamp">
+            <column name="modifyDate" length="19" />
+        </property>
+        <property name="modifyUser" type="string">
+            <column name="modifyUser" length="50" />
+        </property>
+    </class>
+</hibernate-mapping>

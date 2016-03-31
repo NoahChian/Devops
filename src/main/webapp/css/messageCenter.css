@@ -1,0 +1,100 @@
+
+.divMain
+{
+	width:100%;
+	clear:both;
+}
+
+.divCenter
+{
+	text-align:center;
+}
+
+.massageWidth1
+{
+	width:200px;
+}
+
+.massageWidth2
+{
+	width:290px;
+}
+
+.massageWidth3
+{
+	width:200px;
+}
+
+.massageDetailWidth1
+{
+	width:200px;
+}
+
+.massageDetailHeight1
+{
+	height:200px;
+}
+
+.massageDetailWidth2
+{
+	width:496px;
+}
+
+.messageMain
+{
+	clear:both;
+	width:100%;
+}
+
+.message
+{
+	font-family: "Arial";
+	font-size: 13px;
+	text-align:center;
+	border: 1px solid  #678240;
+	float:left;
+	margin:1px 1px 1px 0;
+}
+
+.message div
+{
+	text-align:left;
+	margin:0 0 0 0;
+}
+
+.massageHeight
+{
+	height:70px;
+	line-height:70px;
+}
+
+.massageHeight2
+{
+	text-align:left;
+	height:70px;
+}
+
+.massageHeight3
+{
+	height:70px;
+}
+
+.responseSapn
+{
+	float:left;	
+}
+
+.responseSapn2
+{
+	float:right;	
+}
+
+.messageaTitle
+{
+	float:left;
+	font-family: "Arial";
+	font-size: 13px;
+	margin:10px 0 10px 10px;
+}
+
+

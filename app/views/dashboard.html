@@ -1,0 +1,26 @@
+
+<div class="dashboard-page">
+
+
+<div class = "row">
+    <div class="col-sm-3 col-md-2 sidebar">
+      <div class="text-center">
+        <h1 class="brand">DevOps </h1><h2>管理平台</h2>
+        <img src="images/IMG_120542.png" class="user-avatar" /><br /><br>
+        <h1>User</h1>
+        <a ui-sref="login" class="btn btn-white btn-outline btn-rounded btn-sm">Logout</a>
+
+      </div>
+
+      <ul class="nav nav-sidebar">
+        <li ng-class="{active: $state.includes('ProjList')}"><a ui-sref="ProjList">專案成果清單 <span class="sr-only">(current)</span></a></li>
+        <li ng-class="{active: $state.includes('SetMail')}"><a ui-sref="SetMail">設定郵件伺服器 <span class="sr-only"></span></a></li> 
+        <li ng-class="{active: $state.includes('Expediting')}"><a ui-sref="Expediting">啟動/關閉稽催功能 <span class="sr-only"></span></a></li>
+        <li ng-class="{active: $state.includes('Conversion')}"><a ui-sref="Conversion">啟動/關閉轉檔功能 <span class="sr-only"></span></a></li>
+      </ul>
+    </div>
+
+    <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" ui-view>
+    </div>
+</div>
+</div>
