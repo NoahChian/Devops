@@ -33,12 +33,14 @@
 			<th>操作</th>
 		</tr>
 		<tr ng-repeat="(key,value) in obj">
-			<td><a ui-sref="ResultList" >{{value.name}}</a><span></td>
-			<td>{{value.custom_fields[6].name}}<span></td>
-			<td>{{value.C}}<span></td>
-			<td>{{value.D}}<span></td>
-			<td>{{value.E}}<span></td>
-			<td><a ui-sref="SetProjConf" >{{value.F}}</a><span></td>			
+			<div ng-if="show(value)">
+          	 <td><a ui-sref="ResultList">{{value.name}}</a></td>;
+             <td>是</td>
+             <td><span></td>
+             <td><span></td>
+             <td><span></td>
+             <td><a ui-sref="SetProjConf" ></a><span></td>';
+			</div>
 		</tr>
 	</table>
 	<button></button>

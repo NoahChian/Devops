@@ -28,29 +28,50 @@ angular.module('yapp')
                  }
              ).then(function (response) {
                         console.log('this is a response');
-                        console.log(response);  
+                        //console.log(response);  
                         $scope.count = response.data.totol_count;
                         var len = Object.keys(response.data.projects).length;  
-                        for (var i=0; i<len; i++) {
+                        for (var i=0,j=0; i<len; i++) {
                             //$scope.deployStatus[i] = '';
-                            $scope.obj[i] = response.data.projects[i];
+                            if(response.data.projects[i].custom_fields[6].value == 1)
+                            {
+                                $scope.obj[j] = response.data.projects[i];
+                                j++;
+                            }
                           //  obj.filename = getFileName(obj.uri);
                         }
                        // console.log($scope.deployStatus);
-
                         //var temp = respose.data.results;                        
                         //$scope.results = response.data.results;
-                        console.log($scope.obj);
+                       // console.log($scope.obj);
                     }, 
                     function (err) {
-                          console.log(err);
-                         console.log('this is a error');
-                         console.log(err.stack);
+                        console.log(err);
+                        console.log('this is a error');
+                        console.log(err.stack);
                     }
              ) 
     }
+  
 
+    $scope.show = function (test){
+        //console.log("test");
+       // console.log(test.custom_fields[6].value);
+         if(test.custom_fields[6].value == 1){
+             var context = '<a ui-sref="ResultList" >'+test.name+'</a>';
+        //     '<td>是</td>'+
+        //     '<td><span></td>'+
+        //     '<td><span></td>'+
+        //     '<td><span></td>'+
+        //     '<td><a ui-sref="SetProjConf" ></a><span></td>';
+            console.log(context);
+            return context;
 
+         }else
+         {
+
+         }
+    }
 
     $scope.submit = function() {
 
@@ -61,19 +82,19 @@ angular.module('yapp')
 
 
 
-    $scope.results = {
-    	"first":{
-    		"A":"A1234","B":"是","C":"2015/03/05","D":"2015/03/05","E":"2015/03/05","F":"操作"
-    	},
-	    "second":{
-	    	"A":"B2234","B":"是","C":"2015/06/01","D":"2015/06/16","E":"2015/06/30","F":"操作"
-	    },
-	    "third":{
-	    	"A":"C3234","B":"是","C":"2015/09/01","D":"2015/09/15","E":"2015/09/30","F":"操作"
-	    },
-	    "fourth":{
-	    	"A":"D2578","B":"是","C":"2015/10/01","D":"2015/10/15","E":"2015/10/30","F":"操作"
-	    }
-    };
+    // $scope.results = {
+    // 	"first":{
+    // 		"A":"A1234","B":"是","C":"2015/03/05","D":"2015/03/05","E":"2015/03/05","F":"操作"
+    // 	},
+	   //  "second":{
+	   //  	"A":"B2234","B":"是","C":"2015/06/01","D":"2015/06/16","E":"2015/06/30","F":"操作"
+	   //  },
+	   //  "third":{
+	   //  	"A":"C3234","B":"是","C":"2015/09/01","D":"2015/09/15","E":"2015/09/30","F":"操作"
+	   //  },
+	   //  "fourth":{
+	   //  	"A":"D2578","B":"是","C":"2015/10/01","D":"2015/10/15","E":"2015/10/30","F":"操作"
+	   //  }
+    // };
 
   });
