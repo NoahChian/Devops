@@ -16,8 +16,8 @@ angular
 
   .config(function($stateProvider, $urlRouterProvider) {
 
-    $urlRouterProvider.when('/dashboard','/dashboard/ProjList')
-    .when('/CreateAccount','/dashboard/CreateAccount');
+    $urlRouterProvider.when('/dashboard','/dashboard/ProjList');
+    //$urlRouterProvider.when('/CreateAccount','/CreateAccount');
     $urlRouterProvider.otherwise('/login');
 
     $stateProvider
@@ -32,6 +32,12 @@ angular
           templateUrl: 'views/login.html',
           controller: 'LoginCtrl'
         })
+        .state('CreateAccount', {
+            url: '/CreateAccount',
+            parent: 'base',
+            templateUrl: 'views/CreateAccount.html',
+            controller: 'CreateAccountCtrl'
+          })
         .state('dashboard', {
           url: '/dashboard',
           parent: 'base',
@@ -55,12 +61,6 @@ angular
             parent: 'dashboard',
             templateUrl: 'views/dashboard/Conversion.html',
             controller: 'ConversionCtrl'
-          })
-          .state('CreateAccount', {
-            url: '/CreateAccount',
-            parent: 'dashboard',
-            templateUrl: 'views/dashboard/CreateAccount.html',
-            controller: 'CreateAccountCtrl'
           })
           .state('ResultList', { 
             url: '/ResultList',
@@ -93,6 +93,17 @@ angular
             controller: 'SetProjConfCtrl'
           });
 
+        
 
 
-  });
+
+  }).service('MyVar',function(){
+  this.currentProj = null;
+  this.currentPid = null;
+  this.state = null;
+  this.quesnum = null;
+  this.BackApiUrl = "140.92.142.9:8081";
+  this.redmineApiUrl = "140.92.144.26";
+  
+});
+

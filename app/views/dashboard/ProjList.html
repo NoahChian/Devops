@@ -5,16 +5,17 @@
 
 	<div class="col-md-2">專案名稱：</div>
 	<div class="col-md-2">
-			<input type = "text" ng-model="name" placeholder=""></input>
+			<input type = "text" ng-model="findname" placeholder=""></input>
 	</div>
-	<div class="col-md-offset-5">
+<!-- 	<div class="col-md-offset-5">
 		<input type = "checkbox"></input>
 		是否需要建立清單
-	</div>
+	</div> -->
 
 	<br>
 
-	<div class="pull-right btn btn-primary btn-outline">查詢</div>
+	<div class="pull-right btn btn-primary btn-outline" ng-click = "connetdatabase()">同步資料庫</div>
+	<div class="pull-right btn btn-primary btn-outline" ng-click = "find()">查詢</div>
 	<br>
 	<hr style="width: 100% ; height: 3px; background-color: grey ;"/>
 	<br></br>
@@ -26,21 +27,16 @@
 
 		<tr style="background-color: lightgrey">
 			<th>專案名稱</th>
-			<th>是否需建立清單</th>
-			<th>預計送出日</th>
-			<th>預計完成日</th>
-			<th>實際完成日</th>
-			<th>操作</th>
+			<th>成果清單預計送出日</th>	
+			<th>成果清單預計完成日</th>
+			<th>成果清單實際完成日</th>
+
 		</tr>
 		<tr ng-repeat="(key,value) in obj">
-			<div ng-if="show(value)">
-          	 <td><a ui-sref="ResultList">{{value.name}}</a></td>;
-             <td>是</td>
-             <td><span></td>
-             <td><span></td>
-             <td><span></td>
-             <td><a ui-sref="SetProjConf" ></a><span></td>';
-			</div>
+          	 <td><a ng-click=goProj(value.projname,value.state,value.ques_num,value.projid)>{{value.projname}}</a></td>
+             <td>{{value.pre_sentdate}}</td>
+             <td>{{value.pre_finishdate}}</td>
+             <td>{{value.act_finishdate}}</td>
 		</tr>
 	</table>
 	<button></button>

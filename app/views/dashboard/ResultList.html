@@ -37,23 +37,25 @@
 		<tr style="background-color: lightgrey">
 			<th>成果編號</th>
 			<th>成果名稱</th>
-			<th>送審問題單編號</th>
+			<th>機密等級</th>
+			<th>撰稿人</th>
 			<th>預計交付日</th>
 			<th>送出審查日</th>
 			<th>實際完成日</th>
-			<th>操作</th>	
+			<th>成果審查單編號</th>	
 		</tr>
 
 		
 
 		<tr ng-repeat="(key,value) in results">
-			<td>{{value.A}}<span></td>
-			<td>{{value.B}}<span></td>
-			<td>{{value.C}}<span></td>
-			<td>{{value.D}}<span></td>
-			<td>{{value.E}}<span></td>
-			<td>{{value.F}}<span></td>
-			<td>{{value.G}}<span></td>
+			<td><a href="{{value.resultid}}">{{value.resultid}}</a><span></td>
+			<td>{{value.resultname}}<span></td>
+			<td>{{value.sucurityclass}}<span></td>
+			<td>{{value.editor}}<span></td>
+			<td>{{value.pre_sent}}<span></td>
+			<td>{{value.pre_verify}}<span></td>
+			<td>{{value.act_finish}}<span></td>
+			<td><span></td>
 			
 		</tr>
 	</table>

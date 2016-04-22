@@ -8,15 +8,19 @@
 angular.module('yapp')
   .controller('ExpeditingCtrl', function($scope, $location) {
 
-    $scope.submit = function() {
-
-      $location.path('/dashboard');
-
-      return false;
-    };
     $scope.hour = "00";
     $scope.min = "00";
     $scope.state = '執行中';
+
+        $scope.start = function() {
+      $scope.state ='執行中';
+      return false;
+    };
+
+    $scope.stop = function() {
+       $scope.state ='停止';
+      return false;
+    };
     $scope.dropboxitemselected = function(item){
       $scope.hour = item;
       return false;

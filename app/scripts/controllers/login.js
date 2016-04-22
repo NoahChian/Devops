@@ -8,7 +8,7 @@
  * Controller of yapp
  */
 angular.module('yapp')
-  .controller('LoginCtrl', function($scope, $location, $http) {
+  .controller('LoginCtrl', function($scope, $location, $http,MyVar) {
     $scope.name = null;
     $scope.pwd = null;
     
@@ -44,7 +44,7 @@ angular.module('yapp')
       $http(
              {
                  method: 'GET',
-                 url: 'http://140.92.142.9:8081/TodoService/users/search/findByAccount?account='+id,
+                 url: 'http://'+MyVar.BackApiUrl+'/TodoService/users/search/findByAccount?account='+id,
                  headers: { 
                   'cache-control': 'no-cache',
                   'content-type': 'application/json',

@@ -1,4 +1,4 @@
-
+'use strict';
 /**
  * @ngdoc function
  * @name yapp.controller:MainCtrl
@@ -7,14 +7,14 @@
  * Controller of yapp
  */
 angular.module('yapp')
-  .controller('CreateAccountCtrl',function($scope, $state,$http) {
+  .controller('CreateAccountCtrl',function($scope,  $location,$http) {
     $scope.id = null;
     $scope.firstname = null;
     $scope.secondname = null;
     $scope.email = null;
     $scope.pwd = null;
     $scope.pwd2 = null;
-
+    console.log("inininin");
     $scope.create = function(){
 	    if($scope.id==null){
 	    	alert("請輸入帳號");
@@ -43,25 +43,31 @@ angular.module('yapp')
     		return true;
 	    }
 	    if($scope.pwd.search(/[\W]/g) != -1){
-        console.log('key error');
-        alert("密碼只可為數字跟英文");
-        $scope.pwd = null;
+	        console.log('key error');
+	        alert("密碼只可為數字跟英文");
+	        $scope.pwd = null;
      		$scope.pwd2 = null;
                 return true;
-      }
+      	}
+      	var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      	if(!re.test($scope.email)){
+      		console.log('mail error');
+	        alert("Email格式錯誤");
+	        return true;
+      	}
 
       //send json to database
        var context = '{"account":"'+$scope.id+'","name":"'+$scope.firstname+'","lastname":"'+$scope.lastname+'","mail":"'+$scope.email+'","pwd":"'+$scope.pwd+'"}';
-       console.log(context);
+       console.log(JSON.parse(context));
 
       $http(
                  {
                      method: 'POST',
-                     url: 'http://140.92.142.9:8081/TodoService/users',
+                     url: 'http://localhost:8081/TodoService/users',
                      headers: { 
                      	'cache-control': 'no-cache',
 					    'content-type': 'application/json',
-				
+					
 					 },
 					   
 					 data: JSON.parse(context),
@@ -69,19 +75,24 @@ angular.module('yapp')
                  }
              ).then(function (response) {
                         console.log('this is a response');
-                        console.log(response);                 
+                        console.log(response);
+                        alert("創建成功");      
+ 						$location.path('/login');
                       
                     }, 
                     function (err) {
+                    	if(err.status==409)
+                    		alert("帳號重複");
                         console.log(err);
                         console.log('this is a error');
-                       
+                        $scope.pwd = null;
+    				    $scope.pwd2 = null;
                    }
              );
 
 
 	 };
 
-	
+
 	}
  );

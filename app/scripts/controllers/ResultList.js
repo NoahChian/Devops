@@ -6,8 +6,11 @@
  * Controller of yapp
  */
 angular.module('yapp')
-  .controller('ResultListCtrl', function($scope, $location) {
-
+  .controller('ResultListCtrl', function($scope, $location,MyVar,$http) {
+    $scope.results = [];
+    $scope.ProjNam = MyVar.currentProj;
+    $scope.ProjState = MyVar.state;
+    $scope.QuesNum = MyVar.quesnum;
   	
     $scope.submit = function() {
 
@@ -16,22 +19,43 @@ angular.module('yapp')
       return false;
     };
 
-    $scope.ProjNam = 'A2專案';
-    $scope.ProjState = '編輯中且尚未送審';
-    $scope.QuesNum = '';
-    $scope.results = {
-    	"first":{
-    		"A":"A1234","B":"需求規格書","C":"","D":"2015/03/05","E":"2015/03/05","F":"2015/03/05","G":"x"
-    	},
-	    "second":{
-	    	"A":"B2234","B":"設計規格書","C":"","D":"2015/06/01","E":"2015/06/16","F":"2015/06/30","G":"x"
-	    },
-	    "third":{
-	    	"A":"C3234","B":"程式碼","C":"","D":"2015/09/01","E":"2015/09/15","F":"2015/09/30","G":"x"
-	    },
-	    "fourth":{
-	    	"A":"D2578","B":"附件","C":"","D":"2015/10/01","E":"2015/10/15","F":"2015/10/30","G":"x"
-	    }
+    run();
+
+    function run(){
+     // console.log(MyVar.url);
+          $http(
+                     {
+                         method: 'GET',
+                         url: 'http://'+MyVar.BackApiUrl+'/TodoService/results/search/findByProjid?projid='+MyVar.currentPid, 
+                     }).then(function (response) {        
+                        //console.log(response);
+                        if(response.data!={}){
+                          var len = Object.keys(response.data._embedded.results).length;  
+                          console.log(len);
+                          var object = response.data._embedded.results;
+                          for(var i=0;i<len;i++){
+                              $scope.results[i] = object[i];
+                              if($scope.results[i].act_finish==null)
+                                update(i);
+                              getTicket(i);
+                          }
+                        }
+                    }, 
+                    function (err) {
+                        console.log(err);
+                        console.log('this is a error');
+                        console.log(err.stack);
+                    });
+
     };
+
+    update = function(i){
+      console.log("update "+i);
+    }
+    getTicket = function(i){
+      console.log("connet db "+i);
+    }
+
+   
 
   });
