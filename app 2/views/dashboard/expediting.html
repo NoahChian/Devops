@@ -1,0 +1,43 @@
+
+<div class="container">
+	<br>
+	<h1>啟動/關閉稽催功能</h1><br><br>
+	<div class ="row">
+		<div class ="col-md-2">每日執行稽催時間:</div>
+		<div class="btn-group col-md-1">
+			<button type="button" class="btn btn-default">
+				{{hour}}				
+			</button>
+			<button type="button" class="btn btn-default dropdown-toggle" id ="dropdownmenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
+				<span class="caret"></span>
+				<span class="sr-only">Toggle dropdown</span>
+			</button>
+			<ul class="dropdown-menu" >
+				<li ng-repeat="select in hours"><a ng-click="dropboxitemselected(select)">{{select}}</a></li>
+			</ul>
+				
+		</div>
+		
+		<div class="btn-group col-md-1">
+			<button type="button" class="btn btn-default">
+				{{min}}				
+			</button>
+			<button type="button" class="btn btn-default dropdown-toggle" id ="dropdownmenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
+				<span class="caret"></span>
+				<span class="sr-only">Toggle dropdown</span>
+			</button>
+			<ul class="dropdown-menu" >
+				<li ng-repeat="select in mins"><a ng-click="dropboxitemselected2(select)">{{select}}</a></li>
+			</ul>	
+		</div>
+		<button class="col-md-1">儲存</button>
+	</div><br>
+	<div>
+		<div class="col-md-2">稽催功能狀態：</div>
+		<div class="col-md-1">{{state}}</div>
+		<button ng-click="start()">啟動</button>
+		<button ng-click="stop()">關閉</button>
+	</div>
+
+</div>
+

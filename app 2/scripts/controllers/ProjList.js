@@ -143,18 +143,10 @@ angular.module('yapp')
 
                     if(backup_devops[j].projname == obj_devops[i].name)
                     {
-                        var s1 = (obj_devops[i].custom_fields[7].value==null)?(""):('"'+obj_devops[i].custom_fields[7].value+'"');
-                        var s2 = (obj_devops[i].custom_fields[8].value==null)?(""):('"'+obj_devops[i].custom_fields[8].value+'"');
-                
-
                         console.log("find project , now to update");
                         key = true;                         //remember we find project
-
-                        update_devops[x] = '{"projid":"'+obj_devops[i].id+'","projname":"'+obj_devops[i].name+'","pre_sentdate":'+
-                        s1+',"pre_finishdate":'+
-                        s2+'}';
-                        console.log(update_devops[x]);
-
+                        update_devops[x] = '{"projid":"'+obj_devops[i].id+'","projname":"'+obj_devops[i].name+'","pre_sentdate":"'+
+                        obj_devops[i].custom_fields[7].value+'","pre_finishdate":"'+obj_devops[i].custom_fields[8].value+'"}';
                         $http(
                                 {
                                      method: 'PATCH',
@@ -183,15 +175,10 @@ angular.module('yapp')
                 }
                 if(key==false){
                     console.log("new");
-
-                    var s1 = (obj_devops[i].custom_fields[7].value==null)?'""':('"'+obj_devops[i].custom_fields[7].value+'"');
-                    var s2 = (obj_devops[i].custom_fields[8].value==null)?'""':('"'+obj_devops[i].custom_fields[8].value+'"');
-                
-
-                    new_devops[y] = '{"projid":"'+obj_devops[i].id+'","projname":"'+obj_devops[i].name+'","pre_sentdate":'+
-                    s1+',"pre_finishdate":'+
-                    s2+',"state":"編輯中且未送審","disable":"false","ques_number":""}';
-                    console.log(new_devops[y]);
+                    new_devops[y] = '{"projid":"'+obj_devops[i].id+'","projname":"'+obj_devops[i].name+'","pre_sentdate":"'+
+                    obj_devops[i].custom_fields[7].value+'","pre_finishdate":"'+obj_devops[i].custom_fields[8].value+
+                    '","state":"編輯中且未送審","disable":"false","ques_number":""}';
+                    console.log(JSON.parse(new_devops[y]));
                     $http(
                                 {
                                      method: 'POST',

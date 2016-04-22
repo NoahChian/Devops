@@ -98,7 +98,6 @@ angular
 
 
   }).service('MyVar',function(){
-  this.name = null;
   this.currentProj = null;
   this.currentPid = null;
   this.state = null;

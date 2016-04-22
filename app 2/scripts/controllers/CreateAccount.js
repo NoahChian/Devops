@@ -76,7 +76,7 @@ angular.module('yapp')
              ).then(function (response) {
                         console.log('this is a response');
                         console.log(response);
-                        alert("新增成功");      
+                        alert("創建成功");      
  						$location.path('/login');
                       
                     }, 

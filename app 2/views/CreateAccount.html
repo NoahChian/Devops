@@ -1,0 +1,52 @@
+<div class="create-page">
+	<div class ="row">
+	<br></br>
+	<h1>建立新帳號
+	</h1><br>
+	<div class = "row">
+		<div class="col-md-1 col-md-offset-3">帳號</div>
+		<div class="col-md-4">
+				<input type = "text" ng-model="id" placeholder=""></input>
+		</div>
+	</div>
+	<br>
+	<div class = "row">
+		<div class="col-md-1 col-md-offset-3">姓氏</div>
+		<div class="col-md-4">
+				<input type = "text" ng-model="firstname" placeholder=""></input>
+		</div>
+	</div>
+	<br>
+		<div class = "row">
+		<div class="col-md-1 col-md-offset-3">名字</div>
+		<div class="col-md-4">
+				<input type = "text" ng-model="lastname" placeholder=""></input>
+		</div>
+	</div>
+	<br>
+		<div class = "row">
+		<div class="col-md-1 col-md-offset-3">電子郵件</div>
+		<div class="col-md-4">
+				<input type = "text" ng-model="email" placeholder=""></input>
+		</div>
+	</div>
+	<br>
+		<div class = "row">
+		<div class="col-md-1 col-md-offset-3">密碼</div>
+		<div class="col-md-4">
+				<input type="password"  ng-model="pwd" placeholder=""></input>
+		</div>
+	</div>
+	<br>
+		<div class = "row">
+		<div class="col-md-1 col-md-offset-3">密碼確認</div>
+		<div class="col-md-4">
+				<input type="password"  ng-model="pwd2" placeholder=""></input>
+		</div>
+	</div>
+	<br><br>
+	<div ng-click="create()" class="col-md-offset-4 col-md-1 btn btn-default btn-lg ">確定</div>
+	<div ui-sref = "login" class="col-md-offset-2 col-md-1 btn btn-default btn-lg ">取消</div>
+	</div>
+
+</div>

@@ -57,7 +57,6 @@ angular.module('yapp')
                         if(response.data._embedded!= null)
                         {
                           if(response.data._embedded.users[0].pwd == pwd){
-                            MyVar.name = response.data._embedded.users[0].name;
                             $location.path('/dashboard');
                             return false; 
                           }
