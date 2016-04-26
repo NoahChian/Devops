@@ -7,6 +7,21 @@
 	<div class="col-md-2">
 			<input type = "text" ng-model="findname" placeholder=""></input>
 	</div>
+	<br><br><br>
+	<div class="col-md-2">查詢年度: </div>
+
+			<div class="btn-group">
+			<button type="button" class="btn btn-default">
+				{{year[0]}}				
+			</button>
+			<button type="button" class="btn btn-default dropdown-toggle" id ="dropdownmenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
+				<span class="caret"></span>
+				<span class="sr-only">Toggle dropdown</span>
+			</button>
+			<ul class="dropdown-menu" >
+				<li ng-repeat="select in year"><a ng-click="dropboxitemselected(select)">{{select}}</a></li>
+			</ul>	
+		</div>
 <!-- 	<div class="col-md-offset-5">
 		<input type = "checkbox"></input>
 		是否需要建立清單

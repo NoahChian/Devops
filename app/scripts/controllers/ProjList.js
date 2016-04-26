@@ -7,6 +7,7 @@
  */
 angular.module('yapp')
   .controller('ProjListCtrl', function($scope, $location,$http,MyVar) {
+    $scope.year = ["105"];
     $scope.obj=[];                      //uesd to show in html
     var obj_devops=[];                  //redmine projects
     var new_devops=[];                  //used to new when connet two db
@@ -39,7 +40,7 @@ angular.module('yapp')
                         else
                         {
                             compare();
-                            console.log(obj_devops);
+                           // console.log(obj_devops);
                         }
                     }, 
                     function (err) {
@@ -49,6 +50,7 @@ angular.module('yapp')
                     }
              ) 
     }
+
     function proj_devops(obj_b){
         console.log('search devops projects');
         $http(
@@ -136,25 +138,27 @@ angular.module('yapp')
         console.log("start compare");
         var x=0,y=0;
         for (var i=0; i<lens2; i++) {                 //search proj_redmine and proj_devops
-            console.log("compare "+i);
+       //     console.log("compare "+i);
             var key = false;                            //if redmine has but devops no , new it    , key used to 
             if(obj_devops[i].custom_fields[6].value==1){  //check if it need to create list
                 for(var j=0;j<lens;j++){               // if remine have and devops also too, update it.
 
-                    if(backup_devops[j].projname == obj_devops[i].name)
+                    if(backup_devops[j].projname == obj_devops[i].name && backup_devops[j].disable != true) //比對obj_devops[i],如果找到了devops裡有此專案,而且在devops上不是disable ,代表應該更新他
                     {
+
                         var s1 = (obj_devops[i].custom_fields[7].value==null)?(""):('"'+obj_devops[i].custom_fields[7].value+'"');
                         var s2 = (obj_devops[i].custom_fields[8].value==null)?(""):('"'+obj_devops[i].custom_fields[8].value+'"');
                 
-
-                        console.log("find project , now to update");
+                        //console.log(obj_devops[i].custom_fields[7].value + ":" + obj_devops[i].id);
+                        console.log("find project , now to update ");
                         key = true;                         //remember we find project
 
-                        update_devops[x] = '{"projid":"'+obj_devops[i].id+'","projname":"'+obj_devops[i].name+'","pre_sentdate":'+
+                        update_devops[x] = '{"id":"'+backup_devops[j].id+'","projid":"'+obj_devops[i].id+'","projname":"'+obj_devops[i].name+'","pre_sentdate":'+  //注意 id從我們的資料庫取得, projid從redmine上取得
                         s1+',"pre_finishdate":'+
                         s2+'}';
-                        console.log(update_devops[x]);
 
+               //         console.log(update_devops[x]);
+                        /*
                         $http(
                                 {
                                      method: 'PATCH',
@@ -176,12 +180,12 @@ angular.module('yapp')
                                         console.log(err);
                                         console.log('this is a error');
                                    }
-                        );
+                        );*/
                         x++;
                         break;
                     }
                 }
-                if(key==false){
+                if(key==false){     //所有devops內都沒有  代表應該新建立
                     console.log("new");
 
                     var s1 = (obj_devops[i].custom_fields[7].value==null)?'""':('"'+obj_devops[i].custom_fields[7].value+'"');
@@ -190,9 +194,9 @@ angular.module('yapp')
 
                     new_devops[y] = '{"projid":"'+obj_devops[i].id+'","projname":"'+obj_devops[i].name+'","pre_sentdate":'+
                     s1+',"pre_finishdate":'+
-                    s2+',"state":"編輯中且未送審","disable":"false","ques_number":""}';
-                    console.log(new_devops[y]);
-                    $http(
+                    s2+'}';
+          //          console.log(new_devops[y]);
+                 /*   $http(
                                 {
                                      method: 'POST',
                                      url: 'http://'+MyVar.BackApiUrl+'/TodoService/projects',
@@ -216,16 +220,74 @@ angular.module('yapp')
                                         $scope.pwd = null;
                                         $scope.pwd2 = null;
                                    }
-                    );
+                    );*/
                     y++;
                 }
                 key = false;  
             }
         }
-        console.log(update_devops);
-        console.log(new_devops);
-        update_database();
-    };
+
+       // console.log(update_devops);
+       // console.log(new_devops);
+        var bulksave = covert(update_devops,new_devops);
+        console.log(bulksave);
+        $http(
+                                {
+                                     method: 'POST',
+                                     url: 'http://'+MyVar.BackApiUrl+'/TodoService/bulksave',
+                                     headers: { 
+                                        'cache-control': 'no-cache',
+                                        'content-type': 'application/json',
+                                    
+                                     },                                   
+                                     data: JSON.parse(bulksave),
+                                     json: true 
+                                 }
+                             ).then(function (response) {
+                                        console.log(response.data);
+                                        var len = Object.keys(response.data).length;  
+                                        for (var i=0; i<len; i++) {
+                                                $scope.obj[i] = response.data[i];
+                                        }                      
+                                        backup_devops = $scope.obj; 
+                                        secondconnect();
+                                    }, 
+                                    function (err) {
+                                        if(err.status==409)
+                                            alert("同步失敗");
+                                        console.log(err);
+                                        console.log('this is a error');
+                                        $scope.pwd = null;
+                                        $scope.pwd2 = null;
+                                   }
+                    )
+        };
+
+    function secondconnect(){
+
+    }    
+
+    function covert(update,newobj){
+        
+        var key = Object.keys(update).length;
+    
+        var result = '{"oldprojects":[';
+        for(var i=0;i<key;i++){
+            if(i==0){result = result;}
+            else {result = result+',';}
+            result = result + update[i];        //json字串串連              
+        }
+
+        result = result + '],"newprojects":[';
+        key = Object.keys(newobj).length;
+        for(var i=0;i<key;i++){
+            if(i==0){result = result;}
+            else result = result + ',';
+            result = result + newobj[i];          //json string plus
+        }
+        result = result + ']}'
+        return result;
+    }
 
     function update_database(){
              $http(
@@ -261,9 +323,9 @@ angular.module('yapp')
 
     $scope.find = function (){
         console.log("run in find");
-        if($scope.findname==""){
+        if($scope.findname==null||$scope.findname==""){
             $scope.obj = backup_devops;
-            return false;rem
+            return false;
         }
         var obj_b = $scope.obj;  
        // console.log(obj_b);
@@ -276,8 +338,12 @@ angular.module('yapp')
             console.log($scope.findname);
             if(obj_b[i].projname.match($scope.findname)!=null)
             {
-                $scope.obj[j] = obj_b[i];
-                j++;
+         //       var date = new Date(obj_b[i].pre_sentdate);
+         //       var setdate = new Date(1911+parseInt($scope.year));
+         //       if(date-setdate>0){
+                    $scope.obj[j] = obj_b[i];
+                    j++;
+         //       }
             }
         }
 
