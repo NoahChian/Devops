@@ -257,14 +257,77 @@ angular.module('yapp')
                                             alert("同步失敗");
                                         console.log(err);
                                         console.log('this is a error');
-                                        $scope.pwd = null;
-                                        $scope.pwd2 = null;
                                    }
                     )
         };
 
     function secondconnect(){
+        var key = Object.keys($scope.obj).length;
+        var status = 14;
+        for(var i=0;i<key;i++){
+           $http(
+                 {
+                     method: 'GET',
+                     url: 'http://'+MyVar.redmineApiUrl+'/issues.json?project_id='+$scope.obj[i].projid+'&status_id='+status+'&key=f69bf52b02b565b2bdd354ebd208b87eb8c620d9', 
+                 }
+             ).then(function (response) {
+                        console.log(response);  
+                        if(response.data.total_count!=0){
+                          //  console.log(response.data.total_count);  
+                            for(var i=0;i<response.data.total_count;i++){
+                              //      console.log(response.data.issues[i].tracker.name);  
+                                if(response.data.issues[i].tracker.name=="成果清單審查單"){
+                                    var k = Object.keys(response.data.issues[i].custom_fields).length;
+                               //     console.log(k);  
+                                    for(var j=0;j<k;j++){
+                                        console.log(response.data.issues[i]);
+                                        if(response.data.issues[i].custom_fields[j].name=="版次"&&response.data.issues[i].custom_fields[j].value=="1.0"){
+                                         //   console.log("find");
+                                            $http(
+                                            {
+                                                method: 'GET',
+                                                url: 'http://'+MyVar.redmineApiUrl+'/issues/'+response.data.issues[i].id+'.json?include=journals&key=f69bf52b02b565b2bdd354ebd208b87eb8c620d9'
+                                            }
+                                                ).then(
+                                                function (response2){
+                                                   // console.log(response2.data);
+                                                    var k2 = Object.keys(response2.data.issue.journals).length;
+                                                    for(var l=0;l<k2;l++){
+                                                        var k3 = Object.keys(response2.data.issue.journals[l].details).length;
+                                                        for(var m=0;m<k3;m++){
+                                                            console.log(response2.data.issue.journals[l]);
+                                                            if(response2.data.issue.journals[l].details[m].new_value==status){
+                                                                console.log(response2.data.issue.journals[l].created_on);
+                                                                $scope.obj[i].act_finishdate = response2.data.issue.journals[l].created_on;
+                                                                $scope.obj[i].act_finishdate = $scope.obj[i].act_finishdate.match("(.*)T")[1];
+                                                                
+                                                            }
+                                                        }
+                                                    }
+                                                    console.log('success');
+                                                   // console.log(response2);
+                                                },
+                                                function (err2){
+                                                    console.log(err2);
+                                                    console.log('this is a error');
+                                                    console.log(err.stack);
+                                            });
+                                               // break;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }, 
+                    function (err) {
+                        console.log(err);
+                        console.log('this is a error');
+                        console.log(err.stack);
+                    }
+             ) 
 
+
+        }
     }    
 
     function covert(update,newobj){
