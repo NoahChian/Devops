@@ -6,31 +6,50 @@
  * Controller of yapp
  */
 angular.module('yapp')
-  .controller('tab1', function($scope, $location) {
+  .controller('tab1', function($scope, $location,$stateParams,$http,MyVar) {
 
-   
+   $scope.Projid = $stateParams.currentPid;
+   $scope.ProjName = $stateParams.currentProj;
 
-    $scope.results = {
-      "first":{
-        "A":"v1.0","D":"需求規格書","C":"A1234","B":"2015/03/05","E":"2015/03/05"
-      },
-      "second":{
-        "A":"v1.0","D":"設計規格書","C":"B2244","B":"2015/06/01","E":"2015/06/16"
-      },
-      "third":{
-        "A":"v1.1","D":"需求規格書","C":"A1235","B":"2015/09/01","E":"2015/09/15"
-      },
-      "fourth":{
-        "A":"v1.1","D":"設計規格書","C":"B2234","B":"2015/10/01","E":"2015/10/15"
-      }
+
+
+
+    $scope.results = [];
+
+    run();
+
+    function run(){
+     // console.log(MyVar.url);
+          $http(
+                     {
+                         method: 'GET',
+                         url: 'http://'+MyVar.BackApiUrl+'/TodoService/verfull/search/findByProjectid?projectid='+$stateParams.currentPid, 
+                     }).then(function (response) {        
+                        console.log(response);
+                        if(!(Object.getOwnPropertyNames(response.data).length === 0)){
+                          var len = Object.keys(response.data._embedded.verfull).length;  
+                          //console.log(response.data._embedded.results);
+                          var object = response.data._embedded.verfull;
+                          console.log(object);
+                          for(var i=0;i<len;i++){                             //找尋每一筆成果
+                              $scope.results[i] = object[i];
+                              console.log($scope.results[i]);
+                            //  if($scope.results[i].act_finish==null)          //如果實際完成日是空白  則更新他
+                           //     update(i);    
+  //                              getTicket(i);                                   //得到審查單編號
+                          }
+                        }
+                    }, 
+                    function (err) {
+                        console.log(err);
+                        console.log('this is a error');
+                        console.log(err.stack);
+                    });
+
     };
-  }).controller('tab2', function($scope, $location) {
 
 
-     $scope.results = {
-      "first":{
-        "E":"A1234","C":"需求規格書","B":"930708","A":"2015/03/05","F":"A1235","D":"成果編號"
-      }
-    };
 
-  });
+
+
+  })

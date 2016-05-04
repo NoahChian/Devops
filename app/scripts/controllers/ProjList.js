@@ -24,10 +24,10 @@ angular.module('yapp')
              $http(
                  {
                      method: 'GET',
-                     url: 'http://'+MyVar.redmineApiUrl+'/projects.json?limit=100&offset='+x+'&key=f69bf52b02b565b2bdd354ebd208b87eb8c620d9', 
+                     url: 'http://'+MyVar.redmineApiUrl+'/projects/owner-ben/memberships.json&key=f69bf52b02b565b2bdd354ebd208b87eb8c620d9', 
                  }
              ).then(function (response) {
-                        console.log(response);  
+                     //   console.log(response);  
                         lens2 = response.data.total_count;
                         var len = Object.keys(response.data.projects).length;  
                         for (var i=x; i<len+x; i++) {
@@ -61,18 +61,21 @@ angular.module('yapp')
                  }
              ).then(function (response) {
                         console.log('seach projects ok');
-                        console.log(response);
+                      //  console.log(response);
+                       if(Object.getOwnPropertyNames(response.data).length === 0)
+                        return false;
                          var len = Object.keys(response.data._embedded.projects).length;  
                         for (var i=0; i<len; i++) {
                                 $scope.obj[i] = response.data._embedded.projects[i];
                         }                      
                         backup_devops = $scope.obj; 
+                        secondconnect();
                     }, 
                     function (err) {
                         if(err.status!=200)
                             alert("與DevOps連接失敗");
                         console.log(err);
-                        console.log('this is a error');                 
+                        console.log('this is a error2');                 
                    }
              );
     }
@@ -92,37 +95,21 @@ angular.module('yapp')
                  }
              ).then(function (response) {
                     console.log('seach devops projects ok');
-                    console.log(response);
+                //    console.log(response);
+                if(Object.getOwnPropertyNames(response.data).length === 0)
+                       { 
+                        backup_devops = [];
+                        proj_redmine(0);
+                        lens = 0;
+                        return false;
+                       }
                      var len = Object.keys(response.data._embedded.projects).length;  
                     for (var i=0; i<len; i++) {
                             backup_devops[i] = response.data._embedded.projects[i];
                     }
                     lens = Object.keys(backup_devops).length;
                     proj_redmine(0);
-                /*    $http(
-                     {  
-                         method: 'GET',                                                                 // to get redmine projects
-                         url: 'http://140.92.144.26/projects.json?limit=100&status=0&key=f69bf52b02b565b2bdd354ebd208b87eb8c620d9', 
-                     }).then(function (response) {        
-                        $scope.count = response.data.totol_count;
-                        var len = Object.keys(response.data.projects).length;  
-                        for (var i=0,j=0; i<len; i++) {
-                            if(response.data.projects[i].custom_fields[6].value == 1)
-                            {
-                                $scope.obj[j] = response.data.projects[i];
-                                j++;
-                            }
-                        }
-                        console.log("search redmine projects ok");
-                        lens2= Object.keys($scope.obj).length  
-                        console.log(lens2);
-                        compare();
-                    }, 
-                    function (err) {
-                        console.log(err);
-                        console.log('this is a error');
-                        console.log(err.stack);
-                    });*/
+           
                 }, 
                 function (err) {
                     if(err.status!=200)
@@ -148,45 +135,25 @@ angular.module('yapp')
 
                         var s1 = (obj_devops[i].custom_fields[7].value==null)?(""):('"'+obj_devops[i].custom_fields[7].value+'"');
                         var s2 = (obj_devops[i].custom_fields[8].value==null)?(""):('"'+obj_devops[i].custom_fields[8].value+'"');
+                       
+
                 
-                        //console.log(obj_devops[i].custom_fields[7].value + ":" + obj_devops[i].id);
-                        console.log("find project , now to update ");
+                        console.log(obj_devops[i]);
+                     //   console.log("find project , now to update ");
                         key = true;                         //remember we find project
 
-                        update_devops[x] = '{"id":"'+backup_devops[j].id+'","projid":"'+obj_devops[i].id+'","projname":"'+obj_devops[i].name+'","pre_sentdate":'+  //注意 id從我們的資料庫取得, projid從redmine上取得
+                        update_devops[x] = '{"id":"'+backup_devops[j].id+'","state":"'+backup_devops[j].state+'","projname":"'+obj_devops[i].name+'","pre_sentdate":'+  //注意 id從我們的資料庫取得, projid從redmine上取得
                         s1+',"pre_finishdate":'+
                         s2+'}';
 
-               //         console.log(update_devops[x]);
-                        /*
-                        $http(
-                                {
-                                     method: 'PATCH',
-                                     url: 'http://'+MyVar.BackApiUrl+'/TodoService/projects/'+backup_devops[j].id,
-                                     headers: { 
-                                        'cache-control': 'no-cache',
-                                        'content-type': 'application/json',                               
-                                     },                                   
-                                     data: JSON.parse(update_devops[x]),
-                                     json: true 
-                                 }
-                             ).then(function (response) {
-                                        console.log('update success');
-                                        console.log(response);
-                                    }, 
-                                    function (err) {
-                                        if(err.status==409)
-                                            alert("同步失敗");
-                                        console.log(err);
-                                        console.log('this is a error');
-                                   }
-                        );*/
+                        console.log(update_devops[x].state);
+                        
                         x++;
                         break;
                     }
                 }
                 if(key==false){     //所有devops內都沒有  代表應該新建立
-                    console.log("new");
+                //    console.log("new");
 
                     var s1 = (obj_devops[i].custom_fields[7].value==null)?'""':('"'+obj_devops[i].custom_fields[7].value+'"');
                     var s2 = (obj_devops[i].custom_fields[8].value==null)?'""':('"'+obj_devops[i].custom_fields[8].value+'"');
@@ -195,32 +162,7 @@ angular.module('yapp')
                     new_devops[y] = '{"projid":"'+obj_devops[i].id+'","projname":"'+obj_devops[i].name+'","pre_sentdate":'+
                     s1+',"pre_finishdate":'+
                     s2+'}';
-          //          console.log(new_devops[y]);
-                 /*   $http(
-                                {
-                                     method: 'POST',
-                                     url: 'http://'+MyVar.BackApiUrl+'/TodoService/projects',
-                                     headers: { 
-                                        'cache-control': 'no-cache',
-                                        'content-type': 'application/json',
-                                    
-                                     },                                   
-                                     data: JSON.parse(new_devops[y]),
-                                     json: true 
-                                 }
-                             ).then(function (response) {
-                                        console.log('new it success');
-                                        console.log(response);
-                                    }, 
-                                    function (err) {
-                                        if(err.status==409)
-                                            alert("同步失敗");
-                                        console.log(err);
-                                        console.log('this is a error');
-                                        $scope.pwd = null;
-                                        $scope.pwd2 = null;
-                                   }
-                    );*/
+
                     y++;
                 }
                 key = false;  
@@ -230,7 +172,7 @@ angular.module('yapp')
        // console.log(update_devops);
        // console.log(new_devops);
         var bulksave = covert(update_devops,new_devops);
-        console.log(bulksave);
+      //  console.log(bulksave);
         $http(
                                 {
                                      method: 'POST',
@@ -244,7 +186,7 @@ angular.module('yapp')
                                      json: true 
                                  }
                              ).then(function (response) {
-                                        console.log(response.data);
+                                   //     console.log(response.data);
                                         var len = Object.keys(response.data).length;  
                                         for (var i=0; i<len; i++) {
                                                 $scope.obj[i] = response.data[i];
@@ -263,48 +205,57 @@ angular.module('yapp')
 
     function secondconnect(){
         var key = Object.keys($scope.obj).length;
-        var status = 14;
+       
         for(var i=0;i<key;i++){
-           $http(
+            search(i);
+        }
+    }    
+
+    function search(i){                 //搜查每個專案的版本１．０的成果清單審查單並顯示
+         var status = 14;
+        $http(
                  {
                      method: 'GET',
                      url: 'http://'+MyVar.redmineApiUrl+'/issues.json?project_id='+$scope.obj[i].projid+'&status_id='+status+'&key=f69bf52b02b565b2bdd354ebd208b87eb8c620d9', 
                  }
              ).then(function (response) {
-                        console.log(response);  
+                        //console.log(response);  
                         if(response.data.total_count!=0){
-                          //  console.log(response.data.total_count);  
-                            for(var i=0;i<response.data.total_count;i++){
-                              //      console.log(response.data.issues[i].tracker.name);  
-                                if(response.data.issues[i].tracker.name=="成果清單審查單"){
-                                    var k = Object.keys(response.data.issues[i].custom_fields).length;
-                               //     console.log(k);  
+                        //  console.log(response.data.total_count);  
+                            for(var x=0;x<response.data.total_count;x++){
+                                   // console.log(response.data.issues[x].tracker.name);  
+                                if(response.data.issues[x].tracker.name=="成果清單審查單"){
+                                    var k = Object.keys(response.data.issues[x].custom_fields).length;  //有幾個欄位
+                                    //  console.log(k);  
                                     for(var j=0;j<k;j++){
-                                        console.log(response.data.issues[i]);
-                                        if(response.data.issues[i].custom_fields[j].name=="版次"&&response.data.issues[i].custom_fields[j].value=="1.0"){
-                                         //   console.log("find");
+                                      //  console.log(response.data.issues[x]);
+                                        if(response.data.issues[x].custom_fields[j].name=="版次"&&response.data.issues[x].custom_fields[j].value=="1.0"){
+                                           // console.log("find : i="+i);
+                                           
+
                                             $http(
                                             {
                                                 method: 'GET',
-                                                url: 'http://'+MyVar.redmineApiUrl+'/issues/'+response.data.issues[i].id+'.json?include=journals&key=f69bf52b02b565b2bdd354ebd208b87eb8c620d9'
+                                                url: 'http://'+MyVar.redmineApiUrl+'/issues/'+response.data.issues[x].id+'.json?include=journals&key=f69bf52b02b565b2bdd354ebd208b87eb8c620d9'
                                             }
                                                 ).then(
                                                 function (response2){
-                                                   // console.log(response2.data);
-                                                    var k2 = Object.keys(response2.data.issue.journals).length;
+                                                  //  console.log(response2.data);
+                                                    var k2 = Object.keys(response2.data.issue.journals).length;                     //有幾次修改歷程
                                                     for(var l=0;l<k2;l++){
-                                                        var k3 = Object.keys(response2.data.issue.journals[l].details).length;
+                                                        var k3 = Object.keys(response2.data.issue.journals[l].details).length;      
                                                         for(var m=0;m<k3;m++){
-                                                            console.log(response2.data.issue.journals[l]);
-                                                            if(response2.data.issue.journals[l].details[m].new_value==status){
-                                                                console.log(response2.data.issue.journals[l].created_on);
+                                                          //  console.log(x);
+                                                            if(response2.data.issue.journals[l].details[m].new_value==status){      // 更改後的新狀態為我們制定的已核決狀態
+                                                //                console.log(response2.data.issue.journals[l].created_on);
+                                                
                                                                 $scope.obj[i].act_finishdate = response2.data.issue.journals[l].created_on;
                                                                 $scope.obj[i].act_finishdate = $scope.obj[i].act_finishdate.match("(.*)T")[1];
-                                                                
+                                                                backup_devops = $scope.obj;
                                                             }
                                                         }
                                                     }
-                                                    console.log('success');
+                                                  //  console.log('success');
                                                    // console.log(response2);
                                                 },
                                                 function (err2){
@@ -326,9 +277,9 @@ angular.module('yapp')
                     }
              ) 
 
+    }
 
-        }
-    }    
+
 
     function covert(update,newobj){
         
@@ -366,7 +317,7 @@ angular.module('yapp')
                  }
              ).then(function (response) {
                         console.log('this is a response');
-                        console.log(response);  
+                   //     console.log(response);  
                         $scope.count = Object.keys(response.data._embedded.projects).length;
                         var len = Object.keys(response.data._embedded.projects).length;  
                         for (var i=0; i<len; i++) {
@@ -374,7 +325,7 @@ angular.module('yapp')
                         }
                    
                         $location.path('/dashboard');
-                        console.log($scope.obj);
+                 //       console.log($scope.obj);
                     }, 
                     function (err) {
                         console.log(err);
@@ -387,6 +338,7 @@ angular.module('yapp')
     $scope.find = function (){
         console.log("run in find");
         if($scope.findname==null||$scope.findname==""){
+     //       console.log(backup_devops);
             $scope.obj = backup_devops;
             return false;
         }
@@ -412,14 +364,15 @@ angular.module('yapp')
 
     }
 
-    $scope.goProj = function(x,y,z,w){
+    $scope.goProj = function(x,y,z,w,s){
         MyVar.currentProj = x;
         MyVar.state = y;
         MyVar.quesnum = z;
         MyVar.currentPid = w ;
-        $location.path('/dashboard/ResultList');
-    }
 
+      //  console.log($scope.obj);
+        $location.path('/dashboard/ResultList').search({currentProj:x,state:y,quesnum:z,currentPid:w,pre_finishdate:s});
+    }
 
 
 

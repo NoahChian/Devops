@@ -1,4 +1,4 @@
-/**
+  /**
  * @ngdoc function
  * @name yapp.controller:MainCtrl
  * @description

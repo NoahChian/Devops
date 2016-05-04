@@ -7,12 +7,18 @@
  */
 
 angular.module('yapp')
+// .controller('ViewResultCtrl', function($scope, $location) {
+//   $scope.Projid = $stateParams.currentPid;
+//   $scope.ProjName = $stateParams.currentProj;)}
+// )
 .directive('tabset', function () {
   return {
     restrict: 'E',
     replace: true,
     transclude: true,
-    controller: function($scope) {
+    controller: function($scope,$stateParams) {
+      console.log($stateParams);
+      $scope.ProjName = $stateParams.currentProj;
       $scope.templateUrl = '';
       var tabs = $scope.tabs = [];
       var controller = this;

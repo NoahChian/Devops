@@ -1,6 +1,6 @@
 
 <div class="container-fluid">
-<form role="form" ng-submit="submit()" ng-button="create()">
+<form role="form" >
 	
 	<br></br>
 	<h1>新增成果內容</h1>
@@ -12,7 +12,7 @@
 	<div class = "row">
 		<div class="col-md-2 text-left">成果編號:</div>
 		<div class="input-group col-md-10">
-			<input type="text">
+			<input type="text" ng-model = "number"></input>	
 		</div>
 		<!-- 
 		
@@ -22,14 +22,14 @@
 	<div class = "row">
 		<div class="col-md-2 text-left">成果名稱:</div>
 		<div class="input-group col-md-10">
-			<input type="text" class="col-md-5">
+			<input type="text" class="col-md-5" ng-model = "name">
 		</div>
 	</div>
 	<br></br>
 	<div class = "row">
 		<div class="col-md-2 text-left">預計交付日期:</div>
 		<div class="input-group col-md-10">
-			<input type="text" name="">
+			<input type="text" name="" ng-model="deadline" ></input>
 			*monitor這個欄位,用來判斷是否發通知信,
 			輸入格式為：西元/月份/日期 ex:2016/03/09
 		</div>
@@ -40,7 +40,7 @@
 		<div class="col-md-2 text-left">
 			機密等級:
 		</div>
-		<div class="btn-group">
+		<div class="btn-group col-md-2">
 			<button type="button" class="btn btn-default">
 				{{SecretLv}}				
 			</button>
@@ -52,7 +52,37 @@
 				<li ng-repeat="select in subjects"><a ng-click="dropboxitemselected(select)">{{select}}</a></li>
 			</ul>	
 		</div>
-	</div>
+		<div class="col-md-2 text-left ">
+			是否交付:
+		</div>
+		<div class="btn-group col-md-2">
+			<button type="button" class="btn btn-default">
+				{{needSubmit}}				
+			</button>
+			<button type="button" class="btn btn-default dropdown-toggle" id ="dropdownmenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
+				<span class="caret"></span>
+				<span class="sr-only">Toggle dropdown</span>
+			</button>
+			<ul class="dropdown-menu" >
+				<li ng-repeat="select in submits"><a ng-click="dropboxitemselected2(select)">{{select}}</a></li>
+			</ul>	
+		</div>
+		<div class="col-md-2 text-left ">
+			是否上傳:
+		</div>
+		<div class="btn-group col-md-2">
+			<button type="button" class="btn btn-default">
+				{{upload}}				
+			</button>
+			<button type="button" class="btn btn-default dropdown-toggle" id ="dropdownmenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
+				<span class="caret"></span>
+				<span class="sr-only">Toggle dropdown</span>
+			</button>
+			<ul class="dropdown-menu" >
+				<li ng-repeat="select in uploads"><a ng-click="dropboxitemselected3(select)">{{select}}</a></li>
+			</ul>	
+		</div>		
+		</div>
 	<div class="row">
 		<div class="col-md-offset-2">
 			<h5>機密級：具有實際或潛在之經濟價值，於洩漏後足以使本會資訊安全或利益遭受重大損失之成果．機密級成果應由計畫/專案負責人建議，驚奇所屬之部門主管核定之．</h5>
@@ -64,7 +94,7 @@
 			預計送出審查日:
 		</div>
 		<div class="input-group" >
-			<input type="text" style="background-color:LightGrey" value="{{PreDeadLine}}" readonly>
+			<input type="text" style="background-color:LightGrey" value = "{{result(deadline)}}" readonly>
 			</input>(系統自動填入，預設為交付日前兩週)
 		</div>
 	</div>
@@ -79,20 +109,20 @@
 			<form role="form">
 				<div class="form-group">
 					<label for"sel1">已選名單</label>
-						<select multiple class="form-control" id="sel1">
-							<option ng-repeat="select in SeledName">{{select}}</option>
+						<select multiple class="form-control" id="sel1" ng-model = "multipleSelect1">
+							<option ng-repeat="select in selectedName"  >{{select}}</option>
 						</select>
 				</div>
 			</form>
 		</div>
 		<div class="col-md-1"><br><br>
 					<div class="col-md-1">
-						<button type="button" class="btn btn-default">
+						<button type="button" class="btn btn-default" ng-click=left(multipleSelect);>
 							<span class="glyphicon glyphicon-chevron-left" aria-hidden="true" ></span>					
 						</button>
 					</div><br><br>
 					<div class="col-md-1">
-						<button type="button" class="btn btn-default">
+						<button type="button" class="btn btn-default" ng-click=right(multipleSelect1);>
 							<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>					
 						</button>
 					</div>
@@ -101,8 +131,8 @@
 			<form role="form">
 				<div class="form-group">
 					<label for"sel2">可選名單</label>
-						<select multiple class="form-control" id="sel2">
-							<option ng-repeat="select in SelyetName">{{select}}</option>
+						<select multiple class="form-control" id="sel2" ng-model = "multipleSelect">
+							<option ng-repeat="select in selectYetName" >{{select}}</option>
 						</select>
 				</div>
 			</form>
@@ -116,10 +146,29 @@
 			非所內撰稿人:
 		</div>
 		<div class="input-group col-md-10">
-			<input type="text" class="col-md-5">
+			<input type="text" class="col-md-5" ng-model="who"/>
 		</div>
 	</div>
-	<br></br>
+	<br>
+
+		<div class="col-md-2 text-left ">
+			承辦人:
+		</div>
+		<div class="btn-group col-md-2">
+			<button type="button" class="btn btn-default">
+				{{assigned}}				
+			</button>
+			<button type="button" class="btn btn-default dropdown-toggle" id ="dropdownmenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
+				<span class="caret"></span>
+				<span class="sr-only">Toggle dropdown</span>
+			</button>
+			<ul class="dropdown-menu" >
+				<li ng-repeat="select in assigneds"><a ng-click="dropboxitemselected4(select)">{{select}}</a></li>
+			</ul>	
+		</div>
+	</br>
+	</br>	
+	</br>
 	<div class="row">
 		<div class="col-md-2 text-left">
 			實際完成日:
@@ -129,8 +178,9 @@
 			</input>(系統自動填入，去redmine取得主任核決得日期)NewResult
 		</div>
 	</div>
-	<br><br>
-	<button ui-sref="ResultList" type="submit" class="col-md-offset-2 btn btn-black btn-outline btn-lg" style="background:lightblue">新增</button>
+	<br>
+	<br>
+	<button ng-click="submit()" class="col-md-offset-2 btn btn-black btn-outline btn-lg" style="background:lightblue">新增</button>
 	<button ui-sref="ResultList" type="button" class="col-md-offset-1 btn btn-black btn-outline btn-lg" style="background:lightblue">取消</button>		
 			
 </form>

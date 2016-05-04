@@ -63,22 +63,23 @@ angular
             controller: 'ConversionCtrl'
           })
           .state('ResultList', { 
-            url: '/ResultList',
+            url: '/ResultList?currentProj&currentPid&state&quesnum&pre_finishdate',
             parent: 'dashboard',
             templateUrl: 'views/dashboard/ResultList.html',
-            controller: 'ResultListCtrl'
+            controller: 'ResultListCtrl',
+            //params: {param:null,}
           })
           .state('NewResult', { 
-            url: '/NewResult',
+            url: '/NewResult?currentProj&currentPid&state&quesnum',
             parent: 'dashboard',
             templateUrl: 'views/dashboard/NewResult.html',
             controller: 'NewResultCtrl'
           })
           .state('ViewResult', { 
-            url: '/ViewResult',
+            url: '/ViewResult?currentProj&currentPid&state&quesnum',
             parent: 'dashboard',
             templateUrl: 'views/dashboard/ViewResult.html',
-            //controller: 'ViewResultCtrl'
+           // controller: 'ViewResultCtrl'
           })
           .state('ProjList', { 
             url: '/ProjList',

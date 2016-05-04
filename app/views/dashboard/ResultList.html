@@ -1,5 +1,5 @@
 <div>
-	<a ui-sref="ViewResult" class="pull-right btn btn-primary btn-outline">修改歷程</a>
+	<a ui-sref="ViewResult({currentProj:ProjNam,state:ProjState,quesnum:QuesNum,currentPid:Projid})" class="pull-right btn btn-primary btn-outline">修改歷程</a>
 	<br></br>
 	<div class="col-md-2">
 		專案名稱：
@@ -19,14 +19,14 @@
 		送審問題單編號：
 	</div>
 	<div>
-		<span ng-bind ="QuesNum"></span>
+		<a href="http://140.92.144.26/issues/{{value.id}}" ng-repeat="(key,value) in QuesNum">{{value.id}}(v{{value.version}}) </a>
 	</div>		
 	<br><br>
-	<div class="pull-left btn btn-primary btn-outline">將成果清單送出審查</div>
+	<div class="pull-left btn btn-primary btn-outline " ng-click = "submitResultTicket()">將成果清單送出審查</div>
 	</div>
 	<br></br>
 	<hr style="width: 100% ; height: 3px; background-color: grey ;"/>
-	<div ui-sref="NewResult" class="pull-right btn btn-primary btn-outline">新增成果</div>
+	<div ui-sref="NewResult({currentProj:ProjNam,state:ProjState,quesnum:QuesNum,currentPid:Projid})" class="pull-right btn btn-primary btn-outline">新增成果</div>
 	<br></br><br>
 	<table class="table table-bordered">
 		
@@ -50,12 +50,12 @@
 		<tr ng-repeat="(key,value) in results">
 			<td><a href="{{value.resultid}}">{{value.resultid}}</a><span></td>
 			<td>{{value.resultname}}<span></td>
-			<td>{{value.sucurityclass}}<span></td>
+			<td>{{value.securityclass}}<span></td>
 			<td>{{value.editor}}<span></td>
 			<td>{{value.pre_sent}}<span></td>
-			<td>{{value.pre_verify}}<span></td>
+			<td>{{value.pre_veriify}}<span></td>
 			<td>{{value.act_finish}}<span></td>
-			<td><span></td>
+			<td></td>
 			
 		</tr>
 	</table>
