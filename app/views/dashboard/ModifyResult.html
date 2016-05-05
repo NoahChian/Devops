@@ -174,15 +174,15 @@
 			實際完成日:
 		</div>
 		<div class="input-group" >
-			<input type="text" style="background-color:lightgrey" value="{{PreDeadLine}}" readonly>
-			</input>(系統自動填入，去redmine取得主任核決得日期)NewResult
+			<input type="text" style="background-color:lightgrey" value="{{act_finish}}" readonly>
+			</input>(系統自動填入，去redmine取得主任核決得日期)
 		</div>
 	</div>
 	<br>
 	<br>
-	<button ng-click="submit()" class="col-md-offset-2 btn btn-black btn-outline btn-lg" style="background:lightblue">新增</button>
+	<button ng-click="submit()" class="col-md-offset-2 btn btn-black btn-outline btn-lg" ng-show="hidden4" style="background:lightblue">修改</button>
 	<button ui-sref="ResultList({currentProj:ProjName,currentPid:Projid,state:state,quesnum:quesnum,thisProject:thisProject})" type="button" class="col-md-offset-1 btn btn-black btn-outline btn-lg" style="background:lightblue">取消</button>		
-			
+	<button ng-click="reExmain()" class="col-md-offset-4 btn btn-black btn-outline btn-lg" ng-show="hidden5" style="background:lightblue">送出改版審查</button>			
 </form>
 <br><br><br>
 	

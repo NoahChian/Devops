@@ -22,15 +22,18 @@
 		<a href="http://140.92.144.26/issues/{{value.id}}" ng-repeat="(key,value) in QuesNum">{{value.id}}(v{{value.version}}) </a>
 	</div>		
 	<br><br>
-	<div class="pull-left btn btn-primary btn-outline " ng-click = "submitResultTicket()">將成果清單送出審查</div>
+	<div class="pull-left btn btn-primary btn-outline " ng-show="hidden2" ng-click = "submitResultTicket()">將成果清單送出審查</div>
+	</div>
+	<div class="pull-right btn btn-primary btn-outline " ng-show="hidden3" ng-click = "showemail()">看一下郵件內容</div>
 	</div>
 	<br></br>
 	<hr style="width: 100% ; height: 3px; background-color: grey ;"/>
-	<div ui-sref="NewResult({currentProj:ProjNam,state:ProjState,quesnum:QuesNum,currentPid:Projid})" class="pull-right btn btn-primary btn-outline">新增成果</div>
+	<div ui-sref="NewResult({currentProj:ProjNam,quesnum:quesnum,currentPid:Projid,state:ProjState,thisProject:id})" ng-show="hidden" class="pull-right btn btn-primary btn-outline">新增成果</div>
 	<br></br><br>
+
 	<table class="table table-bordered">
 		
-
+	
 
 
 
@@ -48,7 +51,7 @@
 		
 
 		<tr ng-repeat="(key,value) in results">
-			<td><a href="{{value.resultid}}">{{value.resultid}}</a><span></td>
+			<td><a ng-click="modifyResult(value)">{{value.resultid}}</a></td>
 			<td>{{value.resultname}}<span></td>
 			<td>{{value.securityclass}}<span></td>
 			<td>{{value.editor}}<span></td>

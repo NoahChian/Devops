@@ -11,7 +11,7 @@ angular.module('yapp')
   .controller('LoginCtrl', function($scope, $location, $http,MyVar) {
     $scope.name = null;
     $scope.pwd = null;
-    
+
     $scope.submit = function() {
       var name = $scope.name;
       var pwd = $scope.pwd ;
@@ -57,7 +57,10 @@ angular.module('yapp')
                         if(response.data._embedded!= null)
                         {
                           if(response.data._embedded.users[0].pwd == pwd){
-                            MyVar.name = response.data._embedded.users[0].name;
+                            //MyVar.name = response.data._embedded.users[0].name;
+                           // console.log(response.data._embedded.users[0].name);
+                            document.cookie = "name="+response.data._embedded.users[0].name;
+                           // console.log(document.cookie);
                             $location.path('/dashboard');
                             return false; 
                           }

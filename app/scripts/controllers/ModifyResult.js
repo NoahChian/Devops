@@ -7,19 +7,29 @@
  * Controller of yapp
  */
 angular.module('yapp')
-  .controller('NewResultCtrl', function($scope,MyVar,$stateParams,$http,$location) {
+  .controller('ModifyResultCtrl', function($scope,MyVar,$stateParams,$http,$location) {
   //	console.log($stateParams);
   //	return false;
   	$scope.Projid = $stateParams.currentPid;
   	$scope.ProjName = $stateParams.currentProj;
   	$scope.quesnum = $stateParams.quesnum;
   	$scope.state = $stateParams.state;
-
+  	$scope.name = $stateParams.name;
   	$scope.thisProject = $stateParams.thisProject;
 
+  console.log($stateParams.redmineIssueId);
 	$scope.pre_date = "";
 	$scope.number = ""
 	$scope.who = ""
+  if($scope.state!="已送審")
+  { 
+    $scope.hidden4 = true;
+    $scope.hidden5 = true;
+  }else
+  {
+    $scope.hidden4 = false;
+    $scope.hidden5 = false;
+  }
 
 	$scope.result = function (x){
 		var date = new Date(x);
@@ -27,10 +37,60 @@ angular.module('yapp')
 		$scope.pre_date = date.getFullYear()+'/'+(date.getMonth()+1)+'/'+date.getDate();
 		return $scope.pre_date;
 	}	
-   
+  $scope.selectedName = [];
+  $scope.selectYetName = [];
+  $scope.selectYetNameID = [];
+  var edit = []
+  setData($stateParams.redmineIssueId);
+  function setData(redmineIssueId){
+      $http(
+                 {
+                     method: 'GET',
+                     url: 'http://'+MyVar.BackApiUrl+'/TodoService/results/search/findByRedmineIssueId?redmineIssueId='+redmineIssueId
+                } 
+             ).then(function (response)  { 
+                      var result = response.data._embedded.results[0];
+                      console.log(result);
+                      $scope.SecretLv = result.securityclass;
+                      $scope.needSubmit = result.submit;       
+                      $scope.upload = result.upload;
+                      $scope.name = result.resultname;
+                      $scope.deadline = result.pre_sent;
+                      $scope.number = result.resultid;
+                      $scope.act_finish = result.act_finish;
+                      select(result.editor);
+                      function select(editor){
+                          edit = editor.split(',');
+                      }
+                      getAssigned(redmineIssueId);
+                      function getAssigned(redmineIssueId){
+                      //  console.log("in");
+                        $http(
+                          {
+                            method: 'GET',
+                            url: 'http://'+MyVar.redmineApiUrl+'/issues/'+redmineIssueId+'.json?key=f69bf52b02b565b2bdd354ebd208b87eb8c620d9', 
+                          }
+                          ).then(function (response){
+                              $scope.assigned = response.data.issue.assigned_to.name;
+                              getmember();
 
+                          },function (err){
+                              console.log(err);
+                          }); 
+                      }
+                    },
+                    function (err) {
+                      if(err.status==409)
+                        alert("上傳devopsDB失敗");
+                        console.log(err);
+                        console.log('this is a error');
+                   }
+        );
+    
 
-    $scope.SecretLv = "普通級";
+  }
+
+  $scope.SecretLv = "普通級";
 	$scope.subjects = [
 	'普通級','密級','機密級'
   	];
@@ -44,9 +104,6 @@ angular.module('yapp')
   	];
 
 
-	$scope.selectedName = [];
-  	$scope.selectYetName = [];
-  	$scope.selectYetNameID = [];
   	
 	$scope.assigneds = [];
 	$scope.assigned = "無";
@@ -100,23 +157,48 @@ angular.module('yapp')
 	}
 
 
-	getmember();
 	function getmember(){
  		$http(
                 {
                      method: 'GET',
-                     url: 'http://'+MyVar.redmineApiUrl+'/projects/'+$scope.Projid+'/memberships.json?key=f69bf52b02b565b2bdd354ebd208b87eb8c620d9', 
+                     url: 'http://'+MyVar.redmineApiUrl+'/projects/'+$scope.Projid+'/memberships.json?limit=100&key=f69bf52b02b565b2bdd354ebd208b87eb8c620d9', 
                }
                              ).then(function (response) {
                                         var objects = response.data.memberships;
                                         var key = Object.keys(objects).length;
                                         for(var i=0;i<key;i++){
-                                        	$scope.selectYetName.push(objects[i].user.name);
-                                        	$scope.selectYetNameID.push({'name':objects[i].user.name.toString(),'id':objects[i].user.id.toString()});
+                                          var find = 0
+                                        	for(t=0;t<Object.keys(edit).length;t++)  
+                                          {  
+                                            if(objects[i].user.name==edit[t])
+                                            {  
+                                              $scope.selectedName.push(objects[i].user.name);
+                                              find = 1;
+                                              var L = edit.length;
+                                              for(var x = 0;x<L;x++){
+                                                if(edit[x]==objects[i].user.name)
+                                                  edit.splice(x,1);
+                                              }
+                                              break;
+                                            }
+                                          }
+                                          if(find==0)
+                                          {
+                                            $scope.selectYetName.push(objects[i].user.name);
+                                            $scope.selectYetNameID.push({'name':objects[i].user.name.toString(),'id':objects[i].user.id.toString()});
+                                          }
+
                                         	$scope.assigneds.push(objects[i].user.name);
                                         }
 									    // console.log($scope.selectYetNameID);
-                                                                      	
+                                              var L = edit.length;
+                                              for(var x = 0;x<L;x++){
+                                                if(x>0)
+                                                  $scope.who = $scope.who+','+edit[x];
+                                                else
+                                                  $scope.who = edit[x];  
+                                              }
+                                                                	
                                     }, 
                                     function (err) {
                                         if(err.status==409)
@@ -224,7 +306,7 @@ angular.module('yapp')
     		'{"id":51,"value":"'+ finalEditor+'"}'+//撰稿人
     		']}}';
    
- //  	var json ='{"issue":{"project_id":206,"subject":"465q6","assigned_to_id":20,"tracker_id":7,"custom_fields":[{"id":46,"value":"v1.0"},{"id":48,"value":"機密級"},{"id":49,"value":"否"},{"id":50,"value":"是"},{"id":47,"value":"a1234567891011"},{"id":51,"value":"歐 世文"}]}}';
+   //	var json ='{"issue":{"project_id":206,"subject":"465q6","assigned_to_id":20,"tracker_id":7,"custom_fields":[{"id":46,"value":"v1.0"},{"id":48,"value":"機密級"},{"id":49,"value":"否"},{"id":50,"value":"是"},{"id":47,"value":"a1234567891011"},{"id":51,"value":"歐 世文"}]}}';
 
 		     $http(
                 {
@@ -296,7 +378,7 @@ angular.module('yapp')
                         createVersion(JSON.parse(data));
 //                        alert("新增成功");      
  //						$location.path('/dashboard/ResultList');
-                      	console.log(response);
+                      
                     }, 
                     function (err) {
                     	if(err.status==409)

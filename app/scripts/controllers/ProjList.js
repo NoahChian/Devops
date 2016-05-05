@@ -24,7 +24,7 @@ angular.module('yapp')
              $http(
                  {
                      method: 'GET',
-                     url: 'http://'+MyVar.redmineApiUrl+'/projects/owner-ben/memberships.json&key=f69bf52b02b565b2bdd354ebd208b87eb8c620d9', 
+                     url: 'http://'+MyVar.redmineApiUrl+'/projects.json?limit=100&offset='+x+'&key=f69bf52b02b565b2bdd354ebd208b87eb8c620d9', 
                  }
              ).then(function (response) {
                      //   console.log(response);  
@@ -213,30 +213,54 @@ angular.module('yapp')
 
     function search(i){                 //搜查每個專案的版本１．０的成果清單審查單並顯示
          var status = 14;
-        $http(
+         var responseSum =[];
+         searchIssue(0);
+         function searchIssue(offset){
+            $http(
                  {
                      method: 'GET',
-                     url: 'http://'+MyVar.redmineApiUrl+'/issues.json?project_id='+$scope.obj[i].projid+'&status_id='+status+'&key=f69bf52b02b565b2bdd354ebd208b87eb8c620d9', 
+                     url: 'http://'+MyVar.redmineApiUrl+'/issues.json?project_id='+$scope.obj[i].projid+'&status_id='+status+'&offset='+offset+'&limit=100&key=f69bf52b02b565b2bdd354ebd208b87eb8c620d9', 
                  }
              ).then(function (response) {
-                        //console.log(response);  
-                        if(response.data.total_count!=0){
+                       if((offset+100) < response.data.total_count)
+                       {
+                                for(var x=offset;x<offset+100;x++){
+                                    responseSum[offset+x] = response.data.issues[x];
+                                }
+                            searchIssue(offset+100);    
+                       }else{
+                          for(var x=offset;x<offset+response.data.total_count;x++){
+                                    responseSum[offset+x] = response.data.issues[x];
+                                }
+                            updataState(responseSum);
+                       }
+                    }, 
+                    function (err) {
+                        console.log(err);
+                        console.log('this is a error');
+                        console.log(err.stack);
+                    }
+            ); 
+        }
+            function updataState(responseSum){
+    
+                        if(Object.keys(responseSum).length!=0){
                         //  console.log(response.data.total_count);  
-                            for(var x=0;x<response.data.total_count;x++){
+                            for(var x=0;x<Object.keys(responseSum).length;x++){
                                    // console.log(response.data.issues[x].tracker.name);  
-                                if(response.data.issues[x].tracker.name=="成果清單審查單"){
-                                    var k = Object.keys(response.data.issues[x].custom_fields).length;  //有幾個欄位
+                                if(responseSum[x].tracker.name=="成果清單審查單"){
+                                    var k = Object.keys(responseSum[x].custom_fields).length;  //有幾個欄位
                                     //  console.log(k);  
                                     for(var j=0;j<k;j++){
                                       //  console.log(response.data.issues[x]);
-                                        if(response.data.issues[x].custom_fields[j].name=="版次"&&response.data.issues[x].custom_fields[j].value=="1.0"){
+                                        if(responseSum[x].custom_fields[j].name=="版次"&&responseSum[x].custom_fields[j].value=="1.0"){
                                            // console.log("find : i="+i);
                                            
 
                                             $http(
                                             {
                                                 method: 'GET',
-                                                url: 'http://'+MyVar.redmineApiUrl+'/issues/'+response.data.issues[x].id+'.json?include=journals&key=f69bf52b02b565b2bdd354ebd208b87eb8c620d9'
+                                                url: 'http://'+MyVar.redmineApiUrl+'/issues/'+responseSum[x].id+'.json?include=journals&key=f69bf52b02b565b2bdd354ebd208b87eb8c620d9'
                                             }
                                                 ).then(
                                                 function (response2){
@@ -250,6 +274,7 @@ angular.module('yapp')
                                                 //                console.log(response2.data.issue.journals[l].created_on);
                                                 
                                                                 $scope.obj[i].act_finishdate = response2.data.issue.journals[l].created_on;
+                                                                console.log($scope.obj[i].act_finishdate);
                                                                 $scope.obj[i].act_finishdate = $scope.obj[i].act_finishdate.match("(.*)T")[1];
                                                                 backup_devops = $scope.obj;
                                                             }
@@ -269,13 +294,7 @@ angular.module('yapp')
                                 }
                             }
                         }
-                    }, 
-                    function (err) {
-                        console.log(err);
-                        console.log('this is a error');
-                        console.log(err.stack);
-                    }
-             ) 
+            }
 
     }
 
@@ -370,8 +389,8 @@ angular.module('yapp')
         MyVar.quesnum = z;
         MyVar.currentPid = w ;
 
-      //  console.log($scope.obj);
-        $location.path('/dashboard/ResultList').search({currentProj:x,state:y,quesnum:z,currentPid:w,pre_finishdate:s});
+       // console.log(s);
+        $location.path('/dashboard/ResultList').search({currentProj:x,state:y,quesnum:z,currentPid:w,thisProject:s});
     }
 
 

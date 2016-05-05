@@ -11,7 +11,7 @@
 angular
   .module('yapp', [
     'ui.router',
-    'ngAnimate',
+    'ngAnimate'
   ])
 
   .config(function($stateProvider, $urlRouterProvider) {
@@ -63,20 +63,26 @@ angular
             controller: 'ConversionCtrl'
           })
           .state('ResultList', { 
-            url: '/ResultList?currentProj&currentPid&state&quesnum&pre_finishdate',
+            url: '/ResultList?currentProj&currentPid&state&quesnum&thisProject',
             parent: 'dashboard',
             templateUrl: 'views/dashboard/ResultList.html',
             controller: 'ResultListCtrl',
             //params: {param:null,}
           })
           .state('NewResult', { 
-            url: '/NewResult?currentProj&currentPid&state&quesnum',
+            url: '/NewResult?currentProj&currentPid&state&quesnum&thisProject',
             parent: 'dashboard',
             templateUrl: 'views/dashboard/NewResult.html',
             controller: 'NewResultCtrl'
           })
+          .state('ModifyResult', { 
+            url: '/ModifyResult?currentProj&currentPid&state&quesnum&thisProject&redmineIssueId',
+            parent: 'dashboard',
+            templateUrl: 'views/dashboard/ModifyResult.html',
+            controller: 'ModifyResultCtrl'
+          })
           .state('ViewResult', { 
-            url: '/ViewResult?currentProj&currentPid&state&quesnum',
+            url: '/ViewResult?currentProj&currentPid&state&quesnum&thisProject',
             parent: 'dashboard',
             templateUrl: 'views/dashboard/ViewResult.html',
            // controller: 'ViewResultCtrl'
@@ -106,6 +112,6 @@ angular
   this.quesnum = null;
   this.BackApiUrl = "140.92.142.9:8081";
   this.redmineApiUrl = "140.92.144.26";
-  
+  this.FrontUrl = "140.92.142.9:9000";
 });
 

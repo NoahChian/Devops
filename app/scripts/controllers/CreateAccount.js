@@ -8,6 +8,9 @@
  */
 angular.module('yapp')
   .controller('CreateAccountCtrl',function($scope,  $location,$http) {
+
+
+
     $scope.id = null;
     $scope.firstname = null;
     $scope.secondname = null;
