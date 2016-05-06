@@ -389,7 +389,7 @@ angular.module('yapp')
         MyVar.quesnum = z;
         MyVar.currentPid = w ;
 
-       // console.log(s);
+        console.log($scope.obj);
         $location.path('/dashboard/ResultList').search({currentProj:x,state:y,quesnum:z,currentPid:w,thisProject:s});
     }
 

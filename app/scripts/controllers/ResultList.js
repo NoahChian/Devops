@@ -22,9 +22,10 @@ angular.module('yapp')
     $scope.hidden2 =true;
     $scope.hidden3 =false;
     var QA = [];
-  	var member = [];
+  	var member = []; 
     var lastversiondate="";
     run();
+
 
 
     $scope.showemail=function(){
@@ -65,7 +66,7 @@ angular.module('yapp')
                      }
                  ).then(function (response) {
                             console.log(response.data);
-                          
+                            $scope.hidden3 = false;
 
                         }, 
                         function (err) {
@@ -165,8 +166,7 @@ angular.module('yapp')
         ',"tracker_id":6'+
         ',"custom_fields":[{"id":46,"value":"'+$scope.version+
         '"}],"description":"「'+ $scope.ProjNam +'」成果清單網址'+
-        '<br>http://'+MyVar.FrontUrl+'/#/dashboard/ResultList?currentProj='+$stateParams.currentProj+'&state='+$stateParams.state+'&quesnum='+$stateParams.quesnum+
-        '&currentPid='+$stateParams.currentPid+'&thisProject='+$stateParams.thisProject+
+        '<br><p>http://'+MyVar.FrontUrl+'/#/dashboard/ResultList?currentProj='+$stateParams.currentProj+'&state='+$stateParams.state+'&quesnum='+$stateParams.quesnum+'&currentPid='+$stateParams.currentPid+'&thisProject='+$stateParams.thisProject+'</p>'+
         '<br>審查重點：'+
         '<br>成果清單建立，係依據簽約版計畫書、契約或合作備忘錄。'+
         '<br>◎成果名稱是否與成果「類別」歸屬相符->依據本會技術、原型、著作成果保管辦法'+
@@ -176,13 +176,13 @@ angular.module('yapp')
         '<br>成果類別代碼(成果編碼第11碼)之認定，請參閱「技術、原型、著作成果保管辦法」之規定。'+
         '","status_id":15'+
         '}}';
-        //console.log(JSON.parse(json));
+        console.log(json);
       var mail = '{subject":"「'+ $scope.ProjNam +'」成果清單'+'V'+$scope.version+'待送審'+
         '","assigned_to_id":"'+QA[1]+
         '","description":"'+QA[1]+'同仁您好：'+
           '<br>　您有一筆成果清單審查單待處理，請登入「IDEAS專案管理系統」進行審查，謝謝！'+
           '<br>'+
-          '<br>'+$scope.ProjNam+'專案成果清單網址：http://'+ MyVar.FrontUrl+'/#/dashboard/ResultList?currentProj='+$stateParams.currentProj+'&state='+$stateParams.state+'&quesnum='+$stateParams.quesnum+
+          '<br>'+$scope.ProjNam+'專案成果清單網址： http://'+ MyVar.FrontUrl+'/#/dashboard/ResultList?currentProj='+$stateParams.currentProj+'&state='+$stateParams.state+'&quesnum='+$stateParams.quesnum+
           '&currentPid='+$stateParams.currentPid+'&thisProject='+$stateParams.thisProject+
           '<br>「IDEAS專案管理系統」網址：http://'+MyVar.FrontUrl+
           '<br>審查單送出時間：'+ gettime +
@@ -206,7 +206,7 @@ angular.module('yapp')
         }
       ).then(function (response){
                     console.log(response);
-                    var json = '{"ques_number":'+response.data.issue.id+',"state":"尚未寄出郵件"}';
+                    var json = '{"ques_number":'+response.data.issue.id+',"state":"已送審"}';
                     $stateParams.quesnum = response.data.issue.id;
                     console.log($scope.id);
                     $http(
@@ -243,6 +243,10 @@ angular.module('yapp')
         console.log(err);
       });
       
+
+
+
+
 
     }else{
       console.log("no");
@@ -308,7 +312,7 @@ angular.module('yapp')
                           for(var x=offset;x<offset+response.data.total_count;x++){
                                     responseSum[offset+x] = response.data.issues[x];
                                 }
-                            updataState(responseSum);
+                            updataIssues(responseSum);
                        }
                     }, 
                     function (err) {
@@ -318,7 +322,7 @@ angular.module('yapp')
                     }
             ); 
         }
-        function updataState(responseSum){
+        function updataIssues(responseSum){
           $scope.QuesNum = [];
             if(Object.keys(responseSum).length!=0){       //如果有找到任何issue
            //   console.log(response.data.total_count);
@@ -335,36 +339,73 @@ angular.module('yapp')
                                $scope.QuesNum.push({version:responseSum[x].custom_fields[j].value,status:responseSum[x].status.name,id:responseSum[x].id});
                                //console.log($stateParams.quesnum);
                                //console.log(response.data.issues[x].id);
-                               
-                               if($stateParams.quesnum == responseSum[x].id)
-                               {
-                                 // console.log(response.data.issues[x]);
-                                  lastversiondate = new Date(responseSum[x].updated_on.match("(.*)T")[1]);
-                                 // console.log(lastversiondate);
-                                  
-                                  $scope.version = responseSum[x].custom_fields[j].value;
-                                 // console.log("version change "+$stateParams.quesnum+":"+$scope.version);
-                                  if(responseSum[x].status.name=="已審查待核決"||responseSum[x].status.name=="已送出待審查")
-                                    {
-                                      $scope.ProjState = "已送審";
-                                      $scope.hidden =false;
-                                      $scope.hidden2 =false;
+                            
+                                 if($stateParams.quesnum == responseSum[x].id)
+                                 {
+                                   // console.log(response.data.issues[x]);
+                                    lastversiondate = new Date(responseSum[x].updated_on.match("(.*)T")[1]);
+                                   // console.log(lastversiondate);  
+                                    $scope.version = responseSum[x].custom_fields[j].value;
+                                   // console.log("version change "+$stateParams.quesnum+":"+$scope.version);
+                                    if($scope.ProjState=="已送審"||$scope.ProjState=="已退回"){
+
+                                          function changestate(ProjState){                                          
+                                          var json = '{"state":"'+ProjState+'"}';
+                                          $http(
+                                                      {
+                                                           method: 'PATCH',
+                                                           url: 'http://'+MyVar.BackApiUrl+'/TodoService/projects/'+$scope.id,
+                                                           headers: { 
+                                                              'cache-control': 'no-cache',
+                                                              'content-type': 'application/json',
+                                                          
+                                                           },                                   
+                                                           data: JSON.parse(json),
+                                                           json: true 
+                                                       }
+                                                   ).then(function (response) {
+                                                              console.log("狀態改變");
+                                                              console.log(response.data);
+                                                          }, 
+                                                          function (err) {
+                                                              if(err.status==409)
+                                                                  alert("同步失敗");
+                                                              console.log(err);
+                                                              console.log('this is a error');
+                                                         }
+                                          )
+
+                                        }
+                                        if(responseSum[x].status.name=="已審查待核決"||responseSum[x].status.name=="已送出待審查"||responseSum[x].status.name=="已修正待審查")
+                                          {
+                                            $scope.ProjState = "已送審";
+                                            $scope.hidden =false;
+                                            $scope.hidden2 =false;
+
+
+                                          }
+                                        else if(responseSum[x].status.name=="已核決")
+                                          {
+                                            $scope.ProjState = "已核決";
+                                            $scope.hidden =true;
+                                            $scope.hidden2 =false;
+                                            $scope.hidden3 =true;
+                                          }
+                                        else if(responseSum[x].status.name=="已退回待修正")
+                                        {
+                                          $scope.ProjState = "已退回";
+                                          $scope.hidden =true;
+                                          $scope.hidden2 =false;
+                                        }
+                                          changestate($scope.ProjState);
                                     }
-                                  else if(responseSum[x].status.name=="已核決")
-                                    {
-                                      $scope.ProjState = "已核決";
-                                      $scope.hidden =true;
-                                      $scope.hidden2 =true;
-                                      $scope.hidden3 =true;
-                                    }
-                                  else if(responseSum[x].status.name=="已退回待修正")
-                                  {
-                                    $scope.ProjState = "已退回";
-                                    $scope.hidden =true;
-                                    $scope.hidden2 =true;
-                                  }
-                                                
-                               } 
+                                    if($stateParams.state=="已送出郵件"){
+                                            $scope.ProjState = "已核決";
+                                            $scope.hidden =true;
+                                            $scope.hidden2 =false;
+                                    }  
+                                }
+
                             }
                         }
                     }
@@ -385,7 +426,7 @@ angular.module('yapp')
     }
     $scope.modifyResult = function (result){
 
-      $location.path('/dashboard/ModifyResult').search({currentProj:$stateParams.currentProj,quesnum:$stateParams.quesnum,state:$scope.ProjState,currentPid:$stateParams.currentPid,thisProject:$stateParams.thisProject,redmineIssueId:result.redmineIssueId});
+      $location.path('/dashboard/ModifyResult').search({currentProj:$stateParams.currentProj,quesnum:$stateParams.quesnum,state:$scope.ProjState,currentPid:$stateParams.currentPid,thisProject:$stateParams.thisProject,redmineIssueId:result.id});
       console.log(result);
     }
    

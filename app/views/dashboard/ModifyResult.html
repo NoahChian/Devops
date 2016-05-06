@@ -12,7 +12,7 @@
 	<div class = "row">
 		<div class="col-md-2 text-left">成果編號:</div>
 		<div class="input-group col-md-10">
-			<input type="text" ng-model = "number"></input>	
+			<input type="text" ng-model = "number" ng-disabled="justview"></input>	
 		</div>
 		<!-- 
 		
@@ -22,14 +22,14 @@
 	<div class = "row">
 		<div class="col-md-2 text-left">成果名稱:</div>
 		<div class="input-group col-md-10">
-			<input type="text" class="col-md-5" ng-model = "name">
+			<input type="text" class="col-md-5" ng-disabled="justview" ng-model = "name">
 		</div>
 	</div>
 	<br></br>
 	<div class = "row">
 		<div class="col-md-2 text-left">預計交付日期:</div>
 		<div class="input-group col-md-10">
-			<input type="text" name="" ng-model="deadline" ></input>
+			<input type="text" name="" ng-disabled="justview" ng-model="deadline" ></input>
 			*monitor這個欄位,用來判斷是否發通知信,
 			輸入格式為：西元/月份/日期 ex:2016/03/09
 		</div>
@@ -44,12 +44,12 @@
 			<button type="button" class="btn btn-default">
 				{{SecretLv}}				
 			</button>
-			<button type="button" class="btn btn-default dropdown-toggle" id ="dropdownmenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
+			<button type="button" ng-disabled="justview" class="btn btn-default dropdown-toggle" id ="dropdownmenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
 				<span class="caret"></span>
 				<span class="sr-only">Toggle dropdown</span>
 			</button>
 			<ul class="dropdown-menu" >
-				<li ng-repeat="select in subjects"><a ng-click="dropboxitemselected(select)">{{select}}</a></li>
+				<li ng-repeat="select in subjects"><a  ng-click="dropboxitemselected(select)">{{select}}</a></li>
 			</ul>	
 		</div>
 		<div class="col-md-2 text-left ">
@@ -59,7 +59,7 @@
 			<button type="button" class="btn btn-default">
 				{{needSubmit}}				
 			</button>
-			<button type="button" class="btn btn-default dropdown-toggle" id ="dropdownmenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
+			<button type="button" ng-disabled="justview" class="btn btn-default dropdown-toggle" id ="dropdownmenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
 				<span class="caret"></span>
 				<span class="sr-only">Toggle dropdown</span>
 			</button>
@@ -74,7 +74,7 @@
 			<button type="button" class="btn btn-default">
 				{{upload}}				
 			</button>
-			<button type="button" class="btn btn-default dropdown-toggle" id ="dropdownmenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
+			<button type="button" ng-disabled="justview" class="btn btn-default dropdown-toggle" id ="dropdownmenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
 				<span class="caret"></span>
 				<span class="sr-only">Toggle dropdown</span>
 			</button>
@@ -110,7 +110,7 @@
 				<div class="form-group">
 					<label for"sel1">已選名單</label>
 						<select multiple class="form-control" id="sel1" ng-model = "multipleSelect1">
-							<option ng-repeat="select in selectedName"  >{{select}}</option>
+							<option ng-repeat="select in selectedName" ng-disabled="justview"  >{{select}}</option>
 						</select>
 				</div>
 			</form>
@@ -132,7 +132,7 @@
 				<div class="form-group">
 					<label for"sel2">可選名單</label>
 						<select multiple class="form-control" id="sel2" ng-model = "multipleSelect">
-							<option ng-repeat="select in selectYetName" >{{select}}</option>
+							<option ng-repeat="select in selectYetName" ng-disabled="justview" >{{select}}</option>
 						</select>
 				</div>
 			</form>
@@ -146,7 +146,7 @@
 			非所內撰稿人:
 		</div>
 		<div class="input-group col-md-10">
-			<input type="text" class="col-md-5" ng-model="who"/>
+			<input type="text" class="col-md-5" ng-disabled="justview" ng-model="who"/>
 		</div>
 	</div>
 	<br>
@@ -158,12 +158,12 @@
 			<button type="button" class="btn btn-default">
 				{{assigned}}				
 			</button>
-			<button type="button" class="btn btn-default dropdown-toggle" id ="dropdownmenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
+			<button type="button" class="btn btn-default dropdown-toggle" ng-disabled="justview" id ="dropdownmenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
 				<span class="caret"></span>
 				<span class="sr-only">Toggle dropdown</span>
 			</button>
 			<ul class="dropdown-menu" >
-				<li ng-repeat="select in assigneds"><a ng-click="dropboxitemselected4(select)">{{select}}</a></li>
+				<li ng-repeat="select in assigneds"><a  ng-click="dropboxitemselected4(select)">{{select}}</a></li>
 			</ul>	
 		</div>
 	</br>
@@ -181,7 +181,7 @@
 	<br>
 	<br>
 	<button ng-click="submit()" class="col-md-offset-2 btn btn-black btn-outline btn-lg" ng-show="hidden4" style="background:lightblue">修改</button>
-	<button ui-sref="ResultList({currentProj:ProjName,currentPid:Projid,state:state,quesnum:quesnum,thisProject:thisProject})" type="button" class="col-md-offset-1 btn btn-black btn-outline btn-lg" style="background:lightblue">取消</button>		
+	<button ui-sref="ResultList({currentProj:ProjName,currentPid:Projid,state:state,quesnum:quesnum,thisProject:thisProject})" type="button" class="col-md-offset-1 btn btn-black btn-outline btn-lg" style="background:lightblue" id="btncancel">{{btncancel}}</button>		
 	<button ng-click="reExmain()" class="col-md-offset-4 btn btn-black btn-outline btn-lg" ng-show="hidden5" style="background:lightblue">送出改版審查</button>			
 </form>
 <br><br><br>

@@ -16,20 +16,32 @@ angular.module('yapp')
   	$scope.state = $stateParams.state;
   	$scope.name = $stateParams.name;
   	$scope.thisProject = $stateParams.thisProject;
+    
+  $scope.assigneds = [];
+  $scope.assigned = "無";
+  $scope.hidden5 =false;
+
+  $scope.important = {};
+
+
 
   console.log($stateParams.redmineIssueId);
 	$scope.pre_date = "";
 	$scope.number = ""
 	$scope.who = ""
   if($scope.state!="已送審")
-  { 
+  {
+    $scope.btncancel = "取消";
+    $scope.justview = false;
     $scope.hidden4 = true;
-    $scope.hidden5 = true;
   }else
   {
+    console.log("test");
+    $scope.btncancel = "返回";
+    $scope.justview = true;
     $scope.hidden4 = false;
-    $scope.hidden5 = false;
   }
+
 
 	$scope.result = function (x){
 		var date = new Date(x);
@@ -42,14 +54,14 @@ angular.module('yapp')
   $scope.selectYetNameID = [];
   var edit = []
   setData($stateParams.redmineIssueId);
-  function setData(redmineIssueId){
+  function setData(IssueId){
       $http(
                  {
                      method: 'GET',
-                     url: 'http://'+MyVar.BackApiUrl+'/TodoService/results/search/findByRedmineIssueId?redmineIssueId='+redmineIssueId
+                     url: 'http://'+MyVar.BackApiUrl+'/TodoService/results/'+IssueId
                 } 
              ).then(function (response)  { 
-                      var result = response.data._embedded.results[0];
+                      var result = response.data;
                       console.log(result);
                       $scope.SecretLv = result.securityclass;
                       $scope.needSubmit = result.submit;       
@@ -58,26 +70,28 @@ angular.module('yapp')
                       $scope.deadline = result.pre_sent;
                       $scope.number = result.resultid;
                       $scope.act_finish = result.act_finish;
+                      $scope.assigned = result.assigned;
+                      $scope.version = result.version;
+
+                      $scope.important.SecretLv = result.securityclass;
+                      $scope.important.deadline = result.pre_sent;
+                      $scope.important.name = result.resultname;
+                      $scope.important.number = result.resultid;
+
                       select(result.editor);
                       function select(editor){
                           edit = editor.split(',');
                       }
-                      getAssigned(redmineIssueId);
-                      function getAssigned(redmineIssueId){
-                      //  console.log("in");
-                        $http(
+                      if($scope.state=="已核決"){
+                        if(result.redmineIssueId!=null)
                           {
-                            method: 'GET',
-                            url: 'http://'+MyVar.redmineApiUrl+'/issues/'+redmineIssueId+'.json?key=f69bf52b02b565b2bdd354ebd208b87eb8c620d9', 
+                            checkIssueClose(result.redmineIssueId);                            
                           }
-                          ).then(function (response){
-                              $scope.assigned = response.data.issue.assigned_to.name;
-                              getmember();
-
-                          },function (err){
-                              console.log(err);
-                          }); 
+      
                       }
+                       getmember();
+
+
                     },
                     function (err) {
                       if(err.status==409)
@@ -89,6 +103,26 @@ angular.module('yapp')
     
 
   }
+
+  function checkIssueClose(Issue){
+    console.log(Issue)
+    $http(
+    {
+           method: 'GET',
+           url: 'http://'+MyVar.redmineApiUrl+'/issues/'+Issue+'.json?key=f69bf52b02b565b2bdd354ebd208b87eb8c620d9'
+        } 
+      ).then(function (response){
+       //  console.log("here");
+        console.log(response);
+        if(response.data.issue.status.name=="Closed")
+          $scope.hidden5 =true;
+        else
+          $scope.hidden5 =false;
+      },function (err){
+        console.log(err);
+      }); 
+  }
+
 
   $scope.SecretLv = "普通級";
 	$scope.subjects = [
@@ -104,9 +138,7 @@ angular.module('yapp')
   	];
 
 
-  	
-	$scope.assigneds = [];
-	$scope.assigned = "無";
+
 
 	$scope.dropboxitemselected2 = function(item){
 		$scope.needSubmit = item;
@@ -293,91 +325,59 @@ angular.module('yapp')
     			id = $scope.selectYetNameID[i].id;
 
     	var finalEditor = $scope.selectedName+','+$scope.who;
+      
+      var json = '{"projid":'+$scope.Projid+
+      ',"redmineIssueId":""'+
+      ',"resultid":"'+$scope.number+
+      '","resultname":"'+$scope.name+
+      '","submit":"'+$scope.needSubmit+
+      '","upload":"'+$scope.upload+
+      '","securityclass":"'+$scope.SecretLv+
+      '","editor":"'+finalEditor+
+      '","assigned":"'+$scope.assigned+
+      '","pre_sent":"'+$scope.deadline+
+      '","pre_veriify":"'+$scope.pre_date+
+      '","version":"'+$scope.version+
+      '","act_finish":"'+
+      '","disable":'+false+
+      '}';
 
-    	var json = '{"issue":{"project_id":'+$scope.Projid+
-    		',"subject":"'+$scope.name+
-    		'","assigned_to_id":'+id+
-    		',"tracker_id":7'+
-    		',"custom_fields":[{"id":46,"value":"v1.0"},'+//版本
-    		'{"id":48,"value":"'+$scope.SecretLv+'"},'+//機密
-    		'{"id":49,"value":"'+ $scope.needSubmit+'"},'+	//是否上傳	
-    		'{"id":50,"value":"'+ $scope.upload+'"},'+//是否上傳
-    		'{"id":47,"value":"'+ $scope.number+'"},'+//編號 
-    		'{"id":51,"value":"'+ finalEditor+'"}'+//撰稿人
-    		']}}';
-   
-   //	var json ='{"issue":{"project_id":206,"subject":"465q6","assigned_to_id":20,"tracker_id":7,"custom_fields":[{"id":46,"value":"v1.0"},{"id":48,"value":"機密級"},{"id":49,"value":"否"},{"id":50,"value":"是"},{"id":47,"value":"a1234567891011"},{"id":51,"value":"歐 世文"}]}}';
 
-		     $http(
-                {
-                     method: 'POST',
-                     url: 'http://'+MyVar.redmineApiUrl+'/issues.json?key=f69bf52b02b565b2bdd354ebd208b87eb8c620d9',
-                  
-                      headers: {
-					    'content-type': 'application/json, text/plain, * / *',
-					 },
-					 data: JSON.parse(json),
-					 json: true ,
-        	        }
-                             ).then(function (response) {
-                                     	//alert("新增成功");
-                                     	insertDevopsDB(response.data.issue);
-                                    }, 
-                                    function (err) {
-                                        if(err.status==409)
-                                            alert("上傳redmine失敗");
-                                        console.log(err);
-                                        console.log('this is a error');
-                                   }
-                    )
-        
 
-/*    	console.log($scope.number);
-    	console.log($scope.name);
-    	console.log($scope.deadline);
-    	console.log($scope.SecretLv);
-    	console.log($scope.needSubmit);
-    	console.log($scope.upload);
-    	console.log($scope.pre_date);
-    	console.log($scope.selectedName);
-    	console.log($scope.who);
-  */		
+      updateDevopsDB(json);
 
 
     }
-	function insertDevopsDB(json){
-		console.log(json);
-		var data = '{"projid":'+json.project.id+
-		',"redmineIssueId":'+json.id+
-		',"resultid":"'+json.custom_fields[21].value+
-		'","resultname":"'+json.subject+
-		'","submit":"'+json.custom_fields[23].value+
-		'","upload":"'+json.custom_fields[24].value+
-		'","securityclass":"'+json.custom_fields[22].value+
-		'","editor":"'+json.custom_fields[25].value+
-		'","pre_sent":"'+$scope.deadline+
-		'","pre_veriify":"'+$scope.pre_date+
-		'","act_finish":"'+
-		'","disable":'+false+
-		'}';
+	function updateDevopsDB(json){
+		
 
 	    $http(
                  {
-                     method: 'POST',
-                     url: 'http://'+MyVar.BackApiUrl+'/TodoService/results',
+                     method: 'PATCH',
+                     url: 'http://'+MyVar.BackApiUrl+'/TodoService/results/'+$stateParams.redmineIssueId,
                      headers: { 
                      	'cache-control': 'no-cache',
 					    'content-type': 'application/json',
 					
 					 },
 					   
-					 data: JSON.parse(data),
+					 data: JSON.parse(json),
 					 json: true 
                  }
              ).then(function (response) {
-                        createVersion(JSON.parse(data));
-//                        alert("新增成功");      
- //						$location.path('/dashboard/ResultList');
+                      //  createVersion(JSON.parse(data));
+                      alert("修改成功");      
+
+
+                      if($scope.important.SecretLv==$scope.SecretLv&&$scope.important.deadline==$scope.deadline&&$scope.important.name==$scope.name&&$scope.important.number==$scope.number)
+ 	             					$location.path('/dashboard/ResultList');
+                      else
+                        {
+                          if(confirm("因已修改到重要欄位，需要再將成果清單送出審查，請點按「將成果清單送出審查")){
+                            changestate("編輯中且未送審");
+                            $location.path('/dashboard/ResultList');
+                          }
+                        }
                       
                     }, 
                     function (err) {
@@ -389,6 +389,35 @@ angular.module('yapp')
                    }
         );
 	}
+
+
+  function changestate(ProjState){                                          
+      var json = '{"state":"'+ProjState+'"}';
+      $http(
+                  {
+                       method: 'PATCH',
+                       url: 'http://'+MyVar.BackApiUrl+'/TodoService/projects/'+$scope.thisProject,
+                       headers: { 
+                          'cache-control': 'no-cache',
+                          'content-type': 'application/json',
+                      
+                       },                                   
+                       data: JSON.parse(json),
+                       json: true 
+                   }
+               ).then(function (response) {
+                          console.log("狀態改變");
+                          console.log(response.data);
+                      }, 
+                      function (err) {
+                          if(err.status==409)
+                              alert("同步失敗");
+                          console.log(err);
+                          console.log('this is a error');
+                     }
+      )
+
+  }
 
 	function createVersion(response){
 		console.log(response);

@@ -66,7 +66,7 @@ angular.module('yapp')
       $http(
                  {
                      method: 'POST',
-                     url: 'http://localhost:8081/TodoService/users',
+                     url: 'http://'+BackApiUrl+'/TodoService/users',
                      headers: { 
                      	'cache-control': 'no-cache',
 					    'content-type': 'application/json',
