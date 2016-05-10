@@ -1,0 +1,50 @@
+<div >
+	<br><br>
+	<div class="col-md-2">成果送出改版審查設定</div>
+	<br><br>
+
+	<div class="col-md-2">專案名稱：</div>
+	<div class="col-md-4">
+			{{projectName}}
+	</div>
+	<br><br>
+
+	<div class="col-md-2">成果編號：</div>
+	<div class="col-md-4">
+			{{resultId}}
+	</div>
+	<br><br>
+
+	<div class="col-md-2">成果名稱：</div>
+	<div class="col-md-4">
+			{{resultName}}
+	</div>
+	<br><br><br>
+	<br>
+	<hr style="width: 100% ; height: 3px; background-color: grey ;"/>
+	<br></br>
+	<div class = "row">
+		<div class="col-md-2 col-md-offset-3">改版預計交付日:</div>
+		<div class="col-md-2">
+				<input type = "text" ng-model="preSentdate" placeholder=""></input>
+		</div>
+	</div>
+	<br>
+	<div class = "row">
+		<div class="col-md-2 col-md-offset-3">改版預計審查日:</div>
+		<div class="col-md-2">
+				<input type = "text" ng-model="preExmaindate" placeholder=""></input>
+		</div>
+	</div>
+	<br>
+	<div class = "row">
+		<div class="col-md-2 col-md-offset-3">改版版次:</div>
+		<div class="col-md-2">
+				<input type = "text" ng-model="newVersion" placeholder=""></input>
+		</div>
+	</div>
+	<br><br><br>
+	<button ng-click="submit()" class="col-md-offset-3 btn btn-black btn-outline btn-lg" style="background:lightblue">送出成果改版審查</button>
+	<button ng-click="cancel()" class="col-md-offset-1 btn btn-black btn-outline btn-lg" style="background:lightblue">取消</button>		
+
+</div>

@@ -18,6 +18,11 @@ angular.module('yapp')
     transclude: true,
     controller: function($scope,$stateParams) {
       console.log($stateParams);
+    
+      $scope.Projid = $stateParams.currentPid;
+      $scope.state = $stateParams.state;
+      $scope.quesnum = $stateParams.quesnum;
+      $scope.thisProject = $stateParams.thisProject;
       $scope.ProjName = $stateParams.currentProj;
       $scope.templateUrl = '';
       var tabs = $scope.tabs = [];

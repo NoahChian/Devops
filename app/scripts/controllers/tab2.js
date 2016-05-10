@@ -11,6 +11,7 @@ angular.module('yapp')
   	$scope.Projid = $stateParams.currentPid;
     $scope.ProjName = $stateParams.currentProj;
     $scope.results = [];
+    console.log($stateParams.thisProject);
     run();
 
     function run(){
@@ -18,20 +19,17 @@ angular.module('yapp')
           $http(
                      {
                          method: 'GET',
-                         url: 'http://'+MyVar.BackApiUrl+'/TodoService/verdiary/search/findByProjectid?projectid='+$stateParams.currentPid, 
+                         url: 'http://'+MyVar.BackApiUrl+'/TodoService/verdiary/search/findByProjectid?projectid='+$stateParams.thisProject, 
                      }).then(function (response) {        
                         console.log(response);
                         if(!(Object.getOwnPropertyNames(response.data).length === 0)){
-                          var len = Object.keys(response.data._embedded.verfull).length;  
+                          var len = Object.keys(response.data._embedded.verdiary).length;  
                           //console.log(response.data._embedded.results);
-                          var object = response.data._embedded.verfull;
+                          var object = response.data._embedded.verdiary;
                           console.log(object);
                           for(var i=0;i<len;i++){                             //找尋每一筆成果
                               $scope.results[i] = object[i];
                               console.log($scope.results[i]);
-                            //  if($scope.results[i].act_finish==null)          //如果實際完成日是空白  則更新他
-                           //     update(i);    
-  //                              getTicket(i);                                   //得到審查單編號
                           }
                         }
                     }, 

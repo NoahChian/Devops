@@ -146,7 +146,7 @@ angular.module('yapp')
                         s1+',"pre_finishdate":'+
                         s2+'}';
 
-                        console.log(update_devops[x].state);
+                         console.log(update_devops[x].state);
                         
                         x++;
                         break;
@@ -169,10 +169,10 @@ angular.module('yapp')
             }
         }
 
-       // console.log(update_devops);
-       // console.log(new_devops);
+        console.log(update_devops);
+        console.log(new_devops);
         var bulksave = covert(update_devops,new_devops);
-      //  console.log(bulksave);
+        console.log(JSON.parse(bulksave));
         $http(
                                 {
                                      method: 'POST',
@@ -272,7 +272,7 @@ angular.module('yapp')
                                                           //  console.log(x);
                                                             if(response2.data.issue.journals[l].details[m].new_value==status){      // 更改後的新狀態為我們制定的已核決狀態
                                                 //                console.log(response2.data.issue.journals[l].created_on);
-                                                
+                                                                console.log($scope.obj[i]);
                                                                 $scope.obj[i].act_finishdate = response2.data.issue.journals[l].created_on;
                                                                 console.log($scope.obj[i].act_finishdate);
                                                                 $scope.obj[i].act_finishdate = $scope.obj[i].act_finishdate.match("(.*)T")[1];
@@ -382,6 +382,54 @@ angular.module('yapp')
         }
 
     }
+
+    function createVersion(response){
+        console.log(response);
+        var time = new Date();
+        var data = '{"version":"v'+$scope.version+
+        '","createtime":"'+time.getFullYear()+'/'+(time.getMonth()+1)+'/'+time.getDate()+' '+time.getHours()+':'+time.getMinutes()+
+        '","editor":"'+response.editor+
+        '","pre_sentdate":"'+response.pre_sent+
+        '","projectid":'+response.projid+
+        ',"resultid":"'+response.resultid+
+        '","resultname":"'+response.resultname+
+        '","securityclass":"'+response.securityclass+
+        '"}';
+//      console.log(data);
+        $http(
+                 {
+                     method: 'POST',
+                     url: 'http://'+MyVar.BackApiUrl+'/TodoService/verfull',
+                     headers: { 
+                        'cache-control': 'no-cache',
+                                'content-type': 'application/json',
+                            
+                             },
+                       
+                     data: JSON.parse(data),
+                     json: true 
+                 }
+             ).then(function (response) {
+                     //  console.log(response);
+                          alert("新增成功");      
+                          if($scope.state!="已退回")
+                            changestate("編輯中且未送審");
+                                      else{
+                            $location.path('/dashboard/ResultList');
+                          }
+                      
+                    }, 
+                    function (err) {
+                        if(err.status==409)
+                            alert("上傳devopsDB失敗");
+                        console.log(err);
+                        console.log('this is a error');
+                    
+                   }
+        );
+
+    }
+
 
     $scope.goProj = function(x,y,z,w,s){
         MyVar.currentProj = x;

@@ -7,7 +7,7 @@
  * Controller of yapp
  */
 angular.module('yapp')
-  .controller('CreateAccountCtrl',function($scope,  $location,$http) {
+  .controller('CreateAccountCtrl',function($scope,  $location,$http,MyVar) {
 
 
 
@@ -66,7 +66,7 @@ angular.module('yapp')
       $http(
                  {
                      method: 'POST',
-                     url: 'http://'+BackApiUrl+'/TodoService/users',
+                     url: 'http://'+MyVar.BackApiUrl+'/TodoService/users',
                      headers: { 
                      	'cache-control': 'no-cache',
 					    'content-type': 'application/json',

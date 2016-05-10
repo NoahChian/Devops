@@ -93,6 +93,12 @@ angular
             templateUrl: 'views/dashboard/ProjList.html',
             controller: 'ProjListCtrl'
           })
+          .state('ResultVersionSet', { 
+            url: '/ResultVersionSet?resultId&thisDevopsProjectId',
+            parent: 'dashboard',
+            templateUrl: 'views/dashboard/ResultVersionSet.html',
+            controller: 'ResultVersionSetCtrl'
+          })
           .state('SetProjConf', { 
             url: '/SetProjConf',
             parent: 'dashboard',
@@ -110,8 +116,14 @@ angular
   this.currentPid = null;
   this.state = null;
   this.quesnum = null;
+
+  this.BackApiUrl = "140.92.144.34:8081";
+  this.redmineApiUrl = "140.92.144.26";
+  this.FrontUrl = "140.92.144.33:9000";
+/*
   this.BackApiUrl = "140.92.142.9:8081";
   this.redmineApiUrl = "140.92.144.26";
   this.FrontUrl = "140.92.142.9:9000";
+*/
 });
 

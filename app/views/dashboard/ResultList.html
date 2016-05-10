@@ -1,5 +1,5 @@
 <div>
-	<a ui-sref="ViewResult({currentProj:ProjNam,state:ProjState,quesnum:QuesNum,currentPid:Projid})" class="pull-right btn btn-primary btn-outline">修改歷程</a>
+	<a ui-sref="ViewResult({currentProj:ProjNam,state:ProjState,quesnum:QuesNum,currentPid:Projid,thisProject:id})" class="pull-right btn btn-primary btn-outline">修改歷程</a>
 	<br></br>
 	<div class="col-md-2">
 		專案名稱：
@@ -58,6 +58,7 @@
 			<td>{{value.pre_sent}}<span></td>
 			<td>{{value.pre_veriify}}<span></td>
 			<td>{{value.act_finish}}<span></td>
+			<td><span ng-repeat="x in value.resultissues">{{x}} </td>
 			<td></td>
 			
 		</tr>

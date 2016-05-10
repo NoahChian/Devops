@@ -276,9 +276,8 @@ angular.module('yapp')
       '}';
 
 
-
-
-      insertDevopsDB(json);
+      createRedmineIssue(finalEditor);
+      
    
  //  	var json ='{"issue":{"project_id":206,"subject":"465q6","assigned_to_id":20,"tracker_id":7,"custom_fields":[{"id":46,"value":"v1.0"},{"id":48,"value":"機密級"},{"id":49,"value":"否"},{"id":50,"value":"是"},{"id":47,"value":"a1234567891011"},{"id":51,"value":"歐 世文"}]}}';
 
@@ -298,7 +297,7 @@ angular.module('yapp')
 
     }
 
-  function createRedmineIssue(){
+  function createRedmineIssue(finalEditor){
 
       var assignedId ;
       for(var i=0;i<Object.keys($scope.selectYetNameID).length;i++)
@@ -330,7 +329,29 @@ angular.module('yapp')
           ).then(function (response) {
                 
                 var issusId = response.data.issue.id;
+                $scope.redmineIssues = response.data.issue.id;
                 console.log("issusId:"+issusId);
+
+
+                 var json = '{"projid":'+$scope.Projid+
+                ',"redmineIssueId":"'+issusId+
+                '","resultid":"'+$scope.number+
+                '","resultname":"'+$scope.name+
+                '","submit":"'+$scope.needSubmit+
+                '","upload":"'+$scope.upload+
+                '","securityclass":"'+$scope.SecretLv+
+                '","editor":"'+finalEditor+
+                '","assigned":"'+$scope.assigned+
+                '","pre_sent":"'+$scope.deadline+
+                '","pre_veriify":"'+$scope.pre_date+
+                '","version":"1.0'+
+                '","redmineIssues":"'+$scope.redmineIssues+
+                '","act_finish":"'+
+                '","disable":'+false+
+                '}';
+                insertDevopsDB(json);
+
+
                  /* $http(
                       {
                          method: 'PATCH',
@@ -376,8 +397,13 @@ angular.module('yapp')
                  }
              ).then(function (response) {
 
-                        createVersion(JSON.parse(json));
-                        createRedmineIssue();
+                   //     createVersionLog(JSON.parse(json));
+                          alert("新增成功");      
+                          if($scope.state!="已退回")
+                            changestate("編輯中且未送審");
+                          else{
+                            $location.path('/dashboard/ResultList');
+                          }
                     }, 
                     function (err) {
                     	if(err.status==409)
@@ -414,7 +440,8 @@ angular.module('yapp')
     )
 
   }
-	function createVersion(response){
+  /*
+	function createVersionLog(response){
 		console.log(response);
 		var time = new Date();
 		var data = '{"version":"v'+$scope.version+
@@ -459,7 +486,7 @@ angular.module('yapp')
                    }
         );
 
-	}
+	}*/
 
 
 

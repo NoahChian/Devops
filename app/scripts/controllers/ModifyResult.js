@@ -29,6 +29,8 @@ angular.module('yapp')
 	$scope.pre_date = "";
 	$scope.number = ""
 	$scope.who = ""
+
+
   if($scope.state!="已送審")
   {
     $scope.btncancel = "取消";
@@ -63,6 +65,7 @@ angular.module('yapp')
              ).then(function (response)  { 
                       var result = response.data;
                       console.log(result);
+                      $scope.resultBackup = response.data;
                       $scope.SecretLv = result.securityclass;
                       $scope.needSubmit = result.submit;       
                       $scope.upload = result.upload;
@@ -72,7 +75,7 @@ angular.module('yapp')
                       $scope.act_finish = result.act_finish;
                       $scope.assigned = result.assigned;
                       $scope.version = result.version;
-
+                      $scope.redmineIssues = result.redmineIssues;
                       $scope.important.SecretLv = result.securityclass;
                       $scope.important.deadline = result.pre_sent;
                       $scope.important.name = result.resultname;
@@ -82,12 +85,13 @@ angular.module('yapp')
                       function select(editor){
                           edit = editor.split(',');
                       }
-                      if($scope.state=="已核決"){
-                        if(result.redmineIssueId!=null)
+                      if($scope.state!="已送審"){
+
+                        if(result.redmineIssueId!=null&&result.redmineIssueId!="")
                           {
+
                             checkIssueClose(result.redmineIssueId);                            
                           }
-      
                       }
                        getmember();
 
@@ -114,10 +118,20 @@ angular.module('yapp')
       ).then(function (response){
        //  console.log("here");
         console.log(response);
-        if(response.data.issue.status.name=="Closed")
-          $scope.hidden5 =true;
-        else
-          $scope.hidden5 =false;
+        if(response.data.issue.status.name=="New"||response.data.issue.status.name=="待送出審查")
+        {
+
+          $scope.justview = false;
+          
+        }else{
+
+            if(response.data.issue.status.name=="Closed")
+              $scope.hidden5 =true;
+            console.log("cant fix");
+            $scope.btncancel = "返回";
+            $scope.justview = true;
+            $scope.hidden4 = false;
+        }
       },function (err){
         console.log(err);
       }); 
@@ -327,7 +341,6 @@ angular.module('yapp')
     	var finalEditor = $scope.selectedName+','+$scope.who;
       
       var json = '{"projid":'+$scope.Projid+
-      ',"redmineIssueId":""'+
       ',"resultid":"'+$scope.number+
       '","resultname":"'+$scope.name+
       '","submit":"'+$scope.needSubmit+
@@ -368,16 +381,8 @@ angular.module('yapp')
                       //  createVersion(JSON.parse(data));
                       alert("修改成功");      
 
-
-                      if($scope.important.SecretLv==$scope.SecretLv&&$scope.important.deadline==$scope.deadline&&$scope.important.name==$scope.name&&$scope.important.number==$scope.number)
- 	             					$location.path('/dashboard/ResultList');
-                      else
-                        {
-                          if(confirm("因已修改到重要欄位，需要再將成果清單送出審查，請點按「將成果清單送出審查")){
-                            changestate("編輯中且未送審");
-                            $location.path('/dashboard/ResultList');
-                          }
-                        }
+                      modifyLog(JSON.parse(json));
+                     
                       
                     }, 
                     function (err) {
@@ -419,48 +424,116 @@ angular.module('yapp')
 
   }
 
-	function createVersion(response){
+	function modifyLog(response){
 		console.log(response);
-		var time = new Date();
-		var data = '{"version":"v1.0'+
-		'","createtime":"'+time.getFullYear()+'/'+time.getMonth()+'/'+time.getDate()+' '+time.getHours()+':'+time.getMinutes()+
-		'","editor":"'+response.editor+
-		'","pre_sentdate":"'+response.pre_sent+
-		'","projectid":'+response.projid+
-		',"resultid":"'+response.resultid+
-		'","resultname":"'+response.resultname+
-		'","securityclass":"'+response.securityclass+
-		'"}';
-//		console.log(data);
-	    $http(
-                 {
-                     method: 'POST',
-                     url: 'http://'+MyVar.BackApiUrl+'/TodoService/verfull',
-                     headers: { 
-                     	'cache-control': 'no-cache',
-					    'content-type': 'application/json',
-					
-					 },
-					   
-					 data: JSON.parse(data),
-					 json: true 
-                 }
-             ).then(function (response) {
-                     //  console.log(response);
-                          alert("新增成功");      
- 						$location.path('/dashboard/ResultList');
-                      
-                    }, 
-                    function (err) {
-                    	if(err.status==409)
-                    		alert("上傳devopsDB失敗");
-                        console.log(err);
-                        console.log('this is a error');
-                    
-                   }
-        );
+		console.log($scope.resultBackup);
 
+    if(response.resultname!=$scope.resultBackup.resultname)
+      setVerDate(2,response.resultname,$scope.resultBackup.resultname);
+  
+    if(response.resultid!=$scope.resultBackup.resultid)
+      setVerDate(1,response.resultid,$scope.resultBackup.resultid);
+  
+    if(response.pre_sent!=$scope.resultBackup.pre_sent)
+      setVerDate(3,response.pre_sent,$scope.resultBackup.pre_sent);
+  
+    if(response.securityclass!=$scope.resultBackup.securityclass)
+      setVerDate(4,response.securityclass,$scope.resultBackup.securityclass);
+    
+    if(response.submit!=$scope.resultBackup.submit)
+      setVerDate(5,response.submit,$scope.resultBackup.submit);
+   
+    if(response.upload!=$scope.resultBackup.upload)
+      setVerDate(6,response.upload,$scope.resultBackup.upload);
+    
+    if(response.editor!=$scope.resultBackup.editor)
+      setVerDate(7,response.editor,$scope.resultBackup.editor);
+  
+    if(response.assigned!=$scope.resultBackup.assigned)
+      setVerDate(8,response.assigned,$scope.resultBackup.assigned);
+  
+  //  if(response.assigned!=$scope.resultBackup.assigned)
+  //    setVerDate(9,response.assigned,$scope.resultBackup.assigned);
+  
+
+
+
+    if($scope.important.SecretLv==$scope.SecretLv&&$scope.important.deadline==$scope.deadline&&$scope.important.name==$scope.name&&$scope.important.number==$scope.number)
+      $location.path('/dashboard/ResultList');
+    else
+    {
+      if(confirm("因已修改到重要欄位，需要再將成果清單送出審查，請點按「將成果清單送出審查")){
+        changestate("編輯中且未送審");
+        $location.path('/dashboard/ResultList');
+      }
+    }
 	}
+
+  function setVerDate(index,now,old){
+    var time = new Date();
+    var filed;
+    switch(index){
+      case 1:
+        filed = "成果編號";
+      break
+      case 2:
+        filed = "成果名稱";
+      break
+      case 3:
+        filed = "預計交付日";
+      break
+      case 4:
+        filed = "機密等級";
+      break
+      case 5:
+        filed = "是否交付";
+      break
+      case 6:
+        filed = "是否上傳";
+      break
+      case 7:
+        filed = "撰稿人";
+      break
+      case 8:
+        filed = "承辦人";
+      break      
+    }
+    var json = '{"date":"'+time.getFullYear()+'/'+(time.getMonth()+1)+'/'+time.getDate()+' '+time.getHours()+':'+time.getMinutes()+'",'+
+               '"editor":"'+$scope.loginname+'",'+
+               '"projectid":"'+$scope.thisProject+'",'+
+               '"premodify":"'+old+'",'+
+               '"aftermodify":"'+now+'",'+
+               '"modifyresult":"'+$scope.name+'",'+
+               '"modifyfield":"'+filed+                  
+               '"}';
+    console.log(json);
+    $http(
+       {
+           method: 'POST',
+           url: 'http://'+MyVar.BackApiUrl+'/TodoService/verdiary',
+           headers: { 
+              'cache-control': 'no-cache',
+              'content-type': 'application/json',
+          
+            },                                   
+           data: JSON.parse(json),
+           json: true 
+      }
+    ).then(function (response){
+      console.log(response);
+    },function (err){
+      console.log(err);
+    });
+  }
+
+
+
+
+  $scope.reExmain = function(){
+    console.log("exmain");
+    $location.path('/dashboard/ResultVersionSet').search({resultId:$stateParams.redmineIssueId,thisDevopsProjectId:$scope.thisProject});
+
+  }
 
 
 

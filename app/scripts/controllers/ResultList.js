@@ -94,7 +94,7 @@ angular.module('yapp')
                               console.log($scope.results[i]);
                               if($scope.results[i].act_finish=="")          //如果實際完成日是空白  則更新他
                                 update(i);    
-  //                              getTicket(i);                                   //得到審查單編號
+                              getTicket(i);                                   //得到審查單編號
                           }
                         }
                     }, 
@@ -108,24 +108,39 @@ angular.module('yapp')
 
     function update(i){
      //   var key = Object.keys($scope.results).length;
-        var status = 14;
       //  for(var i=0;i<key;i++){
      //   console.log("update "+i);
-           $http(
-                 {
-                     method: 'GET',
-                     url: 'http://'+MyVar.redmineApiUrl+'/issues.json?project_id='+$scope.results[i].projid+'&status_id='+status+'&key=f69bf52b02b565b2bdd354ebd208b87eb8c620d9', 
-                 }
-             ).then(function (response) {
-                    //    console.log("update"+i);  
-                        //if()
-                    }, 
-                    function (err) {
-                        console.log(err);
-                        console.log('this is a error');
-                        console.log(err.stack);
-                    }
-             ) 
+     if($scope.results[i].redmineIssueId==null||$scope.results[i].redmineIssueId=="")
+      return false;
+    $scope.results[i].resultissues = $scope.results[i].redmineIssues.split(",");
+    console.log($scope.results[i].resultissues);
+    var min = Number.MAX_VALUE;
+    for(var j=0;j<Object.keys($scope.results[i].resultissues).length;j++){
+      if($scope.results[i].resultissues[j]<min)
+        min = $scope.results[i].resultissues[j];
+    }
+   $http(
+         {
+             method: 'GET',
+             url: 'http://'+MyVar.redmineApiUrl+'/issues/'+min+'.json?include=journals&key=f69bf52b02b565b2bdd354ebd208b87eb8c620d9', 
+         }
+     ).then(function (response) {
+                var iss = response.data.issue;
+                var date = iss.updated_on;
+                if(iss.status.name=="Closed"){
+                   $scope.results[i].act_finish= date.split("T")[0];
+                 // $scope.results[i].act_finish=iss
+                }else{
+
+                }  
+                //if()
+            }, 
+            function (err) {
+                console.log(err);
+                console.log('this is a error');
+                console.log(err.stack);
+            }
+     ) 
 
         //}
         
@@ -208,6 +223,7 @@ angular.module('yapp')
                     console.log(response);
                     var json = '{"ques_number":'+response.data.issue.id+',"state":"已送審"}';
                     $stateParams.quesnum = response.data.issue.id;
+                    $scope.ProjState="已送審";
                     console.log($scope.id);
                     $http(
                                 {
@@ -223,7 +239,8 @@ angular.module('yapp')
                                  }
                              ).then(function (response) {
                                         console.log(response.data);
-                                        getResultlistissue();
+
+                                        getResultlistissue();     //成功在devops & redmine上建立新單子後  去改變目前狀態
                                         alert(mail);
 
                                     }, 
@@ -294,8 +311,8 @@ angular.module('yapp')
     function getResultlistissue(){
          var status = '*';
          var responseSum =[];
-         searchIssue(0);
-         function searchIssue(offset){
+         searchIssue(0);          //找這個porject所有的成果清單
+         function searchIssue(offset){      
             $http(
                  {
                      method: 'GET',
@@ -312,7 +329,7 @@ angular.module('yapp')
                           for(var x=offset;x<offset+response.data.total_count;x++){
                                     responseSum[offset+x] = response.data.issues[x];
                                 }
-                            updataIssues(responseSum);
+                            updataIssues(responseSum);  //更新成果編號單欄位
                        }
                     }, 
                     function (err) {
@@ -340,42 +357,14 @@ angular.module('yapp')
                                //console.log($stateParams.quesnum);
                                //console.log(response.data.issues[x].id);
                             
-                                 if($stateParams.quesnum == responseSum[x].id)
+                                 if($stateParams.quesnum == responseSum[x].id)      //如果[x]的編號單等於找到的傳進來的單號
                                  {
                                    // console.log(response.data.issues[x]);
                                     lastversiondate = new Date(responseSum[x].updated_on.match("(.*)T")[1]);
                                    // console.log(lastversiondate);  
                                     $scope.version = responseSum[x].custom_fields[j].value;
                                    // console.log("version change "+$stateParams.quesnum+":"+$scope.version);
-                                    if($scope.ProjState=="已送審"||$scope.ProjState=="已退回"){
-
-                                          function changestate(ProjState){                                          
-                                          var json = '{"state":"'+ProjState+'"}';
-                                          $http(
-                                                      {
-                                                           method: 'PATCH',
-                                                           url: 'http://'+MyVar.BackApiUrl+'/TodoService/projects/'+$scope.id,
-                                                           headers: { 
-                                                              'cache-control': 'no-cache',
-                                                              'content-type': 'application/json',
-                                                          
-                                                           },                                   
-                                                           data: JSON.parse(json),
-                                                           json: true 
-                                                       }
-                                                   ).then(function (response) {
-                                                              console.log("狀態改變");
-                                                              console.log(response.data);
-                                                          }, 
-                                                          function (err) {
-                                                              if(err.status==409)
-                                                                  alert("同步失敗");
-                                                              console.log(err);
-                                                              console.log('this is a error');
-                                                         }
-                                          )
-
-                                        }
+                                    if($scope.ProjState=="已送審"||$scope.ProjState=="已退回"){          
                                         if(responseSum[x].status.name=="已審查待核決"||responseSum[x].status.name=="已送出待審查"||responseSum[x].status.name=="已修正待審查")
                                           {
                                             $scope.ProjState = "已送審";
@@ -386,6 +375,7 @@ angular.module('yapp')
                                           }
                                         else if(responseSum[x].status.name=="已核決")
                                           {
+                                            createVersion();
                                             $scope.ProjState = "已核決";
                                             $scope.hidden =true;
                                             $scope.hidden2 =false;
@@ -398,6 +388,32 @@ angular.module('yapp')
                                           $scope.hidden2 =false;
                                         }
                                           changestate($scope.ProjState);
+                                          function changestate(ProjState){                                          
+                                            var json = '{"state":"'+ProjState+'"}';
+                                            $http(
+                                                        {
+                                                             method: 'PATCH',
+                                                             url: 'http://'+MyVar.BackApiUrl+'/TodoService/projects/'+$scope.id,
+                                                             headers: { 
+                                                                'cache-control': 'no-cache',
+                                                                'content-type': 'application/json',
+                                                             },                                   
+                                                             data: JSON.parse(json),
+                                                             json: true 
+                                                         }
+                                                     ).then(function (response) {
+                                                                console.log("狀態改變");
+                                                                console.log(response.data);
+                                                            }, 
+                                                            function (err) {
+                                                                if(err.status==409)
+                                                                    alert("同步失敗");
+                                                                console.log(err);
+                                                                console.log('this is a error');
+                                                           }
+                                            )
+
+                                          }
                                     }
                                     if($stateParams.state=="已送出郵件"){
                                             $scope.ProjState = "已核決";
@@ -417,6 +433,43 @@ angular.module('yapp')
       
     }
 
+
+function createVersion(){
+    console.log($scope.results);
+    var time = new Date();
+    for(var i=0;i<Object.keys($scope.results).length;i++){
+      var data = '{"version":"v'+$scope.version+
+      '","createtime":"'+time.getFullYear()+'/'+(time.getMonth()+1)+'/'+time.getDate()+' '+time.getHours()+':'+time.getMinutes()+
+      '","editor":"'+$scope.results[i].editor+
+      '","pre_sentdate":"'+$scope.results[i].pre_sent+
+      '","projectid":'+$scope.results[i].projid+
+      ',"resultid":"'+$scope.results[i].resultid+
+      '","resultname":"'+$scope.results[i].resultname+
+      '","securityclass":"'+$scope.results[i].securityclass+
+      '"}';
+      $http(
+        {
+          method: 'POST',
+          url: 'http://'+MyVar.BackApiUrl+'/TodoService/verfull',
+          headers: { 
+          'cache-control': 'no-cache',
+          'content-type': 'application/json',
+          },           
+          data: JSON.parse(data),
+          json: true 
+        }).then(function (response) {
+                       console.log(response); 
+                    }, 
+                    function (err) {
+                      if(err.status==409)
+                        alert("上傳devopsDB失敗");
+                        console.log(err);
+                        console.log('this is a error');
+                    
+                   }
+        );
+    }
+  }
 
     getTicket = function(i){
         console.log("connet db "+i);

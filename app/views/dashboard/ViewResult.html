@@ -7,7 +7,7 @@
 	<div>專案名稱：
 		<span ng-bind="ProjName" />
 	</div>
-	<div ui-sref="ResultList" class="pull-right btn btn-primary btn-outline">回成果清單列表</div>
+	<div ui-sref="ResultList({currentProj:ProjName,currentPid:Projid,state:state,quesnum:quesnum,thisProject:thisProject})" class="pull-right btn btn-primary btn-outline">回成果清單列表</div>
 	<br>
 	<tabset>
 	  <tab title="完整資訊" template-url="/views/dashboard/tab1.html"></tab>

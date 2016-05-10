@@ -10,7 +10,7 @@ angular.module('yapp')
 
    $scope.Projid = $stateParams.currentPid;
    $scope.ProjName = $stateParams.currentProj;
-
+   console.log($stateParams.thisProject);
 
 
 
